@@ -13,27 +13,48 @@ public class Question_Text : MonoBehaviour
     public GameObject prevQuestionButton;
     public GameObject textBG;
     public Text boxText;
-    public RawImage avatar;
+    public RawImage avatarLeft;
+    public RawImage avatarRight;
 
     public Texture[] pics;
     public string[] infoText;
+    public bool[] leftOrRight;
 
     public bool leftSideLayout;
 
     public int questAm;
     public int currentQuest;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
+        avatarTextureUpdate();
         questAm = infoText.Length;
         boxText.text = infoText[currentQuest].ToString();
         leftSideLayout = true;
         Close();
-	}
+    }
+
+    void avatarStateTrueFalse()
+    {
+        avatarRight.enabled = false;
+        avatarLeft.enabled = true;
+    }
+
+    void avatarStateFalseTrue()
+    {
+        avatarLeft.enabled = false;
+        avatarRight.enabled = true;
+    }
+
+    void avatarTextureUpdate()
+    {
+        avatarLeft.texture = pics[currentQuest];
+        avatarRight.texture = pics[currentQuest];
+    }
 
     //This is the function to input values for editor mode, you must have anything at all in it and you must have the same amount of avatars as questions / dialogs
-    public void InsertValues(string[] inText, Texture[] inPics)
+    public void InsertValues(string[] inText, Texture[] inPics, bool[] sideOfScreen)
     {
         if (inText.Length == 0 || inPics.Length == 0)
         {
@@ -52,20 +73,23 @@ public class Question_Text : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         //Left side of the screen for the question / dialog box
         if (leftSideLayout == true)
         {
-            avatar.transform.localPosition = new Vector3(-688.2f, -339.5f, 0);
+            avatarStateTrueFalse();
         }
 
         //Right side of the screen for the question / dialog box
         if (leftSideLayout == false)
         {
-            avatar.transform.localPosition = new Vector3(688.2f, -339.5f, 0);
+            avatarStateFalseTrue();
         }
+    }
 
+    void FixedUpdate()
+    {
         //If we are at the first question / dialog, we can't go back anymore
         if(currentQuest == 0)
         {
@@ -95,16 +119,40 @@ public class Question_Text : MonoBehaviour
     public void NextQuestion()
     {
         currentQuest = currentQuest + 1;
+
+        if (leftOrRight[currentQuest] == true)
+        {
+            leftSideLayout = true;
+            avatarTextureUpdate();
+        }
+
+        else
+        {
+            leftSideLayout = false;
+            avatarTextureUpdate();
+        }
+
         boxText.text = infoText[currentQuest].ToString();
-        avatar.texture = pics[currentQuest];
     }
 
     //Change avatar and text for the previouse question / dialog
     public void PreviouseQuestion()
     {
         currentQuest = currentQuest - 1;
+
+        if (leftOrRight[currentQuest] == true)
+        {
+            leftSideLayout = true;
+            avatarTextureUpdate();
+        }
+
+        else
+        {
+            leftSideLayout = false;
+            avatarTextureUpdate();
+        }
+
         boxText.text = infoText[currentQuest].ToString();
-        avatar.texture = pics[currentQuest];
     }
 
     //When you wanna open the question / dialog box
