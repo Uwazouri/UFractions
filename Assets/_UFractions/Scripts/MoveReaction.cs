@@ -42,4 +42,9 @@ public class MoveReaction : RayCastReaction {
         if (Input.GetMouseButton(0))
             this.hitHold = true;
     }
+
+    public override void SetupSomething()
+    {
+        base.SetupSomething();
+    }
 }

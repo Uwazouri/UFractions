@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RayCastReaction : MonoBehaviour {
+public class AnswerBehaviour : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	private void Start () {
 		
 	}
 	
@@ -14,13 +14,18 @@ public class RayCastReaction : MonoBehaviour {
 		
 	}
 
-    public virtual void OnHit()
+    public virtual void Show()
     {
 
     }
 
-    public virtual void SetupSomething()
+    public virtual void Hide()
     {
 
+    }
+
+    public virtual bool GetResult()
+    {
+        return false;
     }
 }
