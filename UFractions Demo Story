@@ -1,0 +1,192 @@
+{
+    "name": "UFractions Demo Story",
+    "storyVersion": {
+        "main": 1,
+        "patch": 0,
+        "bug": 0
+    },
+    "editorVersion": {
+        "main": 1,
+        "patch": 0,
+        "bug": 0
+    },
+    "introduction": 0,
+    "introductionInformation": "A simple demo story with not much real story.",
+    "paths": [
+        {
+            "pathName": "Concept of Fractions",
+            "description": "Contains simple problems for learning fraction concepts.",
+            "pathPoint": {
+                "problemID": 0,
+                "nextPoints": [
+                    {
+                        "problemID": 1,
+                        "nextPoints": [
+                            {
+                                "problemID": 2,
+                                "nextPoints": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "pathName": "Adding and Subtracting",
+            "description": "Contains problems for learning fraction adding and subtracting",
+            "pathPoint": {
+                "problemID": 1,
+                "nextPoints": []
+            }
+        },
+        {
+            "pathName": "Multiplication and Division",
+            "description": "Contains problems for learning fraction multiplication and division",
+            "pathPoint": {
+                "problemID": 2,
+                "nextPoints": []
+            }
+        }
+    ],
+    "problems": [
+        {
+            "problemID": 0,
+            "questionType": 0,
+            "question": {
+                "textBoxQuestion": {
+                    "texts": [
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."
+                        },
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Select the option that have numbers equals to the way they should share."
+                        }
+                    ]
+                }
+            },
+            "answerType": 0,
+            "answer": {
+                "choicesAnswer": {
+                    "textChoices": [
+                        "Bob 2 and Bill 8",
+                        "Bob 4 and Bill 6",
+                        "Bob 5 and Bill 5",
+                        "Bob 7 and Bill 3",
+                        "Bob 9 and Bill 1"
+                    ],
+                    "imageChoices": [],
+                    "answer": 2
+                }
+            }
+        },
+        {
+            "problemID": 1,
+            "questionType": 0,
+            "question": {
+                "textBoxQuestion": {
+                    "texts": [
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."
+                        },
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Select the option that have numbers equals to the way they should share."
+                        }
+                    ]
+                }
+            },
+            "answerType": 0,
+            "answer": {
+                "choicesAnswer": {
+                    "textChoices": [
+                        "Bob 2 and Bill 8",
+                        "Bob 4 and Bill 6",
+                        "Bob 5 and Bill 5",
+                        "Bob 7 and Bill 3",
+                        "Bob 9 and Bill 1"
+                    ],
+                    "imageChoices": [],
+                    "answer": 2
+                }
+            }
+        },
+        {
+            "problemID": 2,
+            "questionType": 0,
+            "question": {
+                "textBoxQuestion": {
+                    "texts": [
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."
+                        },
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Select the option that have numbers equals to the way they should share."
+                        }
+                    ]
+                }
+            },
+            "answerType": 0,
+            "answer": {
+                "choicesAnswer": {
+                    "textChoices": [
+                        "Bob 2 and Bill 8",
+                        "Bob 4 and Bill 6",
+                        "Bob 5 and Bill 5",
+                        "Bob 7 and Bill 3",
+                        "Bob 9 and Bill 1"
+                    ],
+                    "imageChoices": [],
+                    "answer": 2
+                }
+            }
+        },
+        {
+            "problemID": 3,
+            "questionType": 0,
+            "question": {
+                "textBoxQuestion": {
+                    "texts": [
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."
+                        },
+                        {
+                            "avatar": "http://www.freeiconspng.com/uploads/cat-png-15.png",
+                            "left": true,
+                            "text": "Select the option that have numbers equals to the way they should share."
+                        }
+                    ]
+                }
+            },
+            "answerType": 0,
+            "answer": {
+                "choicesAnswer": {
+                    "textChoices": [
+                        "Bob 2 and Bill 8",
+                        "Bob 4 and Bill 6",
+                        "Bob 5 and Bill 5",
+                        "Bob 7 and Bill 3",
+                        "Bob 9 and Bill 1"
+                    ],
+                    "imageChoices": [],
+                    "answer": 2
+                }
+            }
+        }
+    ],
+    "avatars": [
+        "https://cdn.pixabay.com/photo/2017/10/02/02/30/black-swan-2807716_960_720.jpg"
+    ]
+}

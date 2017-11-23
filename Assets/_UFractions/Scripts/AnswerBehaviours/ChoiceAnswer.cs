@@ -9,7 +9,8 @@ using UnityEngine.EventSystems;
 /// Attach the object to a panel in a canvas that is of suitable size.
 /// Select a prefab of a choice that contains a Toggle component and is of suitable size according to the attached panel.
 /// </summary>
-public class ChoiceAnswerBehaviour : AnswerBehaviour
+[RequireComponent(typeof(SlideUIElement))]
+public class ChoiceAnswer : AnswerBehaviour
 {
     [SerializeField] private GameObject choicePrefab;
     [SerializeField] private Sprite debugSprite;
@@ -17,48 +18,23 @@ public class ChoiceAnswerBehaviour : AnswerBehaviour
     private List<GameObject> choices;
     private GameObject answer;
     private GameObject lastChoice;
-    private bool show = false;
-    private bool hide = false;
 
     /// <summary>
     /// Set the location of the panel and create a list for the choices.
     /// </summary>
     void Start ()
     {
-        this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax, 0, 0);
-        this.choices = new List<GameObject>();
-        this.Setup();
-
-        // Debug method for creating default choices since Setup currently does nothing.
-        this.DebugSetup();
+        StoryManager.Instance.DebugStory();
+        if (this.choices == null)
+            this.choices = new List<GameObject>();
     }
-	
-    /// <summary>
-    /// Update hides or shows the answer panel according to Hide and Show calls.
-    /// </summary>
-	void Update ()
-    {
-		if (this.show)
-        {
-            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax - GetComponent<RectTransform>().rect.width, 0, 0), 25);
-            if (this.transform.localPosition.x <= GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax - GetComponent<RectTransform>().rect.width)
-                this.show = false;
-        }
-        else if (this.hide)
-        {
-            this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax, 0, 0), 25);
-            if (this.transform.localPosition.x >= GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax)
-                this.hide = false;
-        }
-	}
 
     /// <summary>
     /// The virtual function that the problem can use to show the answer part.
     /// </summary>
     public override void Show()
     {
-        if (!this.hide)
-            this.show = true;
+        GetComponent<SlideUIElement>().Show();
     }
 
     /// <summary>
@@ -66,8 +42,21 @@ public class ChoiceAnswerBehaviour : AnswerBehaviour
     /// </summary>
     public override void Hide()
     {
-        if (!this.show)
-            this.hide = true;
+        GetComponent<SlideUIElement>().Hide();
+    }
+
+    /// <summary>
+    /// Sets the choices and correct answer from a given problems answer.
+    /// </summary>
+    public override void SetupAnswer(Story.AnswerStructure answer)
+    {
+        Story.ChoiceAnswerData choicesAnswer = answer.choicesAnswer;
+        foreach (string s in choicesAnswer.textChoices)
+        {
+            this.AddChoice(s);
+        }
+        this.SetAnswer(this.choices[(int)choicesAnswer.answer]);
+        this.SetupChoices();
     }
 
     /// <summary>
@@ -89,14 +78,6 @@ public class ChoiceAnswerBehaviour : AnswerBehaviour
             }
         }
         return correct;
-    }
-
-    /// <summary>
-    /// Sets the choices and correct answer from the StoryManager.
-    /// </summary>
-    private void Setup()
-    {
-        // Needs implementation of StoryManager first.
     }
 
     /// <summary>
@@ -123,6 +104,8 @@ public class ChoiceAnswerBehaviour : AnswerBehaviour
         newChoice.GetComponent<EventTrigger>().triggers.Add(del);
 
         // Add the choice
+        if (this.choices == null)
+            this.choices = new List<GameObject>();
         this.choices.Add(newChoice);
     }
 
@@ -203,23 +186,15 @@ public class ChoiceAnswerBehaviour : AnswerBehaviour
             g.GetComponent<Toggle>().isOn = false;
     }
 
-    // DEBUG METHODS
-
-    private void DebugSetup()
-    {
-        this.AddChoice("Choice A");
-        this.AddChoice("Choice B");
-        this.AddChoice("Choice C");
-        this.SetAnswer(this.choices[this.choices.Count - 1]);
-        this.AddChoice("Choice D");
-        this.AddChoice(this.debugSprite);
-        this.SetupChoices();
-    }
-
+    /// <summary>
+    /// Debug method for activating the result.
+    /// </summary>
     public void DebugReslult()
     {
         if (this.GetResult())
+        {
             print("CORRECT ANSWER!");
+        }
         else
             print("FALSE ANSWER!");
     }

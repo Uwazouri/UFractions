@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 224677029135005324}
   - component: {fileID: 114863883245242568}
   m_Layer: 5
-  m_Name: ChoicePrefab
+  m_Name: ChoiceAnswerChoiceTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,19 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class MoveReaction : RayCastReaction {
-
-    public float movementSpeed = 10;
-
+/// <summary>
+/// Makes the game object this script is attached to react to TouchRayCast with movement along the x-plane.
+/// NOTE: To move objects, a floor plane is needed that lies in the "Floor" layer.
+/// </summary>
+public class MoveReaction : RaycastReaction
+{
     private bool hitHold = false;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
-	// Update is called once per frame
+	/// <summary>
+    /// Moves the object every frame touch is held down.
+    /// </summary>
 	void Update ()
     {
 		if (this.hitHold)
@@ -37,14 +34,12 @@ public class MoveReaction : RayCastReaction {
         }
 	}
 
+    /// <summary>
+    /// The on hit reaction activates move on hold.
+    /// </summary>
     public override void OnHit()
     {
         if (Input.GetMouseButton(0))
             this.hitHold = true;
-    }
-
-    public override void SetupSomething()
-    {
-        base.SetupSomething();
     }
 }

@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Question_Text : MonoBehaviour
+public class TextBoxQuestion : QuestionBehaviour
 {
-    public GameObject normalCanvas;
-    public GameObject questionCanvas;
-    public GameObject closeButton;
-    public GameObject openButton;
     public GameObject nextQuestionButton;
     public GameObject prevQuestionButton;
-    public GameObject textBG;
     public Text boxText;
     public RawImage avatarLeft;
     public RawImage avatarRight;
@@ -23,17 +18,7 @@ public class Question_Text : MonoBehaviour
     public bool leftSideLayout;
 
     public int questAm;
-    public int currentQuest;
-
-    // Use this for initialization
-    void Start()
-    {
-        avatarTextureUpdate();
-        questAm = infoText.Length;
-        boxText.text = infoText[currentQuest].ToString();
-        leftSideLayout = true;
-        Close();
-    }
+    public int currentQuest = 0;
 
     void avatarStateTrueFalse()
     {
@@ -54,22 +39,28 @@ public class Question_Text : MonoBehaviour
     }
 
     //This is the function to input values for editor mode, you must have anything at all in it and you must have the same amount of avatars as questions / dialogs
-    public void InsertValues(string[] inText, Texture[] inPics, bool[] sideOfScreen)
+    public void InsertValues(List<string> inText, List<Texture> inPics, List<bool> sideOfScreen)
     {
-        if (inText.Length == 0 || inPics.Length == 0)
+        if (inText.Count == 0 || inPics.Count == 0)
         {
             Debug.LogWarning("Oh hell no! Put some data in the text and avatars!");
         }
 
-        if (inPics.Length != inText.Length)
+        if (inPics.Count != inText.Count)
         {
             Debug.LogWarning("You must have the same amount of avatars as questions / dialogs!");
         }
 
-        for (int i = 0; i < inText.Length; i++)
+        infoText = new string[inText.Count];
+        questAm = inText.Count;
+        pics = new Texture[inPics.Count];
+        leftOrRight = new bool[sideOfScreen.Count];
+
+        for (int i = 0; i <= inText.Count - 1; i++)
         {
-            infoText[i] = inText[i].ToString();
+            infoText[i] = inText[i];
             pics[i] = inPics[i];
+            leftOrRight[i] = sideOfScreen[i];
         }
     }
 
@@ -91,7 +82,7 @@ public class Question_Text : MonoBehaviour
     void FixedUpdate()
     {
         //If we are at the first question / dialog, we can't go back anymore
-        if(currentQuest == 0)
+        if (currentQuest == 0)
         {
             prevQuestionButton.SetActive(false);
         }
@@ -103,7 +94,7 @@ public class Question_Text : MonoBehaviour
         }
 
         //If we are at question / dialog two or higher, we can go back
-        if(currentQuest != 0)
+        if (currentQuest != 0)
         {
             prevQuestionButton.SetActive(true);
         }
@@ -131,7 +122,6 @@ public class Question_Text : MonoBehaviour
             leftSideLayout = false;
             avatarTextureUpdate();
         }
-
         boxText.text = infoText[currentQuest].ToString();
     }
 
@@ -156,16 +146,64 @@ public class Question_Text : MonoBehaviour
     }
 
     //When you wanna open the question / dialog box
-    public void Open() //SHOW 
+    public override void Show() //SHOW 
     {
-        questionCanvas.SetActive(true);
-        normalCanvas.SetActive(false); //This will be the canvas that is already in the AR scene
+        //questionCanvas.SetActive(true);
+        this.gameObject.SetActive(true); //This will be the canvas that is already in the AR scene
     }
 
     //When you wanna close the question / dialog box
-    public void Close() //HIDE
+    public override void Hide() //HIDE
     {
-        questionCanvas.SetActive(false);
-        normalCanvas.SetActive(true); //This will be the canvas that is already in the AR scene
+        //questionCanvas.SetActive(false);
+        this.gameObject.SetActive(false); //This will be the canvas that is already in the AR scene
+    }
+
+    public override void SetupQuestion(Story.QuestionStructure question)
+    {
+        List<Texture> textures = new List<Texture>();
+        List<bool> leftOrientation = new List<bool>();
+        List<string> texts = new List<string>();
+
+        Texture texture = new Texture();
+
+        bool fail = false;
+        float time = 0;
+        float timeout = 1;
+
+        foreach (Story.TextBox t in question.textBoxQuestion.texts)
+        {
+            WWW www = new WWW(t.avatar);
+
+            while (!www.isDone || !fail)
+            {
+                if (time >= timeout)
+                    fail = true;
+                time += Time.deltaTime;
+            }
+
+            texture = www.texture;
+
+            textures.Add(texture);
+            leftOrientation.Add(t.left);
+            texts.Add(t.text);
+        }
+
+        InsertValues(texts, textures, leftOrientation);
+
+        avatarTextureUpdate();
+        questAm = infoText.Length;
+        boxText.text = infoText[currentQuest].ToString();
+        leftSideLayout = true;
+        Hide();
+    }
+
+    private IEnumerator GetWebText(string url, Texture texture)
+    {
+        WWW www = new WWW(url);
+        print(url);
+        yield return new WaitForSeconds(1.0f);
+        print("Texture Loaded");
+        texture = www.texture;
     }
 }
