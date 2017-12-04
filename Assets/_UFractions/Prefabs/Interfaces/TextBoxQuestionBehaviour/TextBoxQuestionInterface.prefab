@@ -471,6 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ec40a5fc2cb1f4fa25c9760bc01855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questionType: 1
   nextQuestionButton: {fileID: 1420846416208080}
   prevQuestionButton: {fileID: 1633733598201622}
   boxText: {fileID: 114235840550161280}
@@ -600,7 +601,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1775352763352574}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 259.13, y: -144.63, z: 0}
+  m_LocalPosition: {x: 234, y: -119.53001, z: 0}
   m_LocalScale: {x: 0.99999756, y: 0.99999756, z: 0.99999756}
   m_Children: []
   m_Father: {fileID: 224686879902228120}
@@ -608,8 +609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 259.13, y: -144.63}
-  m_SizeDelta: {x: 142.24, y: 142.26}
+  m_AnchoredPosition: {x: 234, y: -119.53}
+  m_SizeDelta: {x: 192.4, y: 192.45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224308259321840992
 RectTransform:
@@ -618,7 +619,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569749923712026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -257.7, y: -146.1, z: 0}
+  m_LocalPosition: {x: -236.37, y: -124.80001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224686879902228120}
@@ -626,8 +627,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -257.7, y: -146.1}
-  m_SizeDelta: {x: 145.1, y: 145.1}
+  m_AnchoredPosition: {x: -236.37, y: -124.8}
+  m_SizeDelta: {x: 187.75, y: 187.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224449706475027602
 RectTransform:

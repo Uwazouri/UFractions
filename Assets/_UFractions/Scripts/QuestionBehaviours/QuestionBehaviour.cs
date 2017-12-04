@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// The interface class used for problems question part.
@@ -6,6 +7,22 @@
 /// </summary>
 public class QuestionBehaviour : MonoBehaviour
 {
+    [Serializable]
+    public enum QuestionType
+    {
+        None,
+        TextBox,
+        Video
+    }
+
+    [Serializable]
+    public class QuestionData
+    {
+
+    }
+
+    public QuestionType questionType;
+
     /// <summary>
     /// Will be used by the problem to show the QuestionBehaviour interface.
     /// </summary>
@@ -26,7 +43,7 @@ public class QuestionBehaviour : MonoBehaviour
     /// Will be used by the problem to setup the QuestionBehaviour interface.
     /// </summary>
     /// <param name="question">The QuestionBehaviour to use to setup the question.</param>
-    public virtual void SetupQuestion(Story.QuestionStructure question)
+    public virtual void SetupQuestion(QuestionData question)
     {
 
     }

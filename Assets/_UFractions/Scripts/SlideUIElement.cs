@@ -7,10 +7,13 @@
 [RequireComponent(typeof(RectTransform), typeof(CanvasRenderer))]
 public class SlideUIElement : MonoBehaviour
 {
+    private float yCenter;
+
     /// <summary>
     /// Will the UI object be position on the left part of the canvas.
     /// </summary>
     public bool leftOrientation = false;
+    public bool centerObjectY = true;
 
     /// <summary>
     /// Will the UI object be hidden on start.
@@ -19,25 +22,31 @@ public class SlideUIElement : MonoBehaviour
 
     private bool show = false;
     private bool hide = false;
+    private bool on = false;
 
     /// <summary>
     /// Initially positions the UI object on start.
     /// </summary>
 	void Start ()
     {
+        if (this.centerObjectY)
+            this.yCenter = 0;
+        else
+            this.yCenter = this.transform.localPosition.y;
+
         if (this.hideOnStart)
         {
             if (!leftOrientation)
-                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax, 0, 0);
+                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax, this.yCenter, 0);
             else
-                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMin - GetComponent<RectTransform>().rect.width, 0, 0);
+                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMin - GetComponent<RectTransform>().rect.width, this.yCenter, 0);
         }
         else
         {
             if (!leftOrientation)
-                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax - GetComponent<RectTransform>().rect.width, 0, 0);
+                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMax - GetComponent<RectTransform>().rect.width, this.yCenter, 0);
             else
-                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMin, 0, 0);
+                this.transform.localPosition = new Vector3(GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.xMin, this.yCenter, 0);
         }
     }
 
@@ -48,6 +57,7 @@ public class SlideUIElement : MonoBehaviour
     {
         if (this.show)
         {
+            this.on = true;
             Rect parentCanvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
             if (parentCanvasRect == null)
                 print("SlideUIPanel could not find canvas rect");
@@ -56,18 +66,19 @@ public class SlideUIElement : MonoBehaviour
                 if (this.transform.localPosition.x <= parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width)
                     this.show = false;
                 else
-                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width, 0, 0), 25);
+                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width, this.yCenter, 0), 25);
             }
             else
             {
                 if (this.transform.localPosition.x >= parentCanvasRect.xMin)
                     this.show = false;
                 else
-                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin, 0, 0), 25);
+                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin, this.yCenter, 0), 25);
             }
         }
         else if (this.hide)
         {
+            this.on = false;
             Rect parentCanvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
             if (parentCanvasRect == null)
                 print("SlideUIPanel could not find canvas rect");
@@ -76,14 +87,14 @@ public class SlideUIElement : MonoBehaviour
                 if (this.transform.localPosition.x >= parentCanvasRect.xMax)
                     this.hide = false;
                 else
-                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMax, 0, 0), 25);
+                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMax, this.yCenter, 0), 25);
             }
             else
             {
                 if (this.transform.localPosition.x <= parentCanvasRect.xMin - GetComponent<RectTransform>().rect.width)
                     this.hide = false;
                 else
-                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin - GetComponent<RectTransform>().rect.width, 0, 0), 25);
+                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin - GetComponent<RectTransform>().rect.width, this.yCenter, 0), 25);
             }
         }
     }
@@ -104,5 +115,19 @@ public class SlideUIElement : MonoBehaviour
     {
         this.show = false;
         this.hide = true;
+    }
+
+    public void Toggle()
+    {
+        if (this.on)
+        {
+            this.hide = true;
+            this.show = false;
+        }
+        else
+        {
+            this.show = true;
+            this.hide = false;
+        }
     }
 }

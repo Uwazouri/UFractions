@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228bb3f969a5afd4a8a4ddc4c28a8338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showing: 0
+  answerType: 1
   choicePrefab: {fileID: 1775708370929022, guid: 700d539657d31484db1e3f8f4e65cf32,
     type: 2}
   debugSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leftOrientation: 0
+  centerObjectY: 1
   hideOnStart: 1
 --- !u!222 &222544856350202544
 CanvasRenderer:

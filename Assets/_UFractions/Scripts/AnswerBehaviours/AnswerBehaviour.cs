@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,23 @@ using UnityEngine;
 /// </summary>
 public class AnswerBehaviour : MonoBehaviour
 {
+    [Serializable]
+    public enum AnswerType
+    {
+        None,
+        Choices,
+        Interaction,
+        Input
+    }
+
+    [Serializable]
+    public class AnswerData
+    {
+
+    }
+
+    public AnswerType answerType;
+
     /// <summary>
     /// Will be used by the problem to show the AnswerBehaviour interface.
     /// </summary>
@@ -28,7 +46,7 @@ public class AnswerBehaviour : MonoBehaviour
     /// Will be used by the problem to setup the AnswerBehaviour interface.
     /// </summary>
     /// <param name="answer">The AnswerStructure to use to setup the problem.</param>
-    public virtual void SetupAnswer(Story.AnswerStructure answer)
+    public virtual void SetupAnswer(AnswerData answer)
     {
     
     }

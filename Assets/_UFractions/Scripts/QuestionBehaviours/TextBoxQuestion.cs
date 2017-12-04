@@ -1,10 +1,37 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TextBoxQuestion : QuestionBehaviour
 {
+    [Serializable]
+    public class TextBoxQuestionData : QuestionData
+    {
+        public List<TextBox> texts;
+
+        public TextBoxQuestionData(List<TextBox> textBoxes)
+        {
+            this.texts = textBoxes;
+        }
+    }
+
+    [Serializable]
+    public class TextBox
+    {
+        public string avatar;
+        public bool left;
+        public string text;
+
+        public TextBox(string avatar, bool leftPlacement, string text)
+        {
+            this.avatar = avatar;
+            this.left = leftPlacement;
+            this.text = text;
+        }
+    }
+
     public GameObject nextQuestionButton;
     public GameObject prevQuestionButton;
     public Text boxText;
@@ -159,7 +186,7 @@ public class TextBoxQuestion : QuestionBehaviour
         this.gameObject.SetActive(false); //This will be the canvas that is already in the AR scene
     }
 
-    public override void SetupQuestion(Story.QuestionStructure question)
+    public override void SetupQuestion(QuestionData question)
     {
         List<Texture> textures = new List<Texture>();
         List<bool> leftOrientation = new List<bool>();
@@ -171,9 +198,9 @@ public class TextBoxQuestion : QuestionBehaviour
         float time = 0;
         float timeout = 1;
 
-        foreach (Story.TextBox t in question.textBoxQuestion.texts)
+        foreach (TextBox t in ((TextBoxQuestionData)question).texts)
         {
-            WWW www = new WWW(t.avatar);
+            WWW www = new WWW(StoryManager.Instance.GetImagePath(t.avatar));
 
             while (!www.isDone || !fail)
             {

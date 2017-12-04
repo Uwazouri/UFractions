@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -12,8 +13,29 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(SlideUIElement))]
 public class ChoiceAnswer : AnswerBehaviour
 {
+    [Serializable]
+    public class ChoiceAnswerData : AnswerData
+    {
+        public List<string> textChoices;
+        public List<string> imageChoices;
+        public int answer;
+        public int mode;
+
+        public ChoiceAnswerData(List<string> strings, int answer, int mode)
+        {
+            this.mode = mode;
+            if (mode == 0)
+                this.imageChoices = strings;
+            else if (mode == 1)
+                this.textChoices = strings;
+            this.answer = answer;
+        }
+    }
+
     [SerializeField] private GameObject choicePrefab;
     [SerializeField] private Sprite debugSprite;
+
+
 
     private List<GameObject> choices;
     private GameObject answer;
@@ -24,7 +46,6 @@ public class ChoiceAnswer : AnswerBehaviour
     /// </summary>
     void Start ()
     {
-        StoryManager.Instance.DebugStory();
         if (this.choices == null)
             this.choices = new List<GameObject>();
     }
@@ -48,13 +69,41 @@ public class ChoiceAnswer : AnswerBehaviour
     /// <summary>
     /// Sets the choices and correct answer from a given problems answer.
     /// </summary>
-    public override void SetupAnswer(Story.AnswerStructure answer)
+    public override void SetupAnswer(AnswerData answer)
     {
-        Story.ChoiceAnswerData choicesAnswer = answer.choicesAnswer;
-        foreach (string s in choicesAnswer.textChoices)
+        ChoiceAnswerData choicesAnswer = (ChoiceAnswerData)answer;
+
+        if (choicesAnswer.mode == 0)
         {
-            this.AddChoice(s);
+            bool fail = false;
+            float time = 0;
+            float timeout = 1;
+
+            foreach (string s in choicesAnswer.imageChoices)
+            {
+                WWW www = new WWW(StoryManager.Instance.GetImagePath(s));
+
+                while (!www.isDone || !fail)
+                {
+                    if (time >= timeout)
+                        fail = true;
+                    time += Time.deltaTime;
+                }
+
+                Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.1f, 0.1f));
+
+                this.AddChoice(sprite);
+            }
         }
+
+        if (choicesAnswer.mode == 1)
+        {
+            foreach (string s in choicesAnswer.textChoices)
+            {
+                this.AddChoice(s);
+            }
+        }
+
         this.SetAnswer(this.choices[(int)choicesAnswer.answer]);
         this.SetupChoices();
     }
@@ -120,7 +169,7 @@ public class ChoiceAnswer : AnswerBehaviour
         GameObject label = newChoice.GetComponentInChildren<Text>().transform.gameObject;
         DestroyImmediate(label.GetComponent<Text>());
         label.AddComponent<Image>();
-        label.GetComponent<Image>().sprite = this.debugSprite;
+        label.GetComponent<Image>().sprite = image;
         label.GetComponent<Image>().preserveAspect = true;
 
         // Create the event trigger for the choice to only allow one choice.
@@ -137,6 +186,8 @@ public class ChoiceAnswer : AnswerBehaviour
         newChoice.GetComponent<EventTrigger>().triggers.Add(del);
 
         // Add the choice
+        if (this.choices == null)
+            this.choices = new List<GameObject>();
         this.choices.Add(newChoice);
     }
 

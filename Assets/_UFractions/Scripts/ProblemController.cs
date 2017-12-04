@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster))]
 public class ProblemController : MonoBehaviour
 {
+    public Story mmm;
     private QuestionBehaviour questionInterface;
     private AnswerBehaviour answerInterface;
     private bool setupDone = false;
@@ -16,13 +18,16 @@ public class ProblemController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        //StoryManager.Instance.DebugStory();
-        StoryManager.Instance.SetCurrentStory("UFractions Demo Story");
+        //StoryManager.Instance.CreateDebugStory("FakeStory");
+        StoryManager.Instance.SetCurrentStory(StoryManager.Instance.GetLocalStories()[0]);
+        StoryManager.Instance.SetCurrentPath(StoryManager.Instance.GetAllPaths()[2]);
+        this.mmm = StoryManager.Instance.currentStory;
         this.SetupProblem();
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update ()
+    {
 		
 	}
 
@@ -72,23 +77,24 @@ public class ProblemController : MonoBehaviour
         {
             if(this.answerInterface.GetResult())
             {
-                // Handle Correct Answer
                 print("Correct!");
+                StoryManager.Instance.SetProblemSolved(true);
             }
             else
             {
-                // Handle wrong answer
                 print("Wrong!");
+                StoryManager.Instance.SetProblemSolved(false);
             }
+            SceneManager.LoadScene("PathProgressionScene");
         }
     }
 
     private void SetupProblem()
     {
         this.answerInterface = StoryManager.Instance.GetCurrentAnswerBehaviour(this.transform);
-        this.answerInterface.SetupAnswer(StoryManager.Instance.GetCurrentProblem().answer);
+        this.answerInterface.SetupAnswer(StoryManager.Instance.GetCurrentAnswerData());
         this.questionInterface = StoryManager.Instance.GetCurrentQuestionBehaviour(this.transform);
-        this.questionInterface.SetupQuestion(StoryManager.Instance.GetCurrentProblem().question);
+        this.questionInterface.SetupQuestion(StoryManager.Instance.GetCurrentQuestionData());
         this.setupDone = true;
     }
 }

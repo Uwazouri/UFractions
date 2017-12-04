@@ -6,5 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_UFractions/Scenes/TestScene.unity
+    guid: 99b81b19c58b06440b09d3cacbd8f73c
+  - enabled: 1
     path: Assets/_UFractions/Scenes/AR Scene.unity
     guid: af6bb5e975a764747be4a7181d8126e7
