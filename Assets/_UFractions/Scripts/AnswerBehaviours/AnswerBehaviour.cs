@@ -14,7 +14,7 @@ public class AnswerBehaviour : MonoBehaviour
     {
         None,
         Choices,
-        Interaction,
+        ARSelection,
         Input
     }
 
