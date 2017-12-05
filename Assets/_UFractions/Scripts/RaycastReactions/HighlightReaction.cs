@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HighlightReaction : RaycastReaction
 {
-    public bool isActive = true; 
+    public bool isActive = false; 
     public bool hitHighlight;
     int hitCounter = 0;
 

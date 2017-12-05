@@ -137,7 +137,25 @@ public class StoryManager : Singleton<StoryManager>
         return this.GetCurrentProblem().questionData;
     }
 
+    public AnswerBehaviour GetCurrentAnswerBehaviour(Transform parent, uint problemID)
+    {
+        return InterfaceFactory.GetInstance().GetAnswerInterface(parent, this.GetProblem(problemID).answerType);
+    }
 
+    public QuestionBehaviour GetCurrentQuestionBehaviour(Transform parent, uint problemID)
+    {
+        return InterfaceFactory.GetInstance().GetQuestionInterface(parent, this.GetProblem(problemID).questionType);
+    }
+
+    public AnswerBehaviour.AnswerData GetCurrentAnswerData(uint problemID)
+    {
+        return this.GetProblem(problemID).answerData;
+    }
+
+    public QuestionBehaviour.QuestionData GetCurrentQuestionData(uint problemID)
+    {
+        return this.GetProblem(problemID).questionData;
+    }
 
 
     public void CreateDebugStory(string name)
@@ -149,99 +167,74 @@ public class StoryManager : Singleton<StoryManager>
         myStory.SetIntroduction("Demo Introduction", "The introduction to the demo story.", 0);
 
 
-        myStory.AddImage("Bob", "https://upload.wikimedia.org/wikipedia/en/c/c5/Bob_the_builder.jpg");
-        myStory.AddImage("Bill", "https://tinyclipart.com/resource/bill-clipart/bill-clipart-148.jpg");
-        myStory.AddImage("Duck", "https://images-na.ssl-images-amazon.com/images/I/41sfz8dKX1L._SL500_AC_SS350_.jpg");
-        myStory.AddImage("Shark", "https://ih1.redbubble.net/image.345993783.8678/st%2Csmall%2C215x235-pad%2C210x230%2Cf8f8f8.lite-1.jpg");
-
+        myStory.AddImage("Bob", "https://vignette3.wikia.nocookie.net/spongebob/images/6/6c/Bob_Barnacle_with_Transparent.png/revision/latest?cb=20160513222607");
+        myStory.AddImage("Bill", "http://www.pngmart.com/files/3/Bill-Gates-PNG-Photos.png");
+        myStory.AddImage("Duck", "http://etc.usf.edu/clippix/pix/rubber-duck_medium.png");
+        myStory.AddImage("Shark", "http://www.student.ltu.se/~emisun-0/shark.png");
         myStory.AddImage("Eggs", "https://qph.ec.quoracdn.net/main-qimg-a134e103f988c48d7cf42978f4c40de8-c");
-        myStory.AddImage("Avocados", "https://static.seekingalpha.com/uploads/2017/11/916375_15102053376085_rId5.jpg");
+        myStory.AddImage("Avocados", "http://cdn0.thetruthaboutknives.com/wp-content/uploads/2017/05/hmaimg2.png");
         myStory.AddImage("FriedEgg", "https://www.rodalesorganiclife.com/sites/rodalesorganiclife.com/files/styles/listicle_slide_custom_user_phone_1x/public/brainfood-eggs-1000.jpg?itok=--rN3XHc");
         myStory.AddImage("Eggplant", "http://cdn.shopify.com/s/files/1/0206/9470/products/Eggplant__baby_eb64eca5-fd42-4db6-9238-ead8fe34572b_grande.jpeg?v=1477037957");
 
-        myStory.AddProblem
-            (1,
-            QuestionBehaviour.QuestionType.TextBox,
-            new TextBoxQuestion.TextBoxQuestionData(
-                new List<TextBoxQuestion.TextBox>(
-                    new TextBoxQuestion.TextBox[]
+        /// Add a problem with textbox question and choice answer
+        myStory.AddProblem(
+            1, // ID of the problem
+            QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
+            new TextBoxQuestion.TextBoxQuestionData( new List<TextBoxQuestion.TextBox>( new TextBoxQuestion.TextBox[] // The QuestionData
                     {
-                        new TextBoxQuestion.TextBox("Bill", true, "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."),
-                        new TextBoxQuestion.TextBox("Bob", false, "Select the option that have numbers equals to the way they should share.")
-                    })),
-            AnswerBehaviour.AnswerType.Choices,
-            new ChoiceAnswer.ChoiceAnswerData(
-                new List<string>(
-                    new string[]
+                        new TextBoxQuestion.TextBox("Bob", true, "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."),
+                        new TextBoxQuestion.TextBox("Bill", false, "Select the option that have numbers equals to the way they should share.")
+                    })), 
+            AnswerBehaviour.AnswerType.Choices, // The AnswerType of the problem
+            new ChoiceAnswer.ChoiceAnswerData( new List<string>( new string[] // The AnswerData
                     {
                         "Bob 2 and Bill 8",
                         "Bob 4 and Bill 6",
                         "Bob 5 and Bill 5",
                         "Bob 7 and Bill 3",
                         "Bob 9 and Bill 1"
-                    }), 2, 1));
+                    }), 2, 1)); // Answer Index, Answer Choices Type 
 
-        myStory.AddProblem
-        (2,
-        QuestionBehaviour.QuestionType.TextBox,
-        new TextBoxQuestion.TextBoxQuestionData(
-            new List<TextBoxQuestion.TextBox>(
-                new TextBoxQuestion.TextBox[]
-                {
+        /// Add a problem with textbox question and input answer
+        myStory.AddProblem(
+            2, // ID of the problem
+            QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
+            new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
+                    {
                             new TextBoxQuestion.TextBox("Duck", true, "One Duck laid 4 eggs."),
                             new TextBoxQuestion.TextBox("Duck", true, "One of the eggs got destroyed!"),
-                            new TextBoxQuestion.TextBox("Duck", true, "How many fractions of eggs remains?")
-                })),
-        AnswerBehaviour.AnswerType.Choices,
-        new ChoiceAnswer.ChoiceAnswerData(
-            new List<string>(
-                new string[]
-                {
-                            "3/4 of all eggs remains.",
-                            "2/4 of all eggs remains.",
-                            "1/4 of all eggs remains.",
-                            "30/4 of all eggs remains.",
-                            "No eggs remains."
-                }), 0, 1));
+                            new TextBoxQuestion.TextBox("Duck", true, "What rod represents how many eggs remains if the white rod is one egg and the purple rod is 4 eggs?")
+                    })),
+            AnswerBehaviour.AnswerType.Input, // The AnswerType of the problem
+            new InputAnswer.InputAnswerData(new List<string>(new string[] // The AnswerData
+                    {
+                        "light green",
+                        "light green rod",
+                        "green",
+                        "green rod"
+                    }),
+                    new List<ARObjectType>(new ARObjectType[]
+                    {
+                        ARObjectType.PurpleRod,
+                        ARObjectType.WhiteRod,
+                        ARObjectType.LightGreenRod,
+                        ARObjectType.RedRod
+                    })));
 
-        myStory.AddProblem
-        (3,
-        QuestionBehaviour.QuestionType.TextBox,
-        new TextBoxQuestion.TextBoxQuestionData(
-            new List<TextBoxQuestion.TextBox>(
-                new TextBoxQuestion.TextBox[]
+        /// Add a problem with textbox question and choice answer
+        myStory.AddProblem(
+            3, // ID of the problem
+            QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
+            new TextBoxQuestion.TextBoxQuestionData( new List<TextBoxQuestion.TextBox>( new TextBoxQuestion.TextBox[] // The QuestionData
                 {
-                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks are dangerous!"),
-                                    new TextBoxQuestion.TextBox("Shark", false, "Sharks are flying underwater...!"),
-                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks can have 9000000 jaws!"),
-                                    new TextBoxQuestion.TextBox("Shark", false, "1/8 of our sharks jaws dropped!"),
-                                    new TextBoxQuestion.TextBox("Shark", true, "How many eggs remains?")
+                                    new TextBoxQuestion.TextBox("Bob", true, "Bob is hungry for candy!"),
+                                    new TextBoxQuestion.TextBox("Bob", true, "Bob has 5 candies and wants to eat some of them."),
+                                    new TextBoxQuestion.TextBox("Bob", true, "The Dark Green rod represents 5 candies and Bob wants to eat 4 of his candies."),
+                                    new TextBoxQuestion.TextBox("Bob", true, "Higlight only the rod that represents 4 candies by touching it.")
                 })),
-        AnswerBehaviour.AnswerType.Choices,
-        new ChoiceAnswer.ChoiceAnswerData(
-            new List<string>(
-                new string[]
-                {
-                                    "Eggs",
-                                    "Avocados",
-                                    "FriedEgg",
-                                    "Eggplant"
-                }), 1, 0));
-
-        myStory.AddProblem(4,
-        QuestionBehaviour.QuestionType.TextBox,
-        new TextBoxQuestion.TextBoxQuestionData(
-            new List<TextBoxQuestion.TextBox>(
-                new TextBoxQuestion.TextBox[]{
-                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks are dangerous!"),
-                                    new TextBoxQuestion.TextBox("Shark", false, "Sharks are flying underwater...!"),
-                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks can have 9000000 jaws!"),
-                                    new TextBoxQuestion.TextBox("Shark", false, "1/8 of our sharks jaws dropped!"),
-                                    new TextBoxQuestion.TextBox("Shark", true, "How many eggs remains?")}
-                )),
-        AnswerBehaviour.AnswerType.ARSelection,
-        new ARSelectionAnswer.ARSElectionAnswerData(
-            new List<ARObjectType>(new ARObjectType[]{
+            AnswerBehaviour.AnswerType.ARSelection, // The AnswerType of the problem
+            new ARSelectionAnswer.ARSElectionAnswerData( new List<ARObjectType>(new ARObjectType[] // The AnswerData
+            {
                                     ARObjectType.BlackRod,
                                     ARObjectType.BlueRod,
                                     ARObjectType.BrownRod,
@@ -251,10 +244,33 @@ public class StoryManager : Singleton<StoryManager>
                                     ARObjectType.PurpleRod,
                                     ARObjectType.RedRod,
                                     ARObjectType.WhiteRod,
-                                    ARObjectType.YellowRod }),
-            new List<ARObjectType>(new ARObjectType[]{
-                                    ARObjectType.BlackRod,
-                                    ARObjectType.YellowRod})));
+                                    ARObjectType.YellowRod
+            }),
+            new List<ARObjectType>(new ARObjectType[]
+            {
+                                    ARObjectType.YellowRod
+            })));
+
+        /// Add a problem with textbox question and choice answer
+        myStory.AddProblem(
+            4, // ID of the problem
+            QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
+            new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
+                    {
+                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks are dangerous!"),
+                                    new TextBoxQuestion.TextBox("Shark", false, "Sharks are flying underwater...!"),
+                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks can have 9000000 jaws!"),
+                                    new TextBoxQuestion.TextBox("Shark", false, "1/8 of our sharks jaws dropped!"),
+                                    new TextBoxQuestion.TextBox("Shark", true, "How many eggs remains?")
+                    })),
+            AnswerBehaviour.AnswerType.Choices, // The AnswerType of the problem
+            new ChoiceAnswer.ChoiceAnswerData(new List<string>(new string[] // The AnswerData
+                    {
+                                    "Eggs",
+                                    "Avocados",
+                                    "FriedEgg",
+                                    "Eggplant"
+                    }), 1, 0)); // Answer Index, Answer Choices Type 
 
         myStory.AddPath("One Problem Path", "This path has only one problem.", 1);
 
