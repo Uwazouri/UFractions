@@ -41,6 +41,7 @@ public class StoryManager : Singleton<StoryManager>
 
     public List<Story> GetLocalStories()
     {
+        this.SetProblemSolved(false);
         string storiesPath = Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + this.storiesFolderName;
 
         print(storiesPath);
@@ -82,6 +83,7 @@ public class StoryManager : Singleton<StoryManager>
 
     public List<Story.Path> GetAllPaths()
     {
+        this.SetProblemSolved(false);
         return this.currentStory.paths;
     }
 
@@ -93,7 +95,6 @@ public class StoryManager : Singleton<StoryManager>
 
     public Story.Problem GetProblem(uint ID)
     {
-        this.lastProblemSolved = false;
         foreach (Story.Problem p in this.currentStory.problems)
         {
             if (p.problemID == ID)
