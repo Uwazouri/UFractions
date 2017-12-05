@@ -87,7 +87,7 @@ public class ProblemController : MonoBehaviour
                 print("Wrong!");
                 StoryManager.Instance.SetProblemSolved(false);
             }
-            SceneManager.LoadScene("PathProgressionScene");
+            SceneManager.LoadSceneAsync("PathProgressionScene", LoadSceneMode.Single);
         }
     }
 
