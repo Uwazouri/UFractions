@@ -107,12 +107,12 @@ public class StoryManager : Singleton<StoryManager>
         return this.GetProblem(this.currentPoint.problemID);
     }
 
-    public Story.Event GetCurrentPoint()
+    public Story.Event GetCurrentEvent()
     {
         return this.currentPoint;
     }
 
-    public void SetCurrentPoint(Story.Event point)
+    public void SetCurrentEvent(Story.Event point)
     {
         this.currentPoint = point;
     }
@@ -179,7 +179,7 @@ public class StoryManager : Singleton<StoryManager>
                         "Bob 5 and Bill 5",
                         "Bob 7 and Bill 3",
                         "Bob 9 and Bill 1"
-                    }),2,1));
+                    }), 2, 1));
 
         myStory.AddProblem
         (2,
@@ -228,18 +228,46 @@ public class StoryManager : Singleton<StoryManager>
                                     "Eggplant"
                 }), 1, 0));
 
+        myStory.AddProblem(4,
+        QuestionBehaviour.QuestionType.TextBox,
+        new TextBoxQuestion.TextBoxQuestionData(
+            new List<TextBoxQuestion.TextBox>(
+                new TextBoxQuestion.TextBox[]{
+                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks are dangerous!"),
+                                    new TextBoxQuestion.TextBox("Shark", false, "Sharks are flying underwater...!"),
+                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks can have 9000000 jaws!"),
+                                    new TextBoxQuestion.TextBox("Shark", false, "1/8 of our sharks jaws dropped!"),
+                                    new TextBoxQuestion.TextBox("Shark", true, "How many eggs remains?")}
+                )),
+        AnswerBehaviour.AnswerType.ARSelection,
+        new ARSelectionAnswer.ARSElectionAnswerData(
+            new List<ARObjectType>(new ARObjectType[]{
+                                    ARObjectType.BlackRod,
+                                    ARObjectType.BlueRod,
+                                    ARObjectType.BrownRod,
+                                    ARObjectType.DarkGreenRod,
+                                    ARObjectType.LightGreenRod,
+                                    ARObjectType.OrangeRod,
+                                    ARObjectType.PurpleRod,
+                                    ARObjectType.RedRod,
+                                    ARObjectType.WhiteRod,
+                                    ARObjectType.YellowRod }),
+            new List<ARObjectType>(new ARObjectType[]{
+                                    ARObjectType.BlackRod,
+                                    ARObjectType.YellowRod})));
+
         myStory.AddPath("One Problem Path", "This path has only one problem.", 1);
 
         myStory.AddPath("One Line Path", "This path has all problems in order", 1);
-        myStory.paths[2].pathPoint.nextPoints.Add(new Story.Event(2));
-        myStory.paths[2].pathPoint.nextPoints[0].nextPoints.Add(new Story.Event(3));
+        myStory.paths[2].pathPoint.nextEvents.Add(new Story.Event(2));
+        myStory.paths[2].pathPoint.nextEvents[0].nextEvents.Add(new Story.Event(3));
+        myStory.paths[2].pathPoint.nextEvents[0].nextEvents[0].nextEvents.Add(new Story.Event(4));
 
         myStory.AddPath("A Path with Branch!", "This path has a branch", 1);
-        myStory.paths[3].pathPoint.nextPoints.Add(new Story.Event(2));
-        myStory.paths[3].pathPoint.nextPoints.Add(new Story.Event(3));
-        myStory.paths[3].pathPoint.nextPoints[0].nextPoints.Add(new Story.Event(1));
-        myStory.paths[3].pathPoint.nextPoints[1].nextPoints.Add(myStory.paths[3].pathPoint.nextPoints[0].nextPoints[0]);
-        myStory.paths[3].pathPoint.nextPoints[0].nextPoints[0].nextPoints.Add(new Story.Event(2));
+        myStory.paths[3].pathPoint.nextEvents.Add(new Story.Event(2));
+        myStory.paths[3].pathPoint.nextEvents.Add(new Story.Event(3));
+        myStory.paths[3].pathPoint.nextEvents[0].nextEvents.Add(new Story.Event(4));
+        myStory.paths[3].pathPoint.nextEvents[1].nextEvents.Add(myStory.paths[3].pathPoint.nextEvents[0].nextEvents[0]);
 
         this.currentStory = myStory;
 

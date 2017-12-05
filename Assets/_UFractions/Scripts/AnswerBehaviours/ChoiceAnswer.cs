@@ -35,8 +35,6 @@ public class ChoiceAnswer : AnswerBehaviour
     [SerializeField] private GameObject choicePrefab;
     [SerializeField] private Sprite debugSprite;
 
-
-
     private List<GameObject> choices;
     private GameObject answer;
     private GameObject lastChoice;

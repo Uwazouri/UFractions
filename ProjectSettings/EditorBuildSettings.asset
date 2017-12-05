@@ -6,8 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_UFractions/Scenes/TestScene.unity
-    guid: 99b81b19c58b06440b09d3cacbd8f73c
+    path: Assets/_UFractions/Scenes/StorySelectionScene.unity
+    guid: fe74b056f46dc694faf851ba8e661340
   - enabled: 1
-    path: Assets/_UFractions/Scenes/AR Scene.unity
-    guid: af6bb5e975a764747be4a7181d8126e7
+    path: Assets/_UFractions/Scenes/PathSelectionScene.unity
+    guid: 0ecd06296379e2641aadd3ac6769c3ba
+  - enabled: 1
+    path: Assets/_UFractions/Scenes/PathProgressionScene.unity
+    guid: 34e6ff644bd0342459e07a08b577f107
+  - enabled: 1
+    path: Assets/_UFractions/Scenes/ProblemScene.unity
+    guid: 5ba41f79a6a90f9449f7c9dd51a76a25

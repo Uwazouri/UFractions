@@ -52,5 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMaster: 1
-  choiceAnswerInterface: {fileID: 1386061025204530, guid: e37dd0530ee46c14296078b3640ce0fe,
-    type: 2}
+  interfaces:
+  - {fileID: 1386061025204530, guid: e37dd0530ee46c14296078b3640ce0fe, type: 2}
+  - {fileID: 1871780324506028, guid: 6a2e2820ddeb0d44d84d10a296aed841, type: 2}
+  - {fileID: 1593809271414780, guid: c829069d9655094469aef3ab53a81dba, type: 2}

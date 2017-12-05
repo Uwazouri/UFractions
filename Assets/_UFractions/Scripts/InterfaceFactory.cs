@@ -18,9 +18,6 @@ public class InterfaceFactory : MonoBehaviour
 
     [SerializeField] private GameObject[] interfaces;
 
-    [SerializeField] private GameObject choiceAnswerInterface;
-    [SerializeField] private GameObject textBoxQuestionInterface;
-
     /// <summary>
     /// Ensure simple singleton like behaviour with thread lock.
     /// </summary>
@@ -63,7 +60,7 @@ public class InterfaceFactory : MonoBehaviour
         foreach (GameObject go in this.interfaces)
         {
             ab = go.GetComponent<AnswerBehaviour>();
-            if (ab.answerType == answerType)
+            if (ab != null && ab.answerType == answerType)
                 return Instantiate(go, parent).GetComponent<AnswerBehaviour>();
         }
         return null;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +10,14 @@ public class ARSelectionAnswer : AnswerBehaviour
     [Serializable]
     public class ARSElectionAnswerData : AnswerData
     {
-        public List<ARObjectType> answare;
+        public List<ARObjectType> answer;
         public List<ARObjectType> objects;
 
-        
+        public ARSElectionAnswerData(List<ARObjectType> objects, List<ARObjectType> answer)
+        {
+            this.answer = answer;
+            this.objects = objects;
+        }
     }
 
     List<ARObjectType> hilighChoices;
@@ -41,7 +46,7 @@ public class ARSelectionAnswer : AnswerBehaviour
     public override void SetupAnswer(AnswerData answer)
     {
         ARSElectionAnswerData data = (ARSElectionAnswerData)answer;
-        this.answare = data.answare;
+        this.answare = data.answer;
         foreach(ARObjectType t in data.objects)
         {
             this.SpawnObject(t);
@@ -57,8 +62,11 @@ public class ARSelectionAnswer : AnswerBehaviour
             {
                 if (arObj.objType == aRObjaectType)
                 {
-                    Instantiate(g, this.transform).transform.Translate(0, this.yPos, 0);
-                    this.yPos++;
+                    GameObject go = Instantiate(g, this.transform);
+                    go.transform.position = new Vector3(0, 1, 0);
+                    go.transform.rotation = Quaternion.identity;
+                    go.transform.Translate(UnityEngine.Random.Range(-2.0f, 2.0f), this.yPos, UnityEngine.Random.Range(-2.0f, 2.0f));
+                    this.yPos += 1.5f;
                     return;
                 }
             }
@@ -110,16 +118,17 @@ public class ARSelectionAnswer : AnswerBehaviour
     /// </summary>
     private List<ARObjectType> GetSelected()
     {
-
         HighlightReaction[] hilights = GetComponentsInChildren<HighlightReaction>();
         ArObjectType[] colorList = GetComponentsInChildren<ArObjectType>();
+
+        print(hilights.Length + " " + colorList.Length);
 
         for (int i = 0; i < hilights.Length; i++)
         {
 
             if (hilights[i].hitHighlight == true)
             {
-
+                print(i);
                 hilighChoices.Add(colorList[i].GetObjectType());
 
             }
@@ -128,8 +137,9 @@ public class ARSelectionAnswer : AnswerBehaviour
     }
 
     // Use this for initialization
-    void Start () {
-		
+    void Start ()
+    {
+        this.hilighChoices = new List<ARObjectType>();
 	}
 	
 	// Update is called once per frame

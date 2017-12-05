@@ -32,7 +32,7 @@ public class HighlightReaction : RaycastReaction
             return; 
         Renderer rend = GetComponent<Renderer>();
     
-        rend.material.SetFloat("_Outline", 1);
+        rend.material.SetFloat("_Outline", 10);
         this.hitHighlight = true;
         hitCounter++;
         if (hitCounter == 2)

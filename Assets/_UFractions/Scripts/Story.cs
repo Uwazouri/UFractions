@@ -61,22 +61,22 @@ public class Story
     public struct Event
     {
         public uint problemID;
-        public List<Event> nextPoints;
+        public List<Event> nextEvents;
 
         public Event(uint problemID)
         {
             this.problemID = problemID;
-            this.nextPoints = new List<Event>();
+            this.nextEvents = new List<Event>();
         }
 
         public void AddPoint(uint problemID)
         {
-            this.nextPoints.Add(new Event(problemID));
+            this.nextEvents.Add(new Event(problemID));
         }
 
         public void AddPoint(Story.Event point)
         {
-            this.nextPoints.Add(point);
+            this.nextEvents.Add(point);
         }
     }
 
