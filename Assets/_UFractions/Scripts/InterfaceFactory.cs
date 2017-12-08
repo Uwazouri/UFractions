@@ -17,6 +17,7 @@ public class InterfaceFactory : MonoBehaviour
     private static InterfaceFactory instance;
 
     [SerializeField] private GameObject[] interfaces;
+    [SerializeField] private GameObject[] arObjectPrefabs;
 
     /// <summary>
     /// Ensure simple singleton like behaviour with thread lock.
@@ -85,5 +86,33 @@ public class InterfaceFactory : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void SpawnARObject(ARObjectType aRObjaectType, Transform parent)
+    {
+        this.SpawnARObject(aRObjaectType, parent, Vector3.zero);
+    }
+
+    public void SpawnARObject(ARObjectType aRObjaectType, Transform parent, Vector3 position)
+    {
+        this.SpawnARObject(aRObjaectType, parent, position, Quaternion.identity);
+    }
+
+    public void SpawnARObject(ARObjectType aRObjaectType, Transform parent, Vector3 position, Quaternion rotation)
+    {
+        foreach (GameObject g in this.arObjectPrefabs)
+        {
+            ArObjectType arObj = g.GetComponent<ArObjectType>();
+            if (arObj != null)
+            {
+                if (arObj.objType == aRObjaectType)
+                {
+                    GameObject go = Instantiate(g, parent);
+                    go.transform.position = position;
+                    go.transform.rotation = rotation;
+                    return;
+                }
+            }
+        }
     }
 }

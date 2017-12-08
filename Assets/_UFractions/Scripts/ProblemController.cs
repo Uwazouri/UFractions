@@ -24,7 +24,7 @@ public class ProblemController : MonoBehaviour
         StoryManager.Instance.SetCurrentPath(StoryManager.Instance.GetAllPaths()[2]);
         StoryManager.Instance.SetCurrentEvent(StoryManager.Instance.GetCurrentEvent().nextEvents[0].nextEvents[0].nextEvents[0]);
         this.mmm = StoryManager.Instance.currentStory;
-        this.SetupProblem();
+        this.SetupProblem(3);
     }
 
     // Update is called once per frame
@@ -87,7 +87,7 @@ public class ProblemController : MonoBehaviour
                 print("Wrong!");
                 StoryManager.Instance.SetProblemSolved(false);
             }
-            SceneManager.LoadScene("PathProgressionScene");
+            SceneManager.LoadSceneAsync("PathProgressionScene", LoadSceneMode.Single);
         }
     }
 
@@ -97,6 +97,15 @@ public class ProblemController : MonoBehaviour
         this.answerInterface.SetupAnswer(StoryManager.Instance.GetCurrentAnswerData());
         this.questionInterface = StoryManager.Instance.GetCurrentQuestionBehaviour(this.transform);
         this.questionInterface.SetupQuestion(StoryManager.Instance.GetCurrentQuestionData());
+        this.setupDone = true;
+    }
+
+    private void SetupProblem(uint problemID)
+    {
+        this.answerInterface = StoryManager.Instance.GetCurrentAnswerBehaviour(this.transform, problemID);
+        this.answerInterface.SetupAnswer(StoryManager.Instance.GetCurrentAnswerData(problemID));
+        this.questionInterface = StoryManager.Instance.GetCurrentQuestionBehaviour(this.transform, problemID);
+        this.questionInterface.SetupQuestion(StoryManager.Instance.GetCurrentQuestionData(problemID));
         this.setupDone = true;
     }
 }
