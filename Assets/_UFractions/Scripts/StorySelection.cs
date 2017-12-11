@@ -47,11 +47,11 @@ public class StorySelection : MonoBehaviour
         for (int i = 0; i < loadedStories.Count; i++)
         {
             GameObject storyButton = Instantiate(storyButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-            storyButton.GetComponent<Button>().onClick.AddListener(selectedStory);
             storyButton.transform.parent = storyChoiceContainer.transform;
             storyButton.transform.localScale = new Vector3(1.0f, 1.1f, 1.0f);
             storyButton.transform.Find("StoryNameText").GetComponent<Text>().text = loadedStories[i].name;
             storyButton.transform.Find("StoryDescriptionText").GetComponent<Text>().text = loadedStories[i].description;
+            Debug.Log(storyButton.transform.Find("StoryNameText").GetComponent<Text>().text);
         }
 
         storyChoiceContainer.GetComponent<RectTransform>().localPosition = new Vector2(-150.0f, -1000.0f);
@@ -62,22 +62,21 @@ public class StorySelection : MonoBehaviour
     public void selectedStory()
     {
         pressedStory = EventSystem.current.currentSelectedGameObject;
-        storySelected = true;
 
         selectedStoryName = pressedStory.transform.Find("StoryNameText").GetComponent<Text>().text;
         selectedStoryDescription = pressedStory.transform.Find("StoryDescriptionText").GetComponent<Text>().text;
 
-        for (int i = 0; i < loadedStories.Count; i++)
+        foreach (Story s in this.loadedStories)
         {
-            if (loadedStories[i].name == selectedStoryName)
+            if (s.name.Equals(selectedStoryName))
             {
-                confirmStory = loadedStories[i];
+                confirmStory = s;
+                storySelected = true;
                 break;
             }
 
             else
             {
-                Debug.Log("The story is fake, please select another story");
                 storySelected = false;
             }
         }
@@ -94,7 +93,7 @@ public class StorySelection : MonoBehaviour
     }
 
     //When you wanna go back to the main menu
-    public void GoToMainMenu()
+    public void GoBack()
     {
         SceneManager.LoadScene("MainMenu");
     }
