@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Collections;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
@@ -16,8 +17,13 @@ public class StoryManager : Singleton<StoryManager>
     private Story.Event currentPoint;
     private Story.Problem currentProblem;
     private bool lastProblemSolved = false;
-    private string storiesFolderName = "Stories";
-    private string baseStoryFolder = "BaseStories";
+
+    private string localStoryNames = "LocalStory";
+    private string localStoryFolderName = "LocalStories"; // This is the folder name that will store stories in the persistent data path.
+
+    private string streamingStoryNames = "StreamingStory"; // If you want to change this you must also change the name of the default stories in StreamingAssets.
+    private string streamingStoryFolderName = "StreamingStories"; // If you want to change this you must also change the name of the folder in StreamingAssets.
+
 
     public string GetVideoPath(string name)
     {
@@ -42,20 +48,66 @@ public class StoryManager : Singleton<StoryManager>
     public List<Story> GetLocalStories()
     {
         this.SetProblemSolved(false);
-        string storiesPath = Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + this.storiesFolderName;
 
-        print(storiesPath);
+        string storiesPath = Path.Combine(Application.persistentDataPath, this.localStoryFolderName);
 
         if (!Directory.Exists(storiesPath))
             Directory.CreateDirectory(storiesPath);
 
-        string[] baseStories = Directory.GetFiles(Application.streamingAssetsPath + System.IO.Path.DirectorySeparatorChar + this.baseStoryFolder, "*.json");
-
-        int t = 1;
-
-        foreach (string s in baseStories)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            File.Copy(s, Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + this.storiesFolderName + System.IO.Path.DirectorySeparatorChar + "BaseStory" + t++ + ".json", true);
+            bool noMoreStories = false;
+            int storyNumber = 1;
+            while (!noMoreStories)
+            {
+                string filePath = Path.Combine(Application.streamingAssetsPath, Path.Combine(this.streamingStoryFolderName, this.streamingStoryNames + storyNumber));
+
+                InterfaceFactory.GetInstance().DebugLog("Loading Streaming Story: " + filePath);
+
+                UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
+                www.timeout = 3;
+                www.SendWebRequest();
+
+                //float time = 0;
+
+                while (!www.isDone && !www.isHttpError && !www.isNetworkError)
+                {
+                    //time += Time.deltaTime;
+                    //if (time > 2)
+                    //    break;
+                };
+
+                if (www.isDone && !www.isHttpError && !www.isNetworkError)
+                {
+                    string writePath = Path.Combine(Application.persistentDataPath, Path.Combine(this.localStoryFolderName, this.localStoryNames + storyNumber + ".json"));
+
+                    InterfaceFactory.GetInstance().DebugLog("Writing Local Story: " + filePath);
+
+                    File.WriteAllText(writePath, www.downloadHandler.text);
+
+                    storyNumber++;
+                }
+                else
+                {
+                    noMoreStories = true;
+                    InterfaceFactory.GetInstance().DebugLog("Last Story Not Found. No more Streaming Stories");
+                }
+            }
+        }
+        else
+        {
+            DirectoryInfo directoryInfo = Directory.GetParent(Path.Combine(Application.streamingAssetsPath, this.streamingStoryFolderName));
+
+            string[] baseStories = Directory.GetFiles(Path.Combine(Application.streamingAssetsPath, this.streamingStoryFolderName)).Where(name => !name.EndsWith(".meta")).ToArray();
+
+            int t = 1;
+
+            foreach (string s in baseStories)
+            {
+                string path = Path.Combine(Application.persistentDataPath, Path.Combine(this.localStoryFolderName, this.localStoryNames + t++ + ".json"));
+                print("Streaming Story To Local:" + path);
+                File.Copy(s, path, true);
+            }
         }
 
         List<Story> localStories = new List<Story>();
@@ -65,8 +117,12 @@ public class StoryManager : Singleton<StoryManager>
         settings.Formatting = Formatting.Indented;
         settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
-        foreach (string s in Directory.GetFiles(Application.persistentDataPath + System.IO.Path.DirectorySeparatorChar + this.storiesFolderName, "*.json"))
+        foreach (string s in Directory.GetFiles(Path.Combine(Application.persistentDataPath, this.localStoryFolderName), "*.json"))
+        {
+            InterfaceFactory.GetInstance().DebugLog("Parsed Local Story " + s + ".");
+            print("Parsed Local Story " + s + ".");
             localStories.Add(Story.LoadFromJSON(s));
+        }
 
         return localStories;
     }
@@ -90,7 +146,7 @@ public class StoryManager : Singleton<StoryManager>
     public void SetCurrentPath(Story.Path path)
     {
         this.currentPath = path;
-        this.currentPoint = this.currentPath.pathPoint;
+        this.currentPoint = this.currentPath.pathEvent;
     }
 
     public Story.Problem GetProblem(uint ID)
@@ -164,127 +220,138 @@ public class StoryManager : Singleton<StoryManager>
         Story myStory = new Story(name);
         myStory.SetStoryVersion(0, 0, 0);
         myStory.SetEditorVersion(0, 0, 0);
-        myStory.SetDescription("A demo story made for testing.");
-        myStory.SetIntroduction("Demo Introduction", "The introduction to the demo story.", 0);
+        myStory.SetDescription("Mother leopard has given birth to a cub whose name is Senatla. The leopard is a rare and endangered animal and predators had killed the previous cubs mother leopard had given birth to. In this story you will help mother leopard to raise her cub and teach him different kinds of skills so that he will be able to survive in the forestalone.");
+        myStory.SetIntroduction("Mother introduction", "Meet with the mother leopard and learn how to help her and her cub.", 1);
 
+        myStory.AddImage("Phone", "https://openclipart.org/image/2400px/svg_to_png/66883/1276610754.png");
+        myStory.AddImage("Mother Leopard", "http://www.clipartoday.com/_thumbs/022/Nature/animals_creature_197072_tnb.png");
+        myStory.AddImage("Cub Leopard", "http://clipartsign.com/upload/2016/03/01/free-jaguar-clipart-3.png");
 
-        myStory.AddImage("Bob", "https://vignette3.wikia.nocookie.net/spongebob/images/6/6c/Bob_Barnacle_with_Transparent.png/revision/latest?cb=20160513222607");
-        myStory.AddImage("Bill", "http://www.pngmart.com/files/3/Bill-Gates-PNG-Photos.png");
-        myStory.AddImage("Duck", "http://etc.usf.edu/clippix/pix/rubber-duck_medium.png");
-        myStory.AddImage("Shark", "http://www.student.ltu.se/~emisun-0/shark.png");
-        myStory.AddImage("Eggs", "https://qph.ec.quoracdn.net/main-qimg-a134e103f988c48d7cf42978f4c40de8-c");
-        myStory.AddImage("Avocados", "http://cdn0.thetruthaboutknives.com/wp-content/uploads/2017/05/hmaimg2.png");
-        myStory.AddImage("FriedEgg", "https://www.rodalesorganiclife.com/sites/rodalesorganiclife.com/files/styles/listicle_slide_custom_user_phone_1x/public/brainfood-eggs-1000.jpg?itok=--rN3XHc");
-        myStory.AddImage("Eggplant", "http://cdn.shopify.com/s/files/1/0206/9470/products/Eggplant__baby_eb64eca5-fd42-4db6-9238-ead8fe34572b_grande.jpeg?v=1477037957");
-
-        /// Add a problem with textbox question and choice answer
+        // Introduction problem with text only.
         myStory.AddProblem(
             1, // ID of the problem
             QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
             new TextBoxQuestion.TextBoxQuestionData( new List<TextBoxQuestion.TextBox>( new TextBoxQuestion.TextBox[] // The QuestionData
                     {
-                        new TextBoxQuestion.TextBox("Bob", true, "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."),
-                        new TextBoxQuestion.TextBox("Bill", false, "Select the option that have numbers equals to the way they should share.")
-                    })), 
-            AnswerBehaviour.AnswerType.Choices, // The AnswerType of the problem
-            new ChoiceAnswer.ChoiceAnswerData( new List<string>( new string[] // The AnswerData
-                    {
-                        "Bob 2 and Bill 8",
-                        "Bob 4 and Bill 6",
-                        "Bob 5 and Bill 5",
-                        "Bob 7 and Bill 3",
-                        "Bob 9 and Bill 1"
-                    }), 2, 1)); // Answer Index, Answer Choices Type 
+                        new TextBoxQuestion.TextBox("Phone", true, "Mother leopard gives birth to a cub whose name is Senatla. Leopard is a " +
+                        "rare and endangered animal and predators had killed the previous cubs Mother leopard had given birth to."),
+                        new TextBoxQuestion.TextBox("Cub Leopard", false, "Senatla is in a quite weak condition, so odds are high that he would not live " +
+                        "to be much older. Leopard cubs are completely helpless during the first few months and there are several threats during their first year."),
+                        new TextBoxQuestion.TextBox("Phone", true, "Through this story you can help mother leopard to raise her cub and teach " +
+                        "him different kinds of skills so that he will be able to survive in the forest alone."),
+                        new TextBoxQuestion.TextBox("Phone", true, "While playing this game and helping Mother and Senatla you will learn " +
+                        "fractions and many things of leopard’s life. With the help of cuisenaire rods you will solve different kinds of problems. " +
+                        "From each solved task you will get points that help Senatla cub.")
 
-        /// Add a problem with textbox question and input answer
+                    })), 
+            AnswerBehaviour.AnswerType.None, // The AnswerType of the problem
+            null
+            ); // Answer Index, Answer Choices Type 
+
+        /// First introduction problem.
         myStory.AddProblem(
             2, // ID of the problem
             QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
             new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
                     {
-                            new TextBoxQuestion.TextBox("Duck", true, "One Duck laid 4 eggs."),
-                            new TextBoxQuestion.TextBox("Duck", true, "One of the eggs got destroyed!"),
-                            new TextBoxQuestion.TextBox("Duck", true, "What rod represents how many eggs remains if the white rod is one egg and the purple rod is 4 eggs?")
+                        new TextBoxQuestion.TextBox("Cub Leopard", false, "Yellow rod represents one day and orange rod rod is all the days that Senatla has lived. " +
+                        "How many days Senatla has lived?"),
+                        new TextBoxQuestion.TextBox("Phone", true, "Hint: Take two yellow rods and compare their length to the length of orange rod.")
+
                     })),
             AnswerBehaviour.AnswerType.Input, // The AnswerType of the problem
             new InputAnswer.InputAnswerData(new List<string>(new string[] // The AnswerData
                     {
-                        "light green",
-                        "light green rod",
-                        "green",
-                        "green rod"
+                        "2",
+                        "two",
+                        "two yellow",
+                        "two yellow rods"
                     }),
                     new List<ARObjectType>(new ARObjectType[]
                     {
-                        ARObjectType.PurpleRod,
-                        ARObjectType.WhiteRod,
-                        ARObjectType.LightGreenRod,
-                        ARObjectType.RedRod
+                        ARObjectType.OrangeRod,
+                        ARObjectType.YellowRod,
+                        ARObjectType.YellowRod
                     })));
 
-        /// Add a problem with textbox question and choice answer
+        /// Second introduction problem.
         myStory.AddProblem(
             3, // ID of the problem
             QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
-            new TextBoxQuestion.TextBoxQuestionData( new List<TextBoxQuestion.TextBox>( new TextBoxQuestion.TextBox[] // The QuestionData
-                {
-                                    new TextBoxQuestion.TextBox("Bob", true, "Bob is hungry for candy!"),
-                                    new TextBoxQuestion.TextBox("Bob", true, "Bob has 5 candies and wants to eat some of them."),
-                                    new TextBoxQuestion.TextBox("Bob", true, "The Dark Green rod represents 5 candies and Bob wants to eat 4 of his candies."),
-                                    new TextBoxQuestion.TextBox("Bob", true, "Higlight only the rod that represents 4 candies by touching it.")
-                })),
-            AnswerBehaviour.AnswerType.ARSelection, // The AnswerType of the problem
-            new ARSelectionAnswer.ARSElectionAnswerData( new List<ARObjectType>(new ARObjectType[] // The AnswerData
-            {
-                                    ARObjectType.BlackRod,
-                                    ARObjectType.BlueRod,
-                                    ARObjectType.BrownRod,
-                                    ARObjectType.DarkGreenRod,
-                                    ARObjectType.LightGreenRod,
-                                    ARObjectType.OrangeRod,
-                                    ARObjectType.PurpleRod,
-                                    ARObjectType.RedRod,
-                                    ARObjectType.WhiteRod,
-                                    ARObjectType.YellowRod
-            }),
-            new List<ARObjectType>(new ARObjectType[]
-            {
-                                    ARObjectType.YellowRod
-            })));
+            new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
+                    {
+                                    new TextBoxQuestion.TextBox("Cub Leopard", false, "Green rod represents the number of Senatla’s legs and light " +
+                                    "blue rod is one leg. How do you mark one leg’s portion of the " +
+                                    "whole number of legs as a fraction ? "),
+                                    new TextBoxQuestion.TextBox("Phone", true, "Hint: First find out how many light blue rods equal green rod and then think about the fraction.")
+                    })),
+            AnswerBehaviour.AnswerType.Choices, // The AnswerType of the problem
+            new ChoiceAnswer.ChoiceAnswerData(new List<string>(new string[] // The AnswerData
+                    {
+                                    "1/2",
+                                    "2/5",
+                                    "1/4",
+                                    "1/8"
+                    }), 2, 1)); // Answer Index, Answer Choices Type 
 
-        /// Add a problem with textbox question and choice answer
+        /// Third introduction problem.
         myStory.AddProblem(
             4, // ID of the problem
             QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
             new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
                     {
-                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks are dangerous!"),
-                                    new TextBoxQuestion.TextBox("Shark", false, "Sharks are flying underwater...!"),
-                                    new TextBoxQuestion.TextBox("Shark", true, "Sharks can have 9000000 jaws!"),
-                                    new TextBoxQuestion.TextBox("Shark", false, "1/8 of our sharks jaws dropped!"),
-                                    new TextBoxQuestion.TextBox("Shark", true, "How many eggs remains?")
+                        new TextBoxQuestion.TextBox("Mother Leopard", false, "Red rod is 8 kg. Black rod tells Mother leopard’s weight. What is Mother leopard’s weight?"),
+                        new TextBoxQuestion.TextBox("Phone", true, "Hint: First find out how many red rods equal one black rod.")
+
                     })),
-            AnswerBehaviour.AnswerType.Choices, // The AnswerType of the problem
-            new ChoiceAnswer.ChoiceAnswerData(new List<string>(new string[] // The AnswerData
+            AnswerBehaviour.AnswerType.Input, // The AnswerType of the problem
+            new InputAnswer.InputAnswerData(new List<string>(new string[] // The AnswerData
                     {
-                                    "Eggs",
-                                    "Avocados",
-                                    "FriedEgg",
-                                    "Eggplant"
-                    }), 1, 0)); // Answer Index, Answer Choices Type 
+                        "32",
+                        "32 kg",
+                        "thirty two",
+                        "thirty two kg"
+                    }),
+                    new List<ARObjectType>(new ARObjectType[]
+                    {
+                        ARObjectType.BlackRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod
+                    })));
 
-        myStory.AddPath("One Problem Path", "This path has only one problem.", 1);
+        /// Add a problem with textbox question and choice answer
+        myStory.AddProblem(
+            5, // ID of the problem
+            QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
+            new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
+                {
+                            new TextBoxQuestion.TextBox("Mother Leopard", false, "Let us assume that blue rod is 240 cm. Mother leopards height is 80 cm. " +
+                            "Highlight only the rod that represents Mother Leopards height. You can highlight a rod by touching it after pressing the exclamation mark on the right."),
+                            new TextBoxQuestion.TextBox("Phone", true, "Hint: Find out which rod is one third of the blue rod.")
+                })),
+            AnswerBehaviour.AnswerType.ARSelection, // The AnswerType of the problem
+            new ARSelectionAnswer.ARSElectionAnswerData(new List<ARObjectType>(new ARObjectType[] // The AnswerData
+            {
+                                    ARObjectType.BlueRod,
+                                    ARObjectType.LightGreenRod,
+                                    ARObjectType.PurpleRod,
+                                    ARObjectType.RedRod,
+                                    ARObjectType.WhiteRod,
+                                    ARObjectType.BrownRod
+            }),
+            new List<ARObjectType>(new ARObjectType[]
+            {
+                                    ARObjectType.LightGreenRod
+            })));
 
-        myStory.AddPath("One Line Path", "This path has all problems in order", 1);
-        myStory.paths[2].pathPoint.nextEvents.Add(new Story.Event(2));
-        myStory.paths[2].pathPoint.nextEvents[0].nextEvents.Add(new Story.Event(3));
-        myStory.paths[2].pathPoint.nextEvents[0].nextEvents[0].nextEvents.Add(new Story.Event(4));
-
-        myStory.AddPath("A Path with Branch!", "This path has a branch", 1);
-        myStory.paths[3].pathPoint.nextEvents.Add(new Story.Event(2));
-        myStory.paths[3].pathPoint.nextEvents.Add(new Story.Event(3));
-        myStory.paths[3].pathPoint.nextEvents[0].nextEvents.Add(new Story.Event(4));
-        myStory.paths[3].pathPoint.nextEvents[1].nextEvents.Add(myStory.paths[3].pathPoint.nextEvents[0].nextEvents[0]);
+        myStory.paths[0].pathEvent.AddPoint(2);
+        myStory.paths[0].pathEvent.AddPoint(3);
+        myStory.paths[0].pathEvent.nextEvents[0].AddPoint(4);
+        myStory.paths[0].pathEvent.nextEvents[0].nextEvents[0].AddPoint(5);
+        myStory.paths[0].pathEvent.nextEvents[1].AddPoint(myStory.paths[0].pathEvent.nextEvents[0].nextEvents[0]);
 
         this.currentStory = myStory;
 

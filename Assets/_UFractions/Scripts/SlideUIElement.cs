@@ -14,6 +14,7 @@ public class SlideUIElement : MonoBehaviour
     /// </summary>
     public bool leftOrientation = false;
     public bool centerObjectY = true;
+    public bool centerObjectX = false;
 
     /// <summary>
     /// Will the UI object be hidden on start.
@@ -61,19 +62,30 @@ public class SlideUIElement : MonoBehaviour
             Rect parentCanvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
             if (parentCanvasRect == null)
                 print("SlideUIPanel could not find canvas rect");
-            else if (!this.leftOrientation)
+            if (!this.centerObjectX)
             {
-                if (this.transform.localPosition.x <= parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width)
-                    this.show = false;
+                if (!this.leftOrientation)
+                {
+                    if (this.transform.localPosition.x <= parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width)
+                        this.show = false;
+                    else
+                        this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width, this.yCenter, 0), 25);
+                }
                 else
-                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMax - GetComponent<RectTransform>().rect.width, this.yCenter, 0), 25);
+                {
+                    if (this.transform.localPosition.x >= parentCanvasRect.xMin)
+                        this.show = false;
+                    else
+                        this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin, this.yCenter, 0), 25);
+                }
             }
             else
             {
-                if (this.transform.localPosition.x >= parentCanvasRect.xMin)
+                print("ISISIA!");
+                if (this.transform.position.x == parentCanvasRect.xMin + parentCanvasRect.width*0.25f)
                     this.show = false;
                 else
-                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin, this.yCenter, 0), 25);
+                    this.transform.localPosition = Vector3.MoveTowards(this.transform.localPosition, new Vector3(parentCanvasRect.xMin + parentCanvasRect.width * 0.25f, this.yCenter, 0), 25);
             }
         }
         else if (this.hide)
