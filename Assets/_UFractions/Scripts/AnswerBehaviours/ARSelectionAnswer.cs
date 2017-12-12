@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 
 public class ARSelectionAnswer : AnswerBehaviour
 {
+    /// <summary>
+    /// Setups the list off objects and answare. 
+    /// </summary>
     [Serializable]
     public class ARSElectionAnswerData : AnswerData
     {
@@ -20,11 +23,20 @@ public class ARSelectionAnswer : AnswerBehaviour
         }
     }
 
-    List<ARObjectType> hilighChoices;
+    List<ARObjectType> highlightChoices;
     List<ARObjectType> answare;
     public List<GameObject> objectPrefab;
     float yPos = 0;
 
+    // Use this for initialization
+    void Start()
+    {
+        this.highlightChoices = new List<ARObjectType>();
+    }
+
+    /// <summary>
+    /// Turns ON the possibility to highlight the rods 
+    /// </summary>
     public override void Show()
     {
         HighlightReaction[] list = GetComponentsInChildren<HighlightReaction>();
@@ -34,6 +46,9 @@ public class ARSelectionAnswer : AnswerBehaviour
         }
     }
 
+    /// <summary>
+    /// Turns OFF the possibility to highlight the rods 
+    /// </summary>
     public override void Hide()
     {
         HighlightReaction[] list = GetComponentsInChildren<HighlightReaction>();
@@ -43,6 +58,10 @@ public class ARSelectionAnswer : AnswerBehaviour
         }
     }
 
+    /// <summary>
+    /// Setups the list of answare that will be compared to the choices of the player. 
+    /// </summary>
+    /// <param name="answer"></param>
     public override void SetupAnswer(AnswerData answer)
     {
         ARSElectionAnswerData data = (ARSElectionAnswerData)answer;
@@ -53,14 +72,18 @@ public class ARSelectionAnswer : AnswerBehaviour
         }
     }
 
-    private void SpawnObject(ARObjectType aRObjaectType)
+    /// <summary>
+    /// Creats the rods that will be active in the scen
+    /// </summary>
+    /// <param name="aRObjectType"></param>
+    private void SpawnObject(ARObjectType aRObjectType)
     {
         foreach (GameObject g in this.objectPrefab)
         {
             ArObjectType arObj = g.GetComponent<ArObjectType>();
             if(arObj != null)
             {
-                if (arObj.objType == aRObjaectType)
+                if (arObj.objType == aRObjectType)
                 {
                     GameObject go = Instantiate(g, this.transform);
                     go.transform.position = new Vector3(0, 1, 0);
@@ -73,77 +96,59 @@ public class ARSelectionAnswer : AnswerBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns if the answare is true or false. 
+    /// </summary>
+    /// <returns>Outcome of the players answare</returns>
     public override bool GetResult()
     {
         return this.CompareAnsware();
     }
 
     /// <summary>
-    /// takes in the answare and the list of hilighted rods 
-    /// returns TRUE if thay are THE SAME
-    /// returns FALSE if the list are NOT the same
-    /// NOTE:  dose not support multiple answare alternatives at this point. 
+    /// Compares the list of highlighted rods to the answare list.
     /// </summary>
     private bool CompareAnsware()
     {
-
         List<ARObjectType> choice = new List<ARObjectType>(GetSelected());
+
         if (answare.Count != choice.Count)
         {
-            hilighChoices.Clear();
+            highlightChoices.Clear();
             return false;
         }
 
         for (int i = 0; i < choice.Count; i++)
         {
-
             if (!answare.Contains(choice[i]))
             {
-                hilighChoices.Clear();
+                highlightChoices.Clear();
                 return false;
             }
-
         }
-        hilighChoices.Clear();
+        highlightChoices.Clear();
         return true;
 
     }
 
     /// <summary>
-    /// NOTE: thinking of changing function to "GetSelected"  and let the function only return the selected list. 
-    /// function checks if any of the rods are hilighted and if thay are add it to a list.
-    /// Calls compare answare with the answare that we send in and the list of hiligthed rods
-    /// if thay are the same it returns true otherwise false. 
-    /// 
+    /// Returns a list of the highlighted rods 
     /// </summary>
+    /// <returns>
+    /// List of the highlighted rods
+    /// </returns>
     private List<ARObjectType> GetSelected()
     {
-        HighlightReaction[] hilights = GetComponentsInChildren<HighlightReaction>();
+        HighlightReaction[] highlights = GetComponentsInChildren<HighlightReaction>();
         ArObjectType[] colorList = GetComponentsInChildren<ArObjectType>();
 
-        print(hilights.Length + " " + colorList.Length);
-
-        for (int i = 0; i < hilights.Length; i++)
+        for (int i = 0; i < highlights.Length; i++)
         {
-
-            if (hilights[i].hitHighlight == true)
-            {
-                print(i);
-                hilighChoices.Add(colorList[i].GetObjectType());
-
+            if (highlights[i].hitHighlight == true)
+            {     
+                highlightChoices.Add(colorList[i].GetObjectType());
             }
         }
-        return hilighChoices;
+        return highlightChoices;
     }
-
-    // Use this for initialization
-    void Start ()
-    {
-        this.hilighChoices = new List<ARObjectType>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

@@ -18,13 +18,13 @@ public class ProgressionHandler : MonoBehaviour
     private Story.Event confirmEvent;
     private  bool eventSelected = false;
     
-    // for debug
+    /// for debug
     //static bool start = false;
 
-    // Use this for initialization
     /// <summary>
     ///  Checks if last problem is solved and then , depending on the number of events.
-    ///  Takes you to the next one or if mutliple lets you choose wich path you want. 
+    ///  Takes you to the next one, if mutliple lets you choose wich path you want. 
+    ///  Note: Seems to be realy slow when changing to scen with AR. 
     /// </summary>
     void Start ()
     {
@@ -32,7 +32,6 @@ public class ProgressionHandler : MonoBehaviour
         eventSelected = false;
         // Creat a list with all the next events. 
         eventList = StoryManager.Instance.GetCurrentEvent().nextEvents;
-
 
         //// just for debug 
         //if (!start)
@@ -42,8 +41,6 @@ public class ProgressionHandler : MonoBehaviour
         //    StoryManager.Instance.CreateDebugStory("dontcommit");
         //    StoryManager.Instance.SetCurrentPath(StoryManager.Instance.GetAllPaths()[3]);
         //}
-
-        
 
         if (StoryManager.Instance.LastProblemSolved() == false)
         {
@@ -63,33 +60,34 @@ public class ProgressionHandler : MonoBehaviour
         }
         else if (eventList.Count  >= 2)
         {
-             // display the slection of path , set scen to selected path 
+             // display the buttons for selection of events
             SpawnButton(); 
-        }
-	
+        }	
 	}
 
 
     /// <summary>
-    /// Spawns the buttons when a the path braches to more then two. 
-    /// loops thrugh the list of events , creat a button for each and set each button with a diffrent event.
+    /// Spawns the buttons when a the path branches. 
+    /// Creat a button for each branch and set each button with that particular event. 
+    /// Note: right now the text of the button is set to the ID of the path (problemID) later you might add a dscription and a name of the Event. 
+    /// Improvements: some way to add a specific on klick function for each button.
     /// </summary>
     private void SpawnButton()
     {
         for (int i = 0; i < eventList.Count; i++)
         {
             GameObject go = Instantiate(buttonPrefab) as GameObject;
-            go.transform.SetParent(buttonContainer,false);
-            //go.GetComponent<Button>().onClick.AddListener(() => GoToScene(i));
-            go.GetComponentInChildren<Text>().text = eventList[i].problemID.ToString();         
+            go.transform.SetParent(buttonContainer,false);  
+            go.GetComponentInChildren<Text>().text = eventList[i].problemID.ToString();     //Set the name of the button.    
         }
     }
 
     /// <summary>
-    /// Checks if the event button is pressed and set the confirmEvent to that buttons event 
-    /// and set the eventSelected to true
+    /// Checks wich of the buttons is pressed and set the event to that event. 
+    /// 
+    /// Improvements:  Not that modular with the use of Find() use some other way to instantiate the buttons with a specific funktion.  
     /// </summary>
-    public void selectEvent()
+    public void SelectEvent()
     {
         buttonPressed = EventSystem.current.currentSelectedGameObject;
         selectedEvent = buttonPressed.transform.Find("Text").GetComponent<Text>().text;
@@ -113,7 +111,7 @@ public class ProgressionHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// if the button is pressed play that sceen. 
+    /// If the button is pressed play that buttons event.  
     /// </summary>
     public void GoToScene()
     {
