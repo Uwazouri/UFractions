@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enum for what type of AR object. 
+/// </summary>
 public enum ARObjectType
 {
     OrangeRod,
@@ -21,19 +24,10 @@ public enum ARObjectType
 public class ArObjectType : MonoBehaviour
 {
     public ARObjectType objType;
-
-	// Use this for initialization
-	void Start ()
-    {
-       
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
-
+    /// <summary>
+    /// returns what type of object is set. 
+    /// </summary>
+    /// <returns></returns>
     public ARObjectType GetObjectType()
     {
         return this.objType;
