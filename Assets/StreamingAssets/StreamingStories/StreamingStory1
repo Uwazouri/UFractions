@@ -1,7 +1,7 @@
 {
   "$type": "Story, Assembly-CSharp",
   "name": "FakeStory",
-  "description": "A demo story made for testing.",
+  "description": "Mother leopard has given birth to a cub whose name is Senatla. The leopard is a rare and endangered animal and predators had killed the previous cubs mother leopard had given birth to. In this story you will help mother leopard to raise her cub and teach him different kinds of skills so that he will be able to survive in the forestalone.",
   "storyVersion": {
     "$type": "Story+Version, Assembly-CSharp",
     "main": 0,
@@ -19,75 +19,9 @@
     "$values": [
       {
         "$type": "Story+Path, Assembly-CSharp",
-        "pathName": "Demo Introduction",
-        "description": "The introduction to the demo story.",
-        "pathPoint": {
-          "$type": "Story+Event, Assembly-CSharp",
-          "problemID": 0,
-          "nextEvents": {
-            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-            "$values": []
-          }
-        }
-      },
-      {
-        "$type": "Story+Path, Assembly-CSharp",
-        "pathName": "One Problem Path",
-        "description": "This path has only one problem.",
-        "pathPoint": {
-          "$type": "Story+Event, Assembly-CSharp",
-          "problemID": 1,
-          "nextEvents": {
-            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-            "$values": []
-          }
-        }
-      },
-      {
-        "$type": "Story+Path, Assembly-CSharp",
-        "pathName": "One Line Path",
-        "description": "This path has all problems in order",
-        "pathPoint": {
-          "$type": "Story+Event, Assembly-CSharp",
-          "problemID": 1,
-          "nextEvents": {
-            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-            "$values": [
-              {
-                "$type": "Story+Event, Assembly-CSharp",
-                "problemID": 2,
-                "nextEvents": {
-                  "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-                  "$values": [
-                    {
-                      "$type": "Story+Event, Assembly-CSharp",
-                      "problemID": 3,
-                      "nextEvents": {
-                        "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-                        "$values": [
-                          {
-                            "$type": "Story+Event, Assembly-CSharp",
-                            "problemID": 4,
-                            "nextEvents": {
-                              "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-                              "$values": []
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      },
-      {
-        "$type": "Story+Path, Assembly-CSharp",
-        "pathName": "A Path with Branch!",
-        "description": "This path has a branch",
-        "pathPoint": {
+        "name": "Mother introduction",
+        "description": "Meet with the mother leopard and learn how to help her and her cub.",
+        "pathEvent": {
           "$type": "Story+Event, Assembly-CSharp",
           "problemID": 1,
           "nextEvents": {
@@ -104,7 +38,16 @@
                       "problemID": 4,
                       "nextEvents": {
                         "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-                        "$values": []
+                        "$values": [
+                          {
+                            "$type": "Story+Event, Assembly-CSharp",
+                            "problemID": 5,
+                            "nextEvents": {
+                              "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                              "$values": []
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -121,7 +64,16 @@
                       "problemID": 4,
                       "nextEvents": {
                         "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
-                        "$values": []
+                        "$values": [
+                          {
+                            "$type": "Story+Event, Assembly-CSharp",
+                            "problemID": 5,
+                            "nextEvents": {
+                              "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                              "$values": []
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -147,36 +99,33 @@
             "$values": [
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Bob",
+                "avatar": "Phone",
                 "left": true,
-                "text": "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."
+                "text": "Mother leopard gives birth to a cub whose name is Senatla. Leopard is a rare and endangered animal and predators had killed the previous cubs Mother leopard had given birth to."
               },
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Bill",
+                "avatar": "Cub Leopard",
                 "left": false,
-                "text": "Select the option that have numbers equals to the way they should share."
+                "text": "Senatla is in a quite weak condition, so odds are high that he would not live to be much older. Leopard cubs are completely helpless during the first few months and there are several threats during their first year."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Phone",
+                "left": true,
+                "text": "Through this story you can help mother leopard to raise her cub and teach him different kinds of skills so that he will be able to survive in the forest alone."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Phone",
+                "left": true,
+                "text": "While playing this game and helping Mother and Senatla you will learn fractions and many things of leopard’s life. With the help of cuisenaire rods you will solve different kinds of problems. From each solved task you will get points that help Senatla cub."
               }
             ]
           }
         },
-        "answerType": 1,
-        "answerData": {
-          "$type": "ChoiceAnswer+ChoiceAnswerData, Assembly-CSharp",
-          "textChoices": {
-            "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
-            "$values": [
-              "Bob 2 and Bill 8",
-              "Bob 4 and Bill 6",
-              "Bob 5 and Bill 5",
-              "Bob 7 and Bill 3",
-              "Bob 9 and Bill 1"
-            ]
-          },
-          "imageChoices": null,
-          "answer": 2,
-          "mode": 1
-        }
+        "answerType": 0,
+        "answerData": null
       },
       {
         "$type": "Story+Problem, Assembly-CSharp",
@@ -189,21 +138,15 @@
             "$values": [
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Duck",
-                "left": true,
-                "text": "One Duck laid 4 eggs."
+                "avatar": "Cub Leopard",
+                "left": false,
+                "text": "Yellow rod represents one day and orange rod rod is all the days that Senatla has lived. How many days Senatla has lived?"
               },
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Duck",
+                "avatar": "Phone",
                 "left": true,
-                "text": "One of the eggs got destroyed!"
-              },
-              {
-                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Duck",
-                "left": true,
-                "text": "What rod represents how many eggs remains if the white rod is one egg and the purple rod is 4 eggs?"
+                "text": "Hint: Take two yellow rods and compare their length to the length of orange rod."
               }
             ]
           }
@@ -214,19 +157,18 @@
           "answers": {
             "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
             "$values": [
-              "light green",
-              "light green rod",
-              "green",
-              "green rod"
+              "2",
+              "two",
+              "two yellow",
+              "two yellow rods"
             ]
           },
           "arObjects": {
             "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
             "$values": [
-              6,
-              9,
-              7,
-              8
+              0,
+              5,
+              5
             ]
           }
         }
@@ -242,55 +184,34 @@
             "$values": [
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Bob",
-                "left": true,
-                "text": "Bob is hungry for candy!"
+                "avatar": "Cub Leopard",
+                "left": false,
+                "text": "Green rod represents the number of Senatla’s legs and light blue rod is one leg. How do you mark one leg’s portion of the whole number of legs as a fraction ? "
               },
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Bob",
+                "avatar": "Phone",
                 "left": true,
-                "text": "Bob has 5 candies and wants to eat some of them."
-              },
-              {
-                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Bob",
-                "left": true,
-                "text": "The Dark Green rod represents 5 candies and Bob wants to eat 4 of his candies."
-              },
-              {
-                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Bob",
-                "left": true,
-                "text": "Higlight only the rod that represents 4 candies by touching it."
+                "text": "Hint: First find out how many light blue rods equal green rod and then think about the fraction."
               }
             ]
           }
         },
-        "answerType": 2,
+        "answerType": 1,
         "answerData": {
-          "$type": "ARSelectionAnswer+ARSElectionAnswerData, Assembly-CSharp",
-          "answer": {
-            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+          "$type": "ChoiceAnswer+ChoiceAnswerData, Assembly-CSharp",
+          "textChoices": {
+            "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
             "$values": [
-              5
+              "1/2",
+              "2/5",
+              "1/4",
+              "1/8"
             ]
           },
-          "objects": {
-            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
-            "$values": [
-              3,
-              1,
-              2,
-              4,
-              7,
-              0,
-              6,
-              8,
-              9,
-              5
-            ]
-          }
+          "imageChoices": null,
+          "answer": 2,
+          "mode": 1
         }
       },
       {
@@ -304,66 +225,97 @@
             "$values": [
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Shark",
-                "left": true,
-                "text": "Sharks are dangerous!"
-              },
-              {
-                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Shark",
+                "avatar": "Mother Leopard",
                 "left": false,
-                "text": "Sharks are flying underwater...!"
+                "text": "Red rod is 8 kg. Black rod tells Mother leopard’s weight. What is Mother leopard’s weight?"
               },
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Shark",
+                "avatar": "Phone",
                 "left": true,
-                "text": "Sharks can have 9000000 jaws!"
-              },
-              {
-                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Shark",
-                "left": false,
-                "text": "1/8 of our sharks jaws dropped!"
-              },
-              {
-                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
-                "avatar": "Shark",
-                "left": true,
-                "text": "How many eggs remains?"
+                "text": "Hint: First find out how many red rods equal one black rod."
               }
             ]
           }
         },
-        "answerType": 1,
+        "answerType": 3,
         "answerData": {
-          "$type": "ChoiceAnswer+ChoiceAnswerData, Assembly-CSharp",
-          "textChoices": null,
-          "imageChoices": {
+          "$type": "InputAnswer+InputAnswerData, Assembly-CSharp",
+          "answers": {
             "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
             "$values": [
-              "Eggs",
-              "Avocados",
-              "FriedEgg",
-              "Eggplant"
+              "32",
+              "32 kg",
+              "thirty two",
+              "thirty two kg"
             ]
           },
-          "answer": 1,
-          "mode": 0
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              3,
+              8,
+              8,
+              8,
+              8,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "$type": "Story+Problem, Assembly-CSharp",
+        "problemID": 5,
+        "questionType": 1,
+        "questionData": {
+          "$type": "TextBoxQuestion+TextBoxQuestionData, Assembly-CSharp",
+          "texts": {
+            "$type": "System.Collections.Generic.List`1[[TextBoxQuestion+TextBox, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Mother Leopard",
+                "left": false,
+                "text": "Let us assume that blue rod is 240 cm. Mother leopards height is 80 cm. Highlight only the rod that represents Mother Leopards height. You can highlight a rod by touching it after pressing the exclamation mark on the right."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Phone",
+                "left": true,
+                "text": "Hint: Find out which rod is one third of the blue rod."
+              }
+            ]
+          }
+        },
+        "answerType": 2,
+        "answerData": {
+          "$type": "ARSelectionAnswer+ARSElectionAnswerData, Assembly-CSharp",
+          "answer": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              7
+            ]
+          },
+          "objects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              1,
+              7,
+              6,
+              8,
+              9,
+              2
+            ]
+          }
         }
       }
     ]
   },
   "imgUrlsDictionary": {
     "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]], mscorlib",
-    "Bob": "https://vignette3.wikia.nocookie.net/spongebob/images/6/6c/Bob_Barnacle_with_Transparent.png/revision/latest?cb=20160513222607",
-    "Bill": "http://www.pngmart.com/files/3/Bill-Gates-PNG-Photos.png",
-    "Duck": "http://etc.usf.edu/clippix/pix/rubber-duck_medium.png",
-    "Shark": "http://www.student.ltu.se/~emisun-0/shark.png",
-    "Eggs": "https://qph.ec.quoracdn.net/main-qimg-a134e103f988c48d7cf42978f4c40de8-c",
-    "Avocados": "http://cdn0.thetruthaboutknives.com/wp-content/uploads/2017/05/hmaimg2.png",
-    "FriedEgg": "https://www.rodalesorganiclife.com/sites/rodalesorganiclife.com/files/styles/listicle_slide_custom_user_phone_1x/public/brainfood-eggs-1000.jpg?itok=--rN3XHc",
-    "Eggplant": "http://cdn.shopify.com/s/files/1/0206/9470/products/Eggplant__baby_eb64eca5-fd42-4db6-9238-ead8fe34572b_grande.jpeg?v=1477037957"
+    "Phone": "https://openclipart.org/image/2400px/svg_to_png/66883/1276610754.png",
+    "Mother Leopard": "http://www.clipartoday.com/_thumbs/022/Nature/animals_creature_197072_tnb.png",
+    "Cub Leopard": "http://clipartsign.com/upload/2016/03/01/free-jaguar-clipart-3.png"
   },
   "vidUrlsDictionary": null
 }

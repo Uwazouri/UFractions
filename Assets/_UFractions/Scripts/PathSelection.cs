@@ -49,8 +49,8 @@ public class PathSelection : MonoBehaviour
             GameObject pathButton = Instantiate(pathButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
             pathButton.transform.parent = pathChoiceContainer.transform;
             pathButton.transform.localScale = new Vector3(1.0f, 1.1f, 1.0f);
-            pathButton.transform.Find("pathNameText").GetComponent<Text>().text = loadedPaths[i].pathName;
-            pathButton.transform.Find("pathDescriptionText").GetComponent<Text>().text = loadedPaths[i].pathPoint.ToString();
+            pathButton.transform.Find("pathNameText").GetComponent<Text>().text = loadedPaths[i].name;
+            pathButton.transform.Find("pathDescriptionText").GetComponent<Text>().text = loadedPaths[i].description;
             Debug.Log(pathButton.transform.Find("pathNameText").GetComponent<Text>().text);
         }
 
@@ -68,7 +68,8 @@ public class PathSelection : MonoBehaviour
 
         foreach (Story.Path s in this.loadedPaths)
         {
-            if (s.pathName.Equals(selectedPathName))
+            print(s.name);
+            if (s.name.Equals(selectedPathName))
             {
                 confirmPath = s;
                 pathSelected = true;

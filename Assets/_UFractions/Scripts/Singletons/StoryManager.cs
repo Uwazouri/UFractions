@@ -62,7 +62,7 @@ public class StoryManager : Singleton<StoryManager>
             {
                 string filePath = Path.Combine(Application.streamingAssetsPath, Path.Combine(this.streamingStoryFolderName, this.streamingStoryNames + storyNumber));
 
-                InterfaceFactory.GetInstance().DebugLog("Loading Streaming Story: " + filePath);
+                //InterfaceFactory.GetInstance().DebugLog("Loading Streaming Story: " + filePath);
 
                 UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(filePath);
                 www.timeout = 3;
@@ -81,7 +81,7 @@ public class StoryManager : Singleton<StoryManager>
                 {
                     string writePath = Path.Combine(Application.persistentDataPath, Path.Combine(this.localStoryFolderName, this.localStoryNames + storyNumber + ".json"));
 
-                    InterfaceFactory.GetInstance().DebugLog("Writing Local Story: " + filePath);
+                    //InterfaceFactory.GetInstance().DebugLog("Writing Local Story: " + filePath);
 
                     File.WriteAllText(writePath, www.downloadHandler.text);
 
@@ -90,7 +90,7 @@ public class StoryManager : Singleton<StoryManager>
                 else
                 {
                     noMoreStories = true;
-                    InterfaceFactory.GetInstance().DebugLog("Last Story Not Found. No more Streaming Stories");
+                    //InterfaceFactory.GetInstance().DebugLog("Last Story Not Found. No more Streaming Stories");
                 }
             }
         }
@@ -119,7 +119,7 @@ public class StoryManager : Singleton<StoryManager>
 
         foreach (string s in Directory.GetFiles(Path.Combine(Application.persistentDataPath, this.localStoryFolderName), "*.json"))
         {
-            InterfaceFactory.GetInstance().DebugLog("Parsed Local Story " + s + ".");
+            //InterfaceFactory.GetInstance().DebugLog("Parsed Local Story " + s + ".");
             print("Parsed Local Story " + s + ".");
             localStories.Add(Story.LoadFromJSON(s));
         }

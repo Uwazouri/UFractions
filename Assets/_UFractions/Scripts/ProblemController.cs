@@ -19,12 +19,12 @@ public class ProblemController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        StoryManager.Instance.CreateDebugStory("FakeStory");
+        //StoryManager.Instance.CreateDebugStory("FakeStory");
         //StoryManager.Instance.SetCurrentStory(StoryManager.Instance.GetLocalStories()[0]);
-        StoryManager.Instance.SetCurrentPath(StoryManager.Instance.GetAllPaths()[0]);
+        //StoryManager.Instance.SetCurrentPath(StoryManager.Instance.GetAllPaths()[0]);
         //StoryManager.Instance.SetCurrentEvent(StoryManager.Instance.GetCurrentEvent().nextEvents[0].nextEvents[0].nextEvents[0]);
         //this.mmm = StoryManager.Instance.currentStory;
-        this.SetupProblem(3);
+        this.SetupProblem();
     }
 
     // Update is called once per frame

@@ -48,18 +48,18 @@ public class ProgressionHandler : MonoBehaviour
         if (StoryManager.Instance.LastProblemSolved() == false)
         {
             // go back to current problem
-            SceneManager.LoadScene("ProblemScene");
+            SceneManager.LoadSceneAsync("ProblemScene");
         }
         else if(eventList.Count == 0)
         {
             //Goes to PathSelection scene
-            SceneManager.LoadScene("PathSelectionScene");
+            SceneManager.LoadSceneAsync("PathSelectionScene");
         }
         else if (eventList.Count == 1)
         {
             //if there is only one path, go to it 
             StoryManager.Instance.SetCurrentEvent(eventList[0]);
-            SceneManager.LoadScene("ProblemScene");
+            SceneManager.LoadSceneAsync("ProblemScene");
         }
         else if (eventList.Count  >= 2)
         {
