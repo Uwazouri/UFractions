@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 /// <summary>
 /// A singleton like class that handles instantiation of different interfaces that needs additional components (such as UI elements).
 /// HOW TO USE: 
@@ -18,6 +20,8 @@ public class InterfaceFactory : MonoBehaviour
 
     [SerializeField] private GameObject[] interfaces;
     [SerializeField] private GameObject[] arObjectPrefabs;
+
+    [SerializeField] private Text debugConsole;
 
     /// <summary>
     /// Ensure simple singleton like behaviour with thread lock.
@@ -114,5 +118,11 @@ public class InterfaceFactory : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void DebugLog(string text)
+    {
+        if (this.debugConsole != null)
+            this.debugConsole.text += System.Environment.NewLine + text;
     }
 }
