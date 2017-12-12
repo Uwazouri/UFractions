@@ -1,0 +1,369 @@
+{
+  "$type": "Story, Assembly-CSharp",
+  "name": "FakeStory",
+  "description": "A demo story made for testing.",
+  "storyVersion": {
+    "$type": "Story+Version, Assembly-CSharp",
+    "main": 0,
+    "patch": 0,
+    "bug": 0
+  },
+  "editorVersion": {
+    "$type": "Story+Version, Assembly-CSharp",
+    "main": 0,
+    "patch": 0,
+    "bug": 0
+  },
+  "paths": {
+    "$type": "System.Collections.Generic.List`1[[Story+Path, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "Story+Path, Assembly-CSharp",
+        "pathName": "Demo Introduction",
+        "description": "The introduction to the demo story.",
+        "pathPoint": {
+          "$type": "Story+Event, Assembly-CSharp",
+          "problemID": 0,
+          "nextEvents": {
+            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+            "$values": []
+          }
+        }
+      },
+      {
+        "$type": "Story+Path, Assembly-CSharp",
+        "pathName": "One Problem Path",
+        "description": "This path has only one problem.",
+        "pathPoint": {
+          "$type": "Story+Event, Assembly-CSharp",
+          "problemID": 1,
+          "nextEvents": {
+            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+            "$values": []
+          }
+        }
+      },
+      {
+        "$type": "Story+Path, Assembly-CSharp",
+        "pathName": "One Line Path",
+        "description": "This path has all problems in order",
+        "pathPoint": {
+          "$type": "Story+Event, Assembly-CSharp",
+          "problemID": 1,
+          "nextEvents": {
+            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "Story+Event, Assembly-CSharp",
+                "problemID": 2,
+                "nextEvents": {
+                  "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                  "$values": [
+                    {
+                      "$type": "Story+Event, Assembly-CSharp",
+                      "problemID": 3,
+                      "nextEvents": {
+                        "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                        "$values": [
+                          {
+                            "$type": "Story+Event, Assembly-CSharp",
+                            "problemID": 4,
+                            "nextEvents": {
+                              "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                              "$values": []
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$type": "Story+Path, Assembly-CSharp",
+        "pathName": "A Path with Branch!",
+        "description": "This path has a branch",
+        "pathPoint": {
+          "$type": "Story+Event, Assembly-CSharp",
+          "problemID": 1,
+          "nextEvents": {
+            "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "Story+Event, Assembly-CSharp",
+                "problemID": 2,
+                "nextEvents": {
+                  "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                  "$values": [
+                    {
+                      "$type": "Story+Event, Assembly-CSharp",
+                      "problemID": 4,
+                      "nextEvents": {
+                        "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                        "$values": []
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "$type": "Story+Event, Assembly-CSharp",
+                "problemID": 3,
+                "nextEvents": {
+                  "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                  "$values": [
+                    {
+                      "$type": "Story+Event, Assembly-CSharp",
+                      "problemID": 4,
+                      "nextEvents": {
+                        "$type": "System.Collections.Generic.List`1[[Story+Event, Assembly-CSharp]], mscorlib",
+                        "$values": []
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "problems": {
+    "$type": "System.Collections.Generic.List`1[[Story+Problem, Assembly-CSharp]], mscorlib",
+    "$values": [
+      {
+        "$type": "Story+Problem, Assembly-CSharp",
+        "problemID": 1,
+        "questionType": 1,
+        "questionData": {
+          "$type": "TextBoxQuestion+TextBoxQuestionData, Assembly-CSharp",
+          "texts": {
+            "$type": "System.Collections.Generic.List`1[[TextBoxQuestion+TextBox, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Bob",
+                "left": true,
+                "text": "Sharing is caring! Bob and Bill needs to share thier 10 candies so that they both have 1/2 of all thier candies."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Bill",
+                "left": false,
+                "text": "Select the option that have numbers equals to the way they should share."
+              }
+            ]
+          }
+        },
+        "answerType": 1,
+        "answerData": {
+          "$type": "ChoiceAnswer+ChoiceAnswerData, Assembly-CSharp",
+          "textChoices": {
+            "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+            "$values": [
+              "Bob 2 and Bill 8",
+              "Bob 4 and Bill 6",
+              "Bob 5 and Bill 5",
+              "Bob 7 and Bill 3",
+              "Bob 9 and Bill 1"
+            ]
+          },
+          "imageChoices": null,
+          "answer": 2,
+          "mode": 1
+        }
+      },
+      {
+        "$type": "Story+Problem, Assembly-CSharp",
+        "problemID": 2,
+        "questionType": 1,
+        "questionData": {
+          "$type": "TextBoxQuestion+TextBoxQuestionData, Assembly-CSharp",
+          "texts": {
+            "$type": "System.Collections.Generic.List`1[[TextBoxQuestion+TextBox, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Duck",
+                "left": true,
+                "text": "One Duck laid 4 eggs."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Duck",
+                "left": true,
+                "text": "One of the eggs got destroyed!"
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Duck",
+                "left": true,
+                "text": "What rod represents how many eggs remains if the white rod is one egg and the purple rod is 4 eggs?"
+              }
+            ]
+          }
+        },
+        "answerType": 3,
+        "answerData": {
+          "$type": "InputAnswer+InputAnswerData, Assembly-CSharp",
+          "answers": {
+            "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+            "$values": [
+              "light green",
+              "light green rod",
+              "green",
+              "green rod"
+            ]
+          },
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              6,
+              9,
+              7,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "$type": "Story+Problem, Assembly-CSharp",
+        "problemID": 3,
+        "questionType": 1,
+        "questionData": {
+          "$type": "TextBoxQuestion+TextBoxQuestionData, Assembly-CSharp",
+          "texts": {
+            "$type": "System.Collections.Generic.List`1[[TextBoxQuestion+TextBox, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Bob",
+                "left": true,
+                "text": "Bob is hungry for candy!"
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Bob",
+                "left": true,
+                "text": "Bob has 5 candies and wants to eat some of them."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Bob",
+                "left": true,
+                "text": "The Dark Green rod represents 5 candies and Bob wants to eat 4 of his candies."
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Bob",
+                "left": true,
+                "text": "Higlight only the rod that represents 4 candies by touching it."
+              }
+            ]
+          }
+        },
+        "answerType": 2,
+        "answerData": {
+          "$type": "ARSelectionAnswer+ARSElectionAnswerData, Assembly-CSharp",
+          "answer": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              5
+            ]
+          },
+          "objects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              3,
+              1,
+              2,
+              4,
+              7,
+              0,
+              6,
+              8,
+              9,
+              5
+            ]
+          }
+        }
+      },
+      {
+        "$type": "Story+Problem, Assembly-CSharp",
+        "problemID": 4,
+        "questionType": 1,
+        "questionData": {
+          "$type": "TextBoxQuestion+TextBoxQuestionData, Assembly-CSharp",
+          "texts": {
+            "$type": "System.Collections.Generic.List`1[[TextBoxQuestion+TextBox, Assembly-CSharp]], mscorlib",
+            "$values": [
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Shark",
+                "left": true,
+                "text": "Sharks are dangerous!"
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Shark",
+                "left": false,
+                "text": "Sharks are flying underwater...!"
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Shark",
+                "left": true,
+                "text": "Sharks can have 9000000 jaws!"
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Shark",
+                "left": false,
+                "text": "1/8 of our sharks jaws dropped!"
+              },
+              {
+                "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
+                "avatar": "Shark",
+                "left": true,
+                "text": "How many eggs remains?"
+              }
+            ]
+          }
+        },
+        "answerType": 1,
+        "answerData": {
+          "$type": "ChoiceAnswer+ChoiceAnswerData, Assembly-CSharp",
+          "textChoices": null,
+          "imageChoices": {
+            "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+            "$values": [
+              "Eggs",
+              "Avocados",
+              "FriedEgg",
+              "Eggplant"
+            ]
+          },
+          "answer": 1,
+          "mode": 0
+        }
+      }
+    ]
+  },
+  "imgUrlsDictionary": {
+    "$type": "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.String, mscorlib]], mscorlib",
+    "Bob": "https://vignette3.wikia.nocookie.net/spongebob/images/6/6c/Bob_Barnacle_with_Transparent.png/revision/latest?cb=20160513222607",
+    "Bill": "http://www.pngmart.com/files/3/Bill-Gates-PNG-Photos.png",
+    "Duck": "http://etc.usf.edu/clippix/pix/rubber-duck_medium.png",
+    "Shark": "http://www.student.ltu.se/~emisun-0/shark.png",
+    "Eggs": "https://qph.ec.quoracdn.net/main-qimg-a134e103f988c48d7cf42978f4c40de8-c",
+    "Avocados": "http://cdn0.thetruthaboutknives.com/wp-content/uploads/2017/05/hmaimg2.png",
+    "FriedEgg": "https://www.rodalesorganiclife.com/sites/rodalesorganiclife.com/files/styles/listicle_slide_custom_user_phone_1x/public/brainfood-eggs-1000.jpg?itok=--rN3XHc",
+    "Eggplant": "http://cdn.shopify.com/s/files/1/0206/9470/products/Eggplant__baby_eb64eca5-fd42-4db6-9238-ead8fe34572b_grande.jpeg?v=1477037957"
+  },
+  "vidUrlsDictionary": null
+}
