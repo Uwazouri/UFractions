@@ -47,19 +47,28 @@ public class TextBoxQuestion : QuestionBehaviour
     public int questAm;
     public int currentQuest = 0;
 
-    void avatarStateTrueFalse()
+    /*
+     * NOTE:
+     *  TrueFalse -> Left
+     *  FalseTrue -> Right
+     */
+
+    //Set the avatar layout to left
+    void AvatarStateTrueFalse()
     {
         avatarRight.enabled = false;
         avatarLeft.enabled = true;
     }
 
-    void avatarStateFalseTrue()
+    //Set the avatar layout to right
+    void AvatarStateFalseTrue()
     {
         avatarLeft.enabled = false;
         avatarRight.enabled = true;
     }
 
-    void avatarTextureUpdate()
+    //Update the textures, typically done when we change page 
+    void AvatarTextureUpdate()
     {
         avatarLeft.texture = pics[currentQuest];
         avatarRight.texture = pics[currentQuest];
@@ -70,7 +79,7 @@ public class TextBoxQuestion : QuestionBehaviour
     {
         if (inText.Count == 0 || inPics.Count == 0)
         {
-            Debug.LogWarning("Oh hell no! Put some data in the text and avatars!");
+            Debug.LogWarning("Put some data in the text and avatars!");
         }
 
         if (inPics.Count != inText.Count)
@@ -78,6 +87,7 @@ public class TextBoxQuestion : QuestionBehaviour
             Debug.LogWarning("You must have the same amount of avatars as questions / dialogs!");
         }
 
+        //Takes the provided text and pictures, then assign them into seperate arrays
         infoText = new string[inText.Count];
         questAm = inText.Count;
         pics = new Texture[inPics.Count];
@@ -91,49 +101,50 @@ public class TextBoxQuestion : QuestionBehaviour
         }
     }
 
+    //Check if the layout of the avatar is left or right, this is modifiable for each page
     private void Update()
     {
-        //Left side of the screen for the question / dialog box
+        //Left side of the screen for the text box
         if (leftSideLayout == true)
         {
-            avatarStateTrueFalse();
+            AvatarStateTrueFalse();
         }
 
-        //Right side of the screen for the question / dialog box
+        //Right side of the screen for the text box
         if (leftSideLayout == false)
         {
-            avatarStateFalseTrue();
+            AvatarStateFalseTrue();
         }
     }
 
     void FixedUpdate()
     {
-        //If we are at the first question / dialog, we can't go back anymore
+        //If we are at the first page, we can't go back anymore
         if (currentQuest == 0)
         {
             prevQuestionButton.SetActive(false);
         }
 
-        //If we are at the last question / dialog, we can't go forward anymore
+        //If we are at the last page, we can't go forward anymore
         if (currentQuest == questAm - 1)
         {
             nextQuestionButton.SetActive(false);
         }
 
-        //If we are at question / dialog two or higher, we can go back
+        //If we are at page two or higher, we can go back
         if (currentQuest != 0)
         {
             prevQuestionButton.SetActive(true);
         }
 
-        //If we are lower than the total amount of questions / dialogs, we can go forth
+        //If we are lower than the total amount of pages, we can go forth
         if (currentQuest != questAm - 1)
         {
             nextQuestionButton.SetActive(true);
         }
     }
 
-    //Change avatar and text for the comming question / dialog
+    //Change avatar and text for the comming page
     public void NextQuestion()
     {
         currentQuest = currentQuest + 1;
@@ -141,18 +152,19 @@ public class TextBoxQuestion : QuestionBehaviour
         if (leftOrRight[currentQuest] == true)
         {
             leftSideLayout = true;
-            avatarTextureUpdate();
+            AvatarTextureUpdate();
         }
 
         else
         {
             leftSideLayout = false;
-            avatarTextureUpdate();
+            AvatarTextureUpdate();
         }
+
         boxText.text = infoText[currentQuest].ToString();
     }
 
-    //Change avatar and text for the previouse question / dialog
+    //Change avatar and text for the previouse page
     public void PreviouseQuestion()
     {
         currentQuest = currentQuest - 1;
@@ -160,32 +172,41 @@ public class TextBoxQuestion : QuestionBehaviour
         if (leftOrRight[currentQuest] == true)
         {
             leftSideLayout = true;
-            avatarTextureUpdate();
+            AvatarTextureUpdate();
         }
 
         else
         {
             leftSideLayout = false;
-            avatarTextureUpdate();
+            AvatarTextureUpdate();
         }
 
         boxText.text = infoText[currentQuest].ToString();
     }
 
-    //When you wanna open the question / dialog box
-    public override void Show() //SHOW 
+    //When you wanna open the text box
+    public override void Show()
     {
-        //questionCanvas.SetActive(true);
-        this.gameObject.SetActive(true); //This will be the canvas that is already in the AR scene
+        this.gameObject.SetActive(true);
     }
 
-    //When you wanna close the question / dialog box
-    public override void Hide() //HIDE
+    //When you wanna close the text box
+    public override void Hide()
     {
-        //questionCanvas.SetActive(false);
-        this.gameObject.SetActive(false); //This will be the canvas that is already in the AR scene
+        this.gameObject.SetActive(false);
     }
 
+    /*
+     * This is the question setup
+     * 
+     * 1. We retreive data about witch question it currently is
+     * 
+     * 2. We search for the pictures linked to each page of text
+     * 
+     * 3. When the picture is retrived we will add it to that page and apply the text
+     * 
+     * 4. When all pics and texts are in place, we set the amount of questions so the orientation of witch question we are on works properly
+     */
     public override void SetupQuestion(QuestionData question)
     {
         List<Texture> textures = new List<Texture>();
@@ -218,13 +239,14 @@ public class TextBoxQuestion : QuestionBehaviour
 
         InsertValues(texts, textures, leftOrientation);
 
-        avatarTextureUpdate();
+        AvatarTextureUpdate();
         questAm = infoText.Length;
         boxText.text = infoText[currentQuest].ToString();
         leftSideLayout = true;
         Hide();
     }
 
+    //Retrieve textures from the internet
     private IEnumerator GetWebText(string url, Texture texture)
     {
         WWW www = new WWW(url);

@@ -18,13 +18,14 @@ public class PathSelection : MonoBehaviour
 
     private GameObject pressedPath;
 
-    // Use this for initialization
+    //Run the path config
     void Start()
     {
         pathSelected = false;
         LoadPathConfig();
     }
 
+    //If we have a selected path, then we will be able to interact with the confirm button to proceed
     private void Update()
     {
         if (pathSelected == false)
@@ -38,8 +39,23 @@ public class PathSelection : MonoBehaviour
         }
     }
 
-    //This is the function to update all the stories in the menu
-    //Interface Factory will have to create a button with two texts, "pathNameText" & "pathDescriptionText"
+    /*
+     * This is the function to update all the stories in the menu!
+     * 
+     * 1. We start by loading all the stories with assistance from StoryManager
+     * 
+     * 2. We go through all the loaded stories and create a button from a prefab. One button for each path
+     * 
+     * 3. We set the position, scale and parent for the button so it will align at the proper place
+     * 
+     * 4. We locate the name and the description text fields of the buttons, these will display name and description for their belonging path
+     *  
+     *      Example:
+     *                  The adventure begins
+     *                  As Chopper sets out to achive his life long dream, he takes a heartbreaking farewell to his hometown and walks out into the big world!
+     *                  
+     * 5. When all buttons have their rightful layout and texts, we position the container once more for a better fit
+     */
     public void LoadPathConfig()
     {
         loadedPaths = StoryManager.Instance.GetAllPaths();
@@ -51,15 +67,14 @@ public class PathSelection : MonoBehaviour
             pathButton.transform.localScale = new Vector3(1.0f, 1.1f, 1.0f);
             pathButton.transform.Find("pathNameText").GetComponent<Text>().text = loadedPaths[i].pathName;
             pathButton.transform.Find("pathDescriptionText").GetComponent<Text>().text = loadedPaths[i].pathPoint.ToString();
-            Debug.Log(pathButton.transform.Find("pathNameText").GetComponent<Text>().text);
         }
 
         pathChoiceContainer.GetComponent<RectTransform>().localPosition = new Vector2(-150.0f, -1000.0f);
     }
 
     //Check witch button was pressed and retrive the belonging name and description
-    //Set the path linked to the button as confirmed path
-    public void selectedPath()
+    //Then set the path linked to that button as the current one
+    public void SelectedPath()
     {
         pressedPath = EventSystem.current.currentSelectedGameObject;
 
@@ -82,7 +97,7 @@ public class PathSelection : MonoBehaviour
         }
     }
 
-    //Sends the confirmed path to the PathSelection scene
+    //Lock the current path and proceed to next scene
     public void OpenPath()
     {
         if (pathSelected == true)
@@ -92,7 +107,7 @@ public class PathSelection : MonoBehaviour
         }
     }
 
-    //When you wanna go back to the main menu
+    //Back to story selection
     public void GoBack()
     {
         SceneManager.LoadScene("StorySelectionScene");
