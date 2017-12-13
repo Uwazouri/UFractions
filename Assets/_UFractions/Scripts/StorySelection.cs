@@ -113,6 +113,6 @@ public class StorySelection : MonoBehaviour
     //Back to main menu
     public void GoBack()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("MainMenuScene");
     }
 }
