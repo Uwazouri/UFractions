@@ -882,6 +882,11 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 78.21469
       objectReference: {fileID: 0}
+    - target: {fileID: 114646310628715868, guid: 27c0dcb525051874d902df3daa26dcbf,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectedStory
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27c0dcb525051874d902df3daa26dcbf, type: 2}
   m_IsPrefabParent: 0
