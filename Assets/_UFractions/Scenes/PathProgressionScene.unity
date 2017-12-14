@@ -729,7 +729,7 @@ Prefab:
     - target: {fileID: 114501968179359528, guid: d0753fc521848b444b67c99728f51610,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: selectEvent
+      value: SelectEvent
       objectReference: {fileID: 0}
     - target: {fileID: 114501968179359528, guid: d0753fc521848b444b67c99728f51610,
         type: 2}
