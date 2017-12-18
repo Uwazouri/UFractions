@@ -127,6 +127,11 @@ public class StoryManager : Singleton<StoryManager>
         return localStories;
     }
 
+    public string GetLocalStoriesPath()
+    {
+        return Path.Combine(Application.persistentDataPath, this.localStoryFolderName);
+    }
+
     public void SetCurrentStory(Story story)
     {
         this.currentStory = story;
@@ -243,7 +248,7 @@ public class StoryManager : Singleton<StoryManager>
                         "fractions and many things of leopard’s life. With the help of cuisenaire rods you will solve different kinds of problems. " +
                         "From each solved task you will get points that help Senatla cub.")
 
-                    })), 
+                    }), null), 
             AnswerBehaviour.AnswerType.None, // The AnswerType of the problem
             null
             ); // Answer Index, Answer Choices Type 
@@ -258,7 +263,7 @@ public class StoryManager : Singleton<StoryManager>
                         "How many days Senatla has lived?"),
                         new TextBoxQuestion.TextBox("Phone", true, "Hint: Take two yellow rods and compare their length to the length of orange rod.")
 
-                    })),
+                    }), null),
             AnswerBehaviour.AnswerType.Input, // The AnswerType of the problem
             new InputAnswer.InputAnswerData(new List<string>(new string[] // The AnswerData
                     {
@@ -280,10 +285,18 @@ public class StoryManager : Singleton<StoryManager>
             QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
             new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
                     {
-                                    new TextBoxQuestion.TextBox("Cub Leopard", false, "Green rod represents the number of Senatla’s legs and light " +
-                                    "blue rod is one leg. How do you mark one leg’s portion of the " +
+                                    new TextBoxQuestion.TextBox("Cub Leopard", false, "Brown rod represents the number of Senatla’s legs and " +
+                                    "red rod is one leg. How do you mark one leg’s portion of the " +
                                     "whole number of legs as a fraction ? "),
-                                    new TextBoxQuestion.TextBox("Phone", true, "Hint: First find out how many light blue rods equal green rod and then think about the fraction.")
+                                    new TextBoxQuestion.TextBox("Phone", true, "Hint: First find out how many red rods equal blue and then think about the fraction.")
+                    }),
+                    new List<ARObjectType>( new ARObjectType[]
+                    {
+                        ARObjectType.BrownRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod,
+                        ARObjectType.RedRod
                     })),
             AnswerBehaviour.AnswerType.Choices, // The AnswerType of the problem
             new ChoiceAnswer.ChoiceAnswerData(new List<string>(new string[] // The AnswerData
@@ -300,10 +313,10 @@ public class StoryManager : Singleton<StoryManager>
             QuestionBehaviour.QuestionType.TextBox, // QuestionType of the problem 
             new TextBoxQuestion.TextBoxQuestionData(new List<TextBoxQuestion.TextBox>(new TextBoxQuestion.TextBox[] // The QuestionData
                     {
-                        new TextBoxQuestion.TextBox("Mother Leopard", false, "Red rod is 8 kg. Black rod tells Mother leopard’s weight. What is Mother leopard’s weight?"),
+                        new TextBoxQuestion.TextBox("Mother Leopard", false, "Red rod is 8 kg. Brown rod tells Mother leopard’s weight. What is Mother leopard’s weight?"),
                         new TextBoxQuestion.TextBox("Phone", true, "Hint: First find out how many red rods equal one black rod.")
 
-                    })),
+                    }), null),
             AnswerBehaviour.AnswerType.Input, // The AnswerType of the problem
             new InputAnswer.InputAnswerData(new List<string>(new string[] // The AnswerData
                     {
@@ -314,7 +327,7 @@ public class StoryManager : Singleton<StoryManager>
                     }),
                     new List<ARObjectType>(new ARObjectType[]
                     {
-                        ARObjectType.BlackRod,
+                        ARObjectType.BrownRod,
                         ARObjectType.RedRod,
                         ARObjectType.RedRod,
                         ARObjectType.RedRod,
@@ -331,7 +344,7 @@ public class StoryManager : Singleton<StoryManager>
                             new TextBoxQuestion.TextBox("Mother Leopard", false, "Let us assume that blue rod is 240 cm. Mother leopards height is 80 cm. " +
                             "Highlight only the rod that represents Mother Leopards height. You can highlight a rod by touching it after pressing the exclamation mark on the right."),
                             new TextBoxQuestion.TextBox("Phone", true, "Hint: Find out which rod is one third of the blue rod.")
-                })),
+                }), null),
             AnswerBehaviour.AnswerType.ARSelection, // The AnswerType of the problem
             new ARSelectionAnswer.ARSElectionAnswerData(new List<ARObjectType>(new ARObjectType[] // The AnswerData
             {

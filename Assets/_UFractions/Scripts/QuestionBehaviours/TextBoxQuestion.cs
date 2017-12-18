@@ -10,10 +10,15 @@ public class TextBoxQuestion : QuestionBehaviour
     public class TextBoxQuestionData : QuestionData
     {
         public List<TextBox> texts;
+        public List<ARObjectType> arObjects;
 
-        public TextBoxQuestionData(List<TextBox> textBoxes)
+        public TextBoxQuestionData(List<TextBox> textBoxes, List<ARObjectType> arObjects)
         {
             this.texts = textBoxes;
+            if (arObjects != null)
+                this.arObjects = arObjects;
+            else
+                this.arObjects = new List<ARObjectType>();
         }
     }
 
@@ -244,6 +249,14 @@ public class TextBoxQuestion : QuestionBehaviour
         boxText.text = infoText[currentQuest].ToString();
         leftSideLayout = true;
         Hide();
+
+        float y = 0;
+
+        foreach (ARObjectType a in ((TextBoxQuestionData)question).arObjects)
+        {
+            InterfaceFactory.GetInstance().SpawnARObject(a, InterfaceFactory.GetInstance().transform, new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), y, UnityEngine.Random.Range(-5.0f, 5.0f)));
+            y += 1.5f;
+        }
     }
 
     //Retrieve textures from the internet

@@ -1,6 +1,6 @@
 {
   "$type": "Story, Assembly-CSharp",
-  "name": "FakeStory",
+  "name": "Leopard Cub Senatla​",
   "description": "Mother leopard has given birth to a cub whose name is Senatla. The leopard is a rare and endangered animal and predators had killed the previous cubs mother leopard had given birth to. In this story you will help mother leopard to raise her cub and teach him different kinds of skills so that he will be able to survive in the forestalone.",
   "storyVersion": {
     "$type": "Story+Version, Assembly-CSharp",
@@ -122,6 +122,10 @@
                 "text": "While playing this game and helping Mother and Senatla you will learn fractions and many things of leopard’s life. With the help of cuisenaire rods you will solve different kinds of problems. From each solved task you will get points that help Senatla cub."
               }
             ]
+          },
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": []
           }
         },
         "answerType": 0,
@@ -149,6 +153,10 @@
                 "text": "Hint: Take two yellow rods and compare their length to the length of orange rod."
               }
             ]
+          },
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": []
           }
         },
         "answerType": 3,
@@ -186,14 +194,24 @@
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
                 "avatar": "Cub Leopard",
                 "left": false,
-                "text": "Green rod represents the number of Senatla’s legs and light blue rod is one leg. How do you mark one leg’s portion of the whole number of legs as a fraction ? "
+                "text": "Brown rod represents the number of Senatla’s legs and red rod is one leg. How do you mark one leg’s portion of the whole number of legs as a fraction ? "
               },
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
                 "avatar": "Phone",
                 "left": true,
-                "text": "Hint: First find out how many light blue rods equal green rod and then think about the fraction."
+                "text": "Hint: First find out how many red rods equal blue and then think about the fraction."
               }
+            ]
+          },
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": [
+              2,
+              8,
+              8,
+              8,
+              8
             ]
           }
         },
@@ -227,7 +245,7 @@
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
                 "avatar": "Mother Leopard",
                 "left": false,
-                "text": "Red rod is 8 kg. Black rod tells Mother leopard’s weight. What is Mother leopard’s weight?"
+                "text": "Red rod is 8 kg. Brown rod tells Mother leopard’s weight. What is Mother leopard’s weight?"
               },
               {
                 "$type": "TextBoxQuestion+TextBox, Assembly-CSharp",
@@ -236,6 +254,10 @@
                 "text": "Hint: First find out how many red rods equal one black rod."
               }
             ]
+          },
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": []
           }
         },
         "answerType": 3,
@@ -253,7 +275,7 @@
           "arObjects": {
             "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
             "$values": [
-              3,
+              2,
               8,
               8,
               8,
@@ -285,6 +307,10 @@
                 "text": "Hint: Find out which rod is one third of the blue rod."
               }
             ]
+          },
+          "arObjects": {
+            "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
+            "$values": []
           }
         },
         "answerType": 2,

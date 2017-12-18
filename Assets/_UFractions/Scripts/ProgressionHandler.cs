@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 
 public class ProgressionHandler : MonoBehaviour
@@ -17,6 +18,8 @@ public class ProgressionHandler : MonoBehaviour
     private string selectedEvent;
     private Story.Event confirmEvent;
     private  bool eventSelected = false;
+    public TextMeshProUGUI loadingText;
+    public Button continueButton;
     
     /// for debug
     //static bool start = false;
@@ -45,24 +48,28 @@ public class ProgressionHandler : MonoBehaviour
         if (StoryManager.Instance.LastProblemSolved() == false)
         {
             // go back to current problem
-            SceneManager.LoadSceneAsync("ProblemScene");
+            this.loadingText.gameObject.SetActive(true);
+            SceneManager.LoadScene("ProblemScene");
         }
         else if(eventList.Count == 0)
         {
             //Goes to PathSelection scene
-            SceneManager.LoadSceneAsync("PathSelectionScene");
+            this.loadingText.gameObject.SetActive(true);
+            SceneManager.LoadScene("PathSelectionScene");
         }
         else if (eventList.Count == 1)
         {
-            //if there is only one path, go to it 
+            //if there is only one path, go to it
+            this.loadingText.gameObject.SetActive(true);
             StoryManager.Instance.SetCurrentEvent(eventList[0]);
-            SceneManager.LoadSceneAsync("ProblemScene");
+            SceneManager.LoadScene("ProblemScene");
         }
         else if (eventList.Count  >= 2)
         {
              // display the buttons for selection of events
-            SpawnButton(); 
-        }	
+            SpawnButton();
+            this.continueButton.gameObject.SetActive(true);
+        }
 	}
 
 
@@ -76,9 +83,9 @@ public class ProgressionHandler : MonoBehaviour
     {
         for (int i = 0; i < eventList.Count; i++)
         {
-            GameObject go = Instantiate(buttonPrefab) as GameObject;
-            go.transform.SetParent(buttonContainer,false);  
-            go.GetComponentInChildren<Text>().text = eventList[i].problemID.ToString();     //Set the name of the button.    
+            GameObject go = Instantiate(buttonPrefab, buttonContainer);
+            go.GetComponent<Button>().onClick.AddListener(() => { SelectEvent(); });
+            go.GetComponentInChildren<TextMeshProUGUI>().text = eventList[i].problemID.ToString();     //Set the name of the button.    
         }
     }
 
@@ -90,7 +97,7 @@ public class ProgressionHandler : MonoBehaviour
     public void SelectEvent()
     {
         buttonPressed = EventSystem.current.currentSelectedGameObject;
-        selectedEvent = buttonPressed.transform.Find("Text").GetComponent<Text>().text;
+        selectedEvent = buttonPressed.transform.Find("Text").GetComponent<TextMeshProUGUI>().text;
 
         foreach (Story.Event e in this.eventList)
         {
@@ -116,7 +123,10 @@ public class ProgressionHandler : MonoBehaviour
     public void GoToScene()
     {
         if(eventSelected == true)
-        { 
+        {
+            this.loadingText.gameObject.SetActive(true);
+            this.continueButton.gameObject.SetActive(false);
+            this.buttonContainer.gameObject.SetActive(false);
             StoryManager.Instance.SetCurrentEvent(confirmEvent); 
             SceneManager.LoadScene("ProblemScene");
         }

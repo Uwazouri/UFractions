@@ -18,8 +18,8 @@ public class InterfaceFactory : MonoBehaviour
 
     private static InterfaceFactory instance;
 
-    [SerializeField] private GameObject[] interfaces;
-    [SerializeField] private GameObject[] arObjectPrefabs;
+    public GameObject[] interfaces;
+    public GameObject[] arObjectPrefabs;
 
     [SerializeField] private Text debugConsole;
 

@@ -11,6 +11,7 @@ public class ProblemController : MonoBehaviour
     public Story mmm;
     private QuestionBehaviour questionInterface;
     private AnswerBehaviour answerInterface;
+    private StoryManager storyManager;
     private bool setupDone = false;
     private bool answerOn = false;
     private bool questionOn = false;
@@ -24,6 +25,7 @@ public class ProblemController : MonoBehaviour
         //StoryManager.Instance.SetCurrentPath(StoryManager.Instance.GetAllPaths()[0]);
         //StoryManager.Instance.SetCurrentEvent(StoryManager.Instance.GetCurrentEvent().nextEvents[0].nextEvents[0].nextEvents[0]);
         //this.mmm = StoryManager.Instance.currentStory;
+        this.storyManager = StoryManager.Instance;
         this.SetupProblem();
     }
 
@@ -87,36 +89,36 @@ public class ProblemController : MonoBehaviour
                 if (this.answerInterface.GetResult())
                 {
                     print("Correct!");
-                    StoryManager.Instance.SetProblemSolved(true);
+                    this.storyManager.SetProblemSolved(true);
                 }
                 else
                 {
                     print("Wrong!");
-                    StoryManager.Instance.SetProblemSolved(false);
+                    this.storyManager.SetProblemSolved(false);
                 }
-                SceneManager.LoadSceneAsync("PathProgressionScene", LoadSceneMode.Single);
+                SceneManager.LoadScene("PathProgressionScene");
             }
             else
             {
-                StoryManager.Instance.SetProblemSolved(true);
-                SceneManager.LoadSceneAsync("PathProgressionScene", LoadSceneMode.Single);
+                this.storyManager.SetProblemSolved(true);
+                SceneManager.LoadScene("PathProgressionScene");
             }
         }
     }
 
     private void SetupProblem()
     {
-        this.SetupProblem(StoryManager.Instance.GetCurrentProblem().problemID);
+        this.SetupProblem(this.storyManager.GetCurrentProblem().problemID);
     }
 
     private void SetupProblem(uint problemID)
     {
-        this.questionInterface = StoryManager.Instance.GetCurrentQuestionBehaviour(this.transform, problemID);
-        this.questionInterface.SetupQuestion(StoryManager.Instance.GetCurrentQuestionData(problemID));
-        if (StoryManager.Instance.GetProblem(problemID).HasAnswer())
+        this.questionInterface = this.storyManager.GetCurrentQuestionBehaviour(this.transform, problemID);
+        this.questionInterface.SetupQuestion(this.storyManager.GetCurrentQuestionData(problemID));
+        if (this.storyManager.GetProblem(problemID).HasAnswer())
         {
-            this.answerInterface = StoryManager.Instance.GetCurrentAnswerBehaviour(this.transform, problemID);
-            this.answerInterface.SetupAnswer(StoryManager.Instance.GetCurrentAnswerData(problemID));
+            this.answerInterface = this.storyManager.GetCurrentAnswerBehaviour(this.transform, problemID);
+            this.answerInterface.SetupAnswer(this.storyManager.GetCurrentAnswerData(problemID));
         }
         else
         {

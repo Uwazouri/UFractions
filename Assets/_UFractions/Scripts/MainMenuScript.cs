@@ -14,10 +14,7 @@ public class MainMenuScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.mainMenuPanel.SetActive(true);
-        
-        storySelection = SceneManager.GetSceneByName("MainMenuScene");
-        testString = storySelection.name;
+
     }
 
     // Update is called once per frame
@@ -27,7 +24,7 @@ public class MainMenuScript : MonoBehaviour
     }
     public void PlayGame()
     {
-        SceneManager.LoadScene("_UFractions/Scenes/StorySelectionScene");
+        SceneManager.LoadScene("StorySelectionScene");
     }
     public void QuitApplication()
     {
