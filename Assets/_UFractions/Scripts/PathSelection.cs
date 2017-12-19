@@ -10,6 +10,9 @@ public class PathSelection : MonoBehaviour
     public GameObject pathButtonPrefab;
     public GameObject pathSelectionCanvas;
     public GameObject pathChoiceContainer;
+    public GameObject loadingPanel;
+    public GameObject buttonPanel;
+
     public List<Story.Path> loadedPaths;
     public bool pathSelected;
     public string selectedPathName;
@@ -47,7 +50,7 @@ public class PathSelection : MonoBehaviour
         for (int i = 0; i < loadedPaths.Count; i++)
         {
             GameObject pathButton = Instantiate(pathButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-            pathButton.transform.parent = pathChoiceContainer.transform;
+            pathButton.transform.SetParent(pathChoiceContainer.transform);
             pathButton.transform.localScale = new Vector3(1.0f, 1.1f, 1.0f);
             pathButton.transform.Find("pathNameText").GetComponent<Text>().text = loadedPaths[i].name;
             pathButton.transform.Find("pathDescriptionText").GetComponent<Text>().text = loadedPaths[i].description;
@@ -88,6 +91,9 @@ public class PathSelection : MonoBehaviour
     {
         if (pathSelected == true)
         {
+            this.pathChoiceContainer.SetActive(false);
+            this.buttonPanel.SetActive(false);
+            this.loadingPanel.SetActive(true);
             StoryManager.Instance.SetCurrentPath(confirmPath);
             SceneManager.LoadScene("PathProgressionScene");
         }

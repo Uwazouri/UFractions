@@ -49,7 +49,7 @@ public class InterfaceFactory : MonoBehaviour
         if (instance != null)
             return instance;
 
-        print("InterfaceFactory has not been setup in scene. Will return null.");
+        print("WARNING! InterfaceFactory has not been setup in scene. Will return null.");
         return null;
     }
 

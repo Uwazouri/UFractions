@@ -7,21 +7,20 @@ public class MainMenuScript : MonoBehaviour
 {
     public GameObject mainMenuPanel;
     public GameObject aboutPanel;
-    public Scene storySelection;
-    public string testString;
-    private AssetBundle myLoadedAssets;
 
-    // Use this for initialization
-    void Start()
+    static bool log = false;
+
+    public void Start()
     {
-
+        //if (!log)
+        //{
+        //    print("Started Log");
+        //    UnityEngine.Profiling.Profiler.logFile = System.IO.Path.Combine(Application.persistentDataPath, "ProfileLog.txt");
+        //    UnityEngine.Profiling.Profiler.enabled = true;
+        //    log = true;
+        //}
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void PlayGame()
     {
         SceneManager.LoadScene("StorySelectionScene");

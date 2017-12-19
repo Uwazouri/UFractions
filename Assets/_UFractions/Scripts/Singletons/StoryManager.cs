@@ -1,22 +1,28 @@
 ﻿using System.IO;
 using System.Linq;
-using System.Collections;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 public class StoryManager : Singleton<StoryManager>
 {
-    protected StoryManager() { }
+    protected StoryManager()
+    {
+        this.jsonSettings = new JsonSerializerSettings();
+        this.jsonSettings.TypeNameHandling = TypeNameHandling.All;
+        this.jsonSettings.Formatting = Formatting.Indented;
+        this.jsonSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        this.jsonSettings.MaxDepth = 99;
+    }
 
     public Story currentStory;
     private Story.Path currentPath;
     private Story.Event currentPoint;
     private Story.Problem currentProblem;
     private bool lastProblemSolved = false;
+    private bool streamingSetupDone = false;
+
+    private JsonSerializerSettings jsonSettings;
 
     private string localStoryNames = "LocalStory";
     private string localStoryFolderName = "LocalStories"; // This is the folder name that will store stories in the persistent data path.
@@ -25,30 +31,8 @@ public class StoryManager : Singleton<StoryManager>
     private string streamingStoryFolderName = "StreamingStories"; // If you want to change this you must also change the name of the folder in StreamingAssets.
 
 
-    public string GetVideoPath(string name)
+    public void SetupStreamingStories()
     {
-        return this.currentStory.vidUrlsDictionary[name];
-    }
-
-    public string GetImagePath(string name)
-    {
-        return this.currentStory.imgUrlsDictionary[name];
-    }
-
-    public void SetProblemSolved(bool solved)
-    {
-        this.lastProblemSolved = solved;
-    }
-
-    public bool LastProblemSolved()
-    {
-        return this.lastProblemSolved;
-    }
-
-    public List<Story> GetLocalStories()
-    {
-        this.SetProblemSolved(false);
-
         string storiesPath = Path.Combine(Application.persistentDataPath, this.localStoryFolderName);
 
         if (!Directory.Exists(storiesPath))
@@ -110,18 +94,46 @@ public class StoryManager : Singleton<StoryManager>
             }
         }
 
-        List<Story> localStories = new List<Story>();
+    }
 
-        JsonSerializerSettings settings = new JsonSerializerSettings();
-        settings.TypeNameHandling = TypeNameHandling.All;
-        settings.Formatting = Formatting.Indented;
-        settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+    public string GetVideoPath(string name)
+    {
+        return this.currentStory.vidUrlsDictionary[name];
+    }
+
+    public string GetImagePath(string name)
+    {
+        return this.currentStory.imgUrlsDictionary[name];
+    }
+
+
+    public void SetProblemSolved(bool solved)
+    {
+        this.lastProblemSolved = solved;
+    }
+
+    public bool LastProblemSolved()
+    {
+        return this.lastProblemSolved;
+    }
+
+
+    public List<Story> GetLocalStories()
+    {
+        if (!this.streamingSetupDone)
+        {
+            this.SetupStreamingStories();
+            this.streamingSetupDone = true;
+        }
+
+        this.SetProblemSolved(false);
+
+        List<Story> localStories = new List<Story>();
 
         foreach (string s in Directory.GetFiles(Path.Combine(Application.persistentDataPath, this.localStoryFolderName), "*.json"))
         {
-            //InterfaceFactory.GetInstance().DebugLog("Parsed Local Story " + s + ".");
-            print("Parsed Local Story " + s + ".");
-            localStories.Add(Story.LoadFromJSON(s));
+            localStories.Add(Story.LoadFromJSON(s, this.jsonSettings));
         }
 
         return localStories;
@@ -131,6 +143,7 @@ public class StoryManager : Singleton<StoryManager>
     {
         return Path.Combine(Application.persistentDataPath, this.localStoryFolderName);
     }
+
 
     public void SetCurrentStory(Story story)
     {
@@ -142,17 +155,19 @@ public class StoryManager : Singleton<StoryManager>
         this.SetCurrentStory(Story.LoadFromJSON(filePath));
     }
 
-    public List<Story.Path> GetAllPaths()
-    {
-        this.SetProblemSolved(false);
-        return this.currentStory.paths;
-    }
 
     public void SetCurrentPath(Story.Path path)
     {
         this.currentPath = path;
         this.currentPoint = this.currentPath.pathEvent;
     }
+
+    public List<Story.Path> GetAllPaths()
+    {
+        this.SetProblemSolved(false);
+        return this.currentStory.paths;
+    }
+
 
     public Story.Problem GetProblem(uint ID)
     {
@@ -169,15 +184,17 @@ public class StoryManager : Singleton<StoryManager>
         return this.GetProblem(this.currentPoint.problemID);
     }
 
-    public Story.Event GetCurrentEvent()
-    {
-        return this.currentPoint;
-    }
 
     public void SetCurrentEvent(Story.Event point)
     {
         this.currentPoint = point;
     }
+
+    public Story.Event GetCurrentEvent()
+    {
+        return this.currentPoint;
+    }
+
 
     public AnswerBehaviour GetCurrentAnswerBehaviour(Transform parent)
     {
@@ -198,6 +215,7 @@ public class StoryManager : Singleton<StoryManager>
     {
         return this.GetCurrentProblem().questionData;
     }
+
 
     public AnswerBehaviour GetCurrentAnswerBehaviour(Transform parent, uint problemID)
     {
@@ -368,12 +386,7 @@ public class StoryManager : Singleton<StoryManager>
 
         this.currentStory = myStory;
 
-        JsonSerializerSettings settings = new JsonSerializerSettings();
-        settings.TypeNameHandling = TypeNameHandling.All;
-        settings.Formatting = Formatting.Indented;
-        settings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
-
-        File.WriteAllText(name + ".json", JsonConvert.SerializeObject(myStory, settings));
+        File.WriteAllText(name + ".json", JsonConvert.SerializeObject(myStory, this.jsonSettings));
     }
 
 }

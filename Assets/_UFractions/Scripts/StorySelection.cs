@@ -10,6 +10,8 @@ public class StorySelection : MonoBehaviour
     public GameObject storyButtonPrefab;
     public GameObject storySelectionCanvas;
     public GameObject storyChoiceContainer;
+    public GameObject loadingPanel;
+    public GameObject buttonPanel;
 
     public List<Story> loadedStories;
 
@@ -21,7 +23,9 @@ public class StorySelection : MonoBehaviour
 
     private GameObject pressedStory;
 
-    //Run the story config
+    /// <summary>
+    /// Run the story config
+    /// </summary>
     void Start()
     {
         storySelected = false;
@@ -66,7 +70,7 @@ public class StorySelection : MonoBehaviour
         for (int i = 0; i < loadedStories.Count; i++)
         {
             GameObject storyButton = Instantiate(storyButtonPrefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-            storyButton.transform.parent = storyChoiceContainer.transform;
+            storyButton.transform.SetParent(storyChoiceContainer.transform);
             storyButton.transform.localScale = new Vector3(1.0f, 1.1f, 1.0f);
             storyButton.transform.Find("StoryNameText").GetComponent<Text>().text = loadedStories[i].name;
             storyButton.transform.Find("StoryDescriptionText").GetComponent<Text>().text = loadedStories[i].description;
@@ -105,6 +109,9 @@ public class StorySelection : MonoBehaviour
     {
         if (storySelected == true)
         {
+            this.storyChoiceContainer.SetActive(false);
+            this.buttonPanel.SetActive(false);
+            this.loadingPanel.SetActive(true);
             StoryManager.Instance.SetCurrentStory(confirmStory);
             SceneManager.LoadScene("PathSelectionScene");
         }

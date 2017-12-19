@@ -253,7 +253,18 @@ using Newtonsoft.Json;
         settings.TypeNameHandling = TypeNameHandling.All;
         settings.Formatting = Formatting.Indented;
         settings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+        settings.MaxDepth = 99;
 
+        Story returnStory = JsonConvert.DeserializeObject<Story>(File.ReadAllText(filePath), settings);
+
+        if (returnStory == null)
+            Debug.Log("Story could not be loaded from file path.");
+
+        return returnStory;
+    }
+
+    public static Story LoadFromJSON(string filePath, JsonSerializerSettings settings)
+    {
         Story returnStory = JsonConvert.DeserializeObject<Story>(File.ReadAllText(filePath), settings);
 
         if (returnStory == null)

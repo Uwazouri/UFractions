@@ -247,7 +247,7 @@ public class TextBoxQuestion : QuestionBehaviour
         AvatarTextureUpdate();
         questAm = infoText.Length;
         boxText.text = infoText[currentQuest].ToString();
-        leftSideLayout = true;
+        leftSideLayout = this.leftOrRight[currentQuest];
         Hide();
 
         float y = 0;

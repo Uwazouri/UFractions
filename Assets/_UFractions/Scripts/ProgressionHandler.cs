@@ -18,7 +18,7 @@ public class ProgressionHandler : MonoBehaviour
     private string selectedEvent;
     private Story.Event confirmEvent;
     private  bool eventSelected = false;
-    public TextMeshProUGUI loadingText;
+    public GameObject loadingPanel;
     public Button continueButton;
     
     /// for debug
@@ -48,19 +48,19 @@ public class ProgressionHandler : MonoBehaviour
         if (StoryManager.Instance.LastProblemSolved() == false)
         {
             // go back to current problem
-            this.loadingText.gameObject.SetActive(true);
+            this.loadingPanel.SetActive(true);
             SceneManager.LoadScene("ProblemScene");
         }
         else if(eventList.Count == 0)
         {
             //Goes to PathSelection scene
-            this.loadingText.gameObject.SetActive(true);
+            this.loadingPanel.SetActive(true);
             SceneManager.LoadScene("PathSelectionScene");
         }
         else if (eventList.Count == 1)
         {
             //if there is only one path, go to it
-            this.loadingText.gameObject.SetActive(true);
+            this.loadingPanel.SetActive(true);
             StoryManager.Instance.SetCurrentEvent(eventList[0]);
             SceneManager.LoadScene("ProblemScene");
         }
@@ -124,7 +124,7 @@ public class ProgressionHandler : MonoBehaviour
     {
         if(eventSelected == true)
         {
-            this.loadingText.gameObject.SetActive(true);
+            this.loadingPanel.SetActive(true);
             this.continueButton.gameObject.SetActive(false);
             this.buttonContainer.gameObject.SetActive(false);
             StoryManager.Instance.SetCurrentEvent(confirmEvent); 

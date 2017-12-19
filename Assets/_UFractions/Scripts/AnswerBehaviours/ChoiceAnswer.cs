@@ -10,7 +10,6 @@ using UnityEngine.EventSystems;
 /// Attach the object to a panel in a canvas that is of suitable size.
 /// Select a prefab of a choice that contains a Toggle component and is of suitable size according to the attached panel.
 /// </summary>
-[RequireComponent(typeof(SlideUIElement))]
 public class ChoiceAnswer : AnswerBehaviour
 {
     [Serializable]
@@ -53,7 +52,8 @@ public class ChoiceAnswer : AnswerBehaviour
     /// </summary>
     public override void Show()
     {
-        GetComponent<SlideUIElement>().Show();
+        //GetComponent<SlideUIElement>().Show();
+        this.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -61,7 +61,8 @@ public class ChoiceAnswer : AnswerBehaviour
     /// </summary>
     public override void Hide()
     {
-        GetComponent<SlideUIElement>().Hide();
+        //GetComponent<SlideUIElement>().Hide();
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>

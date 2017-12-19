@@ -5,7 +5,7 @@ PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 13
   productGUID: 5f945d5b53e95db47932728989e7c836
-  AndroidProfiler: 0
+  AndroidProfiler: 1
   AndroidFilterTouchesWhenObscured: 0
   defaultScreenOrientation: 2
   targetDevice: 2
@@ -124,7 +124,12 @@ PlayerSettings:
     16:9: 1
     Others: 0
   bundleVersion: 0.1
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 102900000, guid: 2a808ea1cc8b93f4aba227b5d5f61a11, type: 3}
+  - {fileID: 102900000, guid: fe74b056f46dc694faf851ba8e661340, type: 3}
+  - {fileID: 102900000, guid: 0ecd06296379e2641aadd3ac6769c3ba, type: 3}
+  - {fileID: 102900000, guid: 34e6ff644bd0342459e07a08b577f107, type: 3}
+  - {fileID: 102900000, guid: 5ba41f79a6a90f9449f7c9dd51a76a25, type: 3}
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 0
@@ -153,7 +158,7 @@ PlayerSettings:
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
-  AndroidPreferredInstallLocation: 1
+  AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
   iPhoneStrippingLevel: 0
@@ -162,7 +167,7 @@ PlayerSettings:
   ForceSDCardPermission: 1
   CreateWallpaper: 0
   APKExpansionFiles: 0
-  keepLoadedShadersAlive: 0
+  keepLoadedShadersAlive: 1
   StripUnusedMeshComponents: 0
   VertexChannelCompressionMask:
     serializedVersion: 2
@@ -605,7 +610,11 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    UNet: 1
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
+    UNet: 0
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: acc77293-80c1-4e7a-b710-4d90e453e18a
