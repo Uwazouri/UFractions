@@ -2,12 +2,15 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Newtonsoft.Json;
+using System.Collections;
 
 public class StoryManager : Singleton<StoryManager>
 {
     protected StoryManager()
     {
+        this.currentStoryTextures = new Dictionary<string, Texture2D>();
         this.jsonSettings = new JsonSerializerSettings();
         this.jsonSettings.TypeNameHandling = TypeNameHandling.All;
         this.jsonSettings.Formatting = Formatting.Indented;
@@ -21,6 +24,11 @@ public class StoryManager : Singleton<StoryManager>
     private Story.Problem currentProblem;
     private bool lastProblemSolved = false;
     private bool streamingSetupDone = false;
+    private bool loadingUrlDone = false;
+    private bool loadingUrlError = false;
+    private WWW www;
+
+    private Dictionary<string, Texture2D> currentStoryTextures;
 
     private JsonSerializerSettings jsonSettings;
 
@@ -96,6 +104,26 @@ public class StoryManager : Singleton<StoryManager>
 
     }
 
+    private void SetupCurrentStoryImages()
+    {
+        this.currentStoryTextures.Clear();
+
+        foreach (KeyValuePair<string, string> kvp in this.currentStory.imgUrlsDictionary)
+        {
+            www = new WWW(kvp.Value);
+            
+            while (!www.isDone && www.error == null)
+            {
+
+            }
+            if (www.isDone)
+            {
+                print("Image Loaded " + kvp.Key);
+                this.currentStoryTextures.Add(kvp.Key, www.texture);
+            }
+        }
+    }
+
 
     public string GetVideoPath(string name)
     {
@@ -105,6 +133,24 @@ public class StoryManager : Singleton<StoryManager>
     public string GetImagePath(string name)
     {
         return this.currentStory.imgUrlsDictionary[name];
+    }
+
+    public Texture GetImageTexture(string name)
+    {
+        if (this.currentStoryTextures.ContainsKey(name))
+            return this.currentStoryTextures[name];
+        else
+        {
+            return new Texture();
+        }
+    }
+
+    public Sprite GetImageSprite(string name)
+    {
+        if (this.currentStoryTextures.ContainsKey(name))
+            return Sprite.Create(this.currentStoryTextures[name], new Rect(0, 0, this.currentStoryTextures[name].width, this.currentStoryTextures[name].height), new Vector2(0.1f, 0.1f));
+        else
+            return new Sprite();
     }
 
 
@@ -148,11 +194,13 @@ public class StoryManager : Singleton<StoryManager>
     public void SetCurrentStory(Story story)
     {
         this.currentStory = story;
+        this.SetupCurrentStoryImages();
     }
 
     public void SetCurrentStory(string filePath)
     {
         this.SetCurrentStory(Story.LoadFromJSON(filePath));
+        this.SetupCurrentStoryImages();
     }
 
 
@@ -388,5 +436,4 @@ public class StoryManager : Singleton<StoryManager>
 
         File.WriteAllText(name + ".json", JsonConvert.SerializeObject(myStory, this.jsonSettings));
     }
-
 }

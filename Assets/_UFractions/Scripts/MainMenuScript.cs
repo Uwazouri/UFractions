@@ -7,6 +7,8 @@ public class MainMenuScript : MonoBehaviour
 {
     public GameObject mainMenuPanel;
     public GameObject aboutPanel;
+    public GameObject loadingPanel;
+    public GameObject componentsPanel;
 
     static bool log = false;
 
@@ -23,6 +25,8 @@ public class MainMenuScript : MonoBehaviour
 
     public void PlayGame()
     {
+        this.componentsPanel.SetActive(false);
+        this.loadingPanel.SetActive(true);
         SceneManager.LoadScene("StorySelectionScene");
     }
     public void QuitApplication()

@@ -30,15 +30,15 @@ public class PathSelection : MonoBehaviour
 
     private void Update()
     {
-        if (pathSelected == false)
-        {
-            GameObject.Find("CONFIRM").GetComponent<Button>().interactable = false;
-        }
+        //if (pathSelected == false)
+        //{
+        //    GameObject.Find("CONFIRM").GetComponent<Button>().interactable = false;
+        //}
 
-        else
-        {
-            GameObject.Find("CONFIRM").GetComponent<Button>().interactable = true;
-        }
+        //else
+        //{
+        //    GameObject.Find("CONFIRM").GetComponent<Button>().interactable = true;
+        //}
     }
 
     //This is the function to update all the stories in the menu
@@ -76,6 +76,7 @@ public class PathSelection : MonoBehaviour
             {
                 confirmPath = s;
                 pathSelected = true;
+                GameObject.Find("CONFIRM").GetComponent<Button>().interactable = true;
                 break;
             }
 

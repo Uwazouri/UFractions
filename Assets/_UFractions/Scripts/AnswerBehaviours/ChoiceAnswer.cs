@@ -74,24 +74,26 @@ public class ChoiceAnswer : AnswerBehaviour
 
         if (choicesAnswer.mode == 0)
         {
-            bool fail = false;
-            float time = 0;
-            float timeout = 1;
+            //bool fail = false;
+            //float time = 0;
+            //float timeout = 1;
 
             foreach (string s in choicesAnswer.imageChoices)
             {
-                WWW www = new WWW(StoryManager.Instance.GetImagePath(s));
+                //WWW www = new WWW(StoryManager.Instance.GetImagePath(s));
 
-                while (!www.isDone || !fail)
-                {
-                    if (time >= timeout)
-                        fail = true;
-                    time += Time.deltaTime;
-                }
+                //while (!www.isDone || !fail)
+                //{
+                //    if (time >= timeout)
+                //        fail = true;
+                //    time += Time.deltaTime;
+                //}
 
-                Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.1f, 0.1f));
+                //Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.1f, 0.1f));
 
-                this.AddChoice(sprite);
+                //this.AddChoice(sprite);
+
+                this.AddChoice(StoryManager.Instance.GetImageSprite(s));
             }
         }
 

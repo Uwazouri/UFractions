@@ -220,26 +220,31 @@ public class TextBoxQuestion : QuestionBehaviour
 
         Texture texture = new Texture();
 
-        bool fail = false;
-        float time = 0;
-        float timeout = 1;
+        //bool fail = false;
+        //float time = 0;
+        //float timeout = 1;
 
         foreach (TextBox t in ((TextBoxQuestionData)question).texts)
         {
-            WWW www = new WWW(StoryManager.Instance.GetImagePath(t.avatar));
+            //WWW www = new WWW(StoryManager.Instance.GetImagePath(t.avatar));
 
-            while (!www.isDone || !fail)
-            {
-                if (time >= timeout)
-                    fail = true;
-                time += Time.deltaTime;
-            }
+            //while (!www.isDone || !fail)
+            //{
+            //    if (time >= timeout)
+            //        fail = true;
+            //    time += Time.deltaTime;
+            //}
 
-            texture = www.texture;
+            //texture = www.texture;
 
-            textures.Add(texture);
+            //textures.Add(texture);
+            //leftOrientation.Add(t.left);
+            //texts.Add(t.text);
+
+            textures.Add(StoryManager.Instance.GetImageTexture(t.avatar));
             leftOrientation.Add(t.left);
             texts.Add(t.text);
+
         }
 
         InsertValues(texts, textures, leftOrientation);

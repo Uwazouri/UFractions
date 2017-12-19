@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class StorySelection : MonoBehaviour
 {
@@ -35,15 +35,15 @@ public class StorySelection : MonoBehaviour
     //If we have a selected story, then we will be able to interact with the confirm button to proceed
     private void Update()
     {
-        if (storySelected == false)
-        {
-            GameObject.Find("CONFIRM").GetComponent<Button>().interactable = false;
-        }
+        //if (storySelected == false)
+        //{
+        //    GameObject.Find("CONFIRM").GetComponent<Button>().interactable = false;
+        //}
 
-        else
-        {
-            GameObject.Find("CONFIRM").GetComponent<Button>().interactable = true;
-        }
+        //else
+        //{
+            
+        //}
     }
 
     /*
@@ -94,6 +94,7 @@ public class StorySelection : MonoBehaviour
             {
                 confirmStory = s;
                 storySelected = true;
+                GameObject.Find("CONFIRM").GetComponent<Button>().interactable = true;
                 break;
             }
 
@@ -112,8 +113,7 @@ public class StorySelection : MonoBehaviour
             this.storyChoiceContainer.SetActive(false);
             this.buttonPanel.SetActive(false);
             this.loadingPanel.SetActive(true);
-            StoryManager.Instance.SetCurrentStory(confirmStory);
-            SceneManager.LoadScene("PathSelectionScene");
+            StartCoroutine(SetStoryLoadPathNextFrame());
         }
     }
 
@@ -121,5 +121,12 @@ public class StorySelection : MonoBehaviour
     public void GoBack()
     {
         SceneManager.LoadScene("MainMenuScene");
+    }
+
+    IEnumerator SetStoryLoadPathNextFrame()
+    {
+        yield return new WaitForSeconds(0.01f);
+        StoryManager.Instance.SetCurrentStory(confirmStory);
+        SceneManager.LoadScene("PathSelectionScene");
     }
 }
