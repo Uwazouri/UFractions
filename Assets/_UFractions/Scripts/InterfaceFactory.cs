@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// A singleton like class that handles instantiation of different interfaces that needs additional components (such as UI elements).
 /// HOW TO USE: 
 /// 1. Create an empty GameObject and attach this script as a component and check the isMaster bool to true.
-/// 2. 
-/// To add a new interface, add a private serialized gameobject field and make a public function for getting the interface object.
+/// 2. Add interfaces prefabs to the interfaces array in the inspector.
+/// 3. Add AR Objects prefabs to the arObjectPrefabs array in the inspector.
+/// 
 /// NOTES!: In Unity Script Execution Order set InterfaceFactory to above default time. Also make sure there is only one InterfaceFactory in every scene.
 /// </summary>
 public class InterfaceFactory : MonoBehaviour
@@ -21,7 +19,7 @@ public class InterfaceFactory : MonoBehaviour
     public GameObject[] interfaces;
     public GameObject[] arObjectPrefabs;
 
-    [SerializeField] private Text debugConsole;
+    [SerializeField] private Text debugConsole; /// Old, used before to print debug messages on android
 
     /// <summary>
     /// Ensure simple singleton like behaviour with thread lock.
@@ -92,16 +90,34 @@ public class InterfaceFactory : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Creates an ARObject of given type.
+    /// </summary>
+    /// <param name="aRObjaectType">The ARObjectType of the ArObject to create.</param>
+    /// <param name="parent">The parent the created ARObject should have.</param>
     public void SpawnARObject(ARObjectType aRObjaectType, Transform parent)
     {
         this.SpawnARObject(aRObjaectType, parent, Vector3.zero);
     }
 
+    /// <summary>
+    /// Creates an ARObject of given type.
+    /// </summary>
+    /// <param name="aRObjaectType">The ARObjectType of the ArObject to create.</param>
+    /// <param name="parent">The parent the created ARObject should have.</param>
+    /// <param name="position">The position of the ARObject.</param>
     public void SpawnARObject(ARObjectType aRObjaectType, Transform parent, Vector3 position)
     {
         this.SpawnARObject(aRObjaectType, parent, position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Creates an ARObject of given type.
+    /// </summary>
+    /// <param name="aRObjaectType">The ARObjectType of the ArObject to create.</param>
+    /// <param name="parent">The parent the created ARObject should have.</param>
+    /// <param name="position">The position of the ARObject.</param>
+    /// <param name="rotation">The rotation of the ARObject.</param>
     public void SpawnARObject(ARObjectType aRObjaectType, Transform parent, Vector3 position, Quaternion rotation)
     {
         foreach (GameObject g in this.arObjectPrefabs)
@@ -120,6 +136,10 @@ public class InterfaceFactory : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Old, used to print messages on android before. Dont use, make something else.
+    /// </summary>
+    /// <param name="text">The test to print.</param>
     public void DebugLog(string text)
     {
         if (this.debugConsole != null)

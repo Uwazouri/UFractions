@@ -1,54 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Thrown together editor with no real functionality except saving the hardcoded debug story and display local story folder path.
+/// </summary>
 public class EditorController : MonoBehaviour
 {
-    public class EditorProblem
-    {
-        public Dropdown questionDropdown;
-
-        public EditorProblem()
-        {
-        }
-    }
-
 
     public Story story;
     public TextMeshProUGUI nameText;
     public TMP_InputField pathText;
 
-	// Use this for initialization
+	/// <summary>
+    /// Get the local story path on start.
+    /// </summary>
 	void Start ()
     {
         pathText.text = StoryManager.Instance.GetLocalStoriesPath();
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
 
-    public void UpdatePathText()
-    {
-        //pathText.SetText(StoryManager.Instance.GetLocalStoriesPath());
-    }
-
+    /// <summary>
+    /// Saves the debug story of storymanager.
+    /// </summary>
     public void SaveStory()
     {
         StoryManager.Instance.CreateDebugStory(this.nameText.text);
     }
 
+    /// <summary>
+    /// Set the name to use when saving the story.
+    /// </summary>
+    /// <param name="name"></param>
     public void SetStoryName(string name)
     {
         story.SetName(name);
-    }
-
-    public void SetStoryDescription(string description)
-    {
-        story.SetDescription(description);
     }
 }

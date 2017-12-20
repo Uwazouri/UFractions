@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/// Code from Unity 3D wiki 2017-12-20
+/// http://wiki.unity3d.com/index.php/Singleton
+
+using UnityEngine;
 
 /// <summary>
 /// Be aware this will not prevent a non singleton constructor
@@ -64,6 +67,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
 
     private static bool applicationIsQuitting = false;
+
     /// <summary>
     /// When Unity quits, it destroys objects in a random order.
     /// In principle, a Singleton is only destroyed when application quits.

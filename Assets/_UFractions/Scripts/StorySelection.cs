@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
+/// <summary>
+/// Handles story selection of the current story in the path selection scene.
+/// Note: Must set current story before it can continue to path progression scene.
+/// </summary>
 public class StorySelection : MonoBehaviour
 {
     public GameObject storyButtonPrefab;
@@ -24,7 +28,7 @@ public class StorySelection : MonoBehaviour
     private GameObject pressedStory;
 
     /// <summary>
-    /// Run the story config
+    /// Set no story selected on start and load all stories with storymanager.
     /// </summary>
     void Start()
     {
@@ -32,37 +36,23 @@ public class StorySelection : MonoBehaviour
         LoadStoryConfig();
     }
 
-    //If we have a selected story, then we will be able to interact with the confirm button to proceed
-    private void Update()
-    {
-        //if (storySelected == false)
-        //{
-        //    GameObject.Find("CONFIRM").GetComponent<Button>().interactable = false;
-        //}
-
-        //else
-        //{
-            
-        //}
-    }
-
-    /*
-     * This is the function to update all the stories in the menu!
-     *
-     * 1. We start by loading all the stories with assistance from StoryManager
-     *
-     * 2. We go through all the loaded stories and create a button from a prefab. One button for each story
-     *
-     * 3. We set the position, scale and parent for the button so it will align at the proper place
-     *
-     * 4. We locate the name and the description text fields of the buttons, these will display name and description for their belonging story
-     *
-     *      Example:
-     *                  Adventures Of Chopper
-     *                  This is a story about a little reindeer named Chopper, who's life long dream is to become the best doctor in the world!
-     *  
-     * 5. When all buttons have their rightful layout and texts, we position the container once more for a better fit
-     */
+    /// <summary>
+    /// This is the function to update all the stories in the menu!
+    /// 
+    /// 1. We start by loading all the stories with assistance from StoryManager
+    /// 
+    /// 2. We go through all the loaded stories and create a button from a prefab. One button for each story
+    /// 
+    /// 3. We set the position, scale and parent for the button so it will align at the proper place
+    /// 
+    /// 4. We locate the name and the description text fields of the buttons, these will display name and description for their belonging story
+    /// 
+    ///      Example:
+    ///                  Adventures Of Chopper
+    ///                  This is a story about a little reindeer named Chopper, who's life long dream is to become the best doctor in the world!
+    ///  
+    /// 5. When all buttons have their rightful layout and texts, we position the container once more for a better fit
+    /// </summary>
     public void LoadStoryConfig()
     {
         loadedStories = StoryManager.Instance.GetLocalStories();
@@ -79,8 +69,10 @@ public class StorySelection : MonoBehaviour
         storyChoiceContainer.GetComponent<RectTransform>().localPosition = new Vector2(-150.0f, -1000.0f);
     }
 
-    //Check witch button was pressed and retrive the belonging name and description
-    //Then set the story linked to that button as the current one
+    /// <summary>
+    /// Check witch button was pressed and retrive the belonging name and description
+    /// Then set the story linked to that button as the current one
+    /// </summary>
     public void SelectedStory()
     {
         pressedStory = EventSystem.current.currentSelectedGameObject;
@@ -105,7 +97,9 @@ public class StorySelection : MonoBehaviour
         }
     }
 
-    //Lock the current story and proceed to next scene
+    /// <summary>
+    /// Lock the current story and proceed to next scene
+    /// </summary>
     public void OpenStory()
     {
         if (storySelected == true)
@@ -117,12 +111,18 @@ public class StorySelection : MonoBehaviour
         }
     }
 
-    //Back to main menu
+    /// <summary>
+    /// Back to main menu
+    /// </summary>
     public void GoBack()
     {
         SceneManager.LoadScene("MainMenuScene");
     }
 
+    /// <summary>
+    /// Enumerator that will start loading current story after loading screen has been displayed.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SetStoryLoadPathNextFrame()
     {
         yield return new WaitForSeconds(0.01f);

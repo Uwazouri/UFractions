@@ -1,55 +1,50 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Answer interface that uses simple input field to answer a question.
+/// </summary>
 public class InputAnswer : AnswerBehaviour
 {
-    public class InputAnswerData : AnswerData
+    /// <summary>
+    /// Data interface for InputAnswer.
+    /// </summary>
+    [Serializable] public class InputAnswerData : AnswerData
     {
         public List<string> answers;
-        public List<ARObjectType> arObjects;
 
-        public InputAnswerData(List<string> answers, List<ARObjectType> arObjects)
+        /// <summary>
+        /// Constructor sets the data.
+        /// </summary>
+        /// <param name="answers">A list of accepted answers.</param>
+        public InputAnswerData(List<string> answers)
         {
             this.answers = answers;
-            this.arObjects = arObjects;
         }
     }
 
     public List<string> answerStrings;
     public InputField answerBox;
 
-    // Use this for initialization
+    /// <summary>
+    /// Hides answer part on start.
+    /// </summary>
     void Start()
     {
         this.Hide();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// Setup function for InputBox.
     /// </summary>
-    /// <param name="ans">String, correct answer.</param>
-    /// <param name="desc">Text to be displayed in the box.</param>
+    /// <param name="answerData">AnswerData for problem.</param>
     public override void SetupAnswer(AnswerData answerData)
     {
         InputAnswerData data = (InputAnswerData)answerData;
 
         this.answerStrings = data.answers;
-
-        float y = 1.5f;
-
-        foreach (ARObjectType a in data.arObjects)
-        {
-            InterfaceFactory.GetInstance().SpawnARObject(a, InterfaceFactory.GetInstance().transform, new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), y, UnityEngine.Random.Range(-5.0f, 5.0f)));
-            y += 1.5f;
-        }
     }
 
     /// <summary>

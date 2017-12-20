@@ -1,22 +1,26 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
+/// <summary>
+/// Answer Interface that uses selection of ARObjects to answer a question.
+/// </summary>
 public class ARSelectionAnswer : AnswerBehaviour
 {
     /// <summary>
-    /// Setups the list off objects and answare. 
+    /// The data interface for ARSelectionAnswer.
     /// </summary>
-    [Serializable]
-    public class ARSElectionAnswerData : AnswerData
+    [Serializable] public class ARSelectionAnswerData : AnswerData
     {
         public List<ARObjectType> answer;
         public List<ARObjectType> objects;
 
-        public ARSElectionAnswerData(List<ARObjectType> objects, List<ARObjectType> answer)
+        /// <summary>
+        /// Constructor that will set data.
+        /// </summary>
+        /// <param name="objects">A list of ARObjectType that will be spawned.</param>
+        /// <param name="answer">A list of ARObjectType that is the correct answer.</param>
+        public ARSelectionAnswerData(List<ARObjectType> objects, List<ARObjectType> answer)
         {
             this.answer = answer;
             this.objects = objects;
@@ -28,7 +32,9 @@ public class ARSelectionAnswer : AnswerBehaviour
     public List<GameObject> objectPrefab;
     float yPos = 0;
 
-    // Use this for initialization
+    /// <summary>
+    /// Setup needed instances at start.
+    /// </summary>
     void Start()
     {
         this.highlightChoices = new List<ARObjectType>();
@@ -61,10 +67,10 @@ public class ARSelectionAnswer : AnswerBehaviour
     /// <summary>
     /// Setups the list of answare that will be compared to the choices of the player. 
     /// </summary>
-    /// <param name="answer"></param>
+    /// <param name="answer">The answer data interface of the question. Must be of ARSelectionAnswerData.</param>
     public override void SetupAnswer(AnswerData answer)
     {
-        ARSElectionAnswerData data = (ARSElectionAnswerData)answer;
+        ARSelectionAnswerData data = (ARSelectionAnswerData)answer;
         this.answare = data.answer;
         foreach(ARObjectType t in data.objects)
         {
@@ -73,9 +79,9 @@ public class ARSelectionAnswer : AnswerBehaviour
     }
 
     /// <summary>
-    /// Creats the rods that will be active in the scen
+    /// Spawns an ARObject of given type.
     /// </summary>
-    /// <param name="aRObjectType"></param>
+    /// <param name="aRObjectType">The ARObjectType to spawn.</param>
     private void SpawnObject(ARObjectType aRObjectType)
     {
         foreach (GameObject g in this.objectPrefab)

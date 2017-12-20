@@ -4,14 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Question Interface that uses textboxes to display a question.
+/// </summary>
 public class TextBoxQuestion : QuestionBehaviour
 {
-    [Serializable]
-    public class TextBoxQuestionData : QuestionData
+    /// <summary>
+    /// The data interface for TextBoxQuestion.
+    /// </summary>
+    [Serializable] public class TextBoxQuestionData : QuestionData
     {
         public List<TextBox> texts;
         public List<ARObjectType> arObjects;
 
+        /// <summary>
+        /// Constructor that sets data.
+        /// </summary>
+        /// <param name="textBoxes">The textboxes that can be shown.</param>
+        /// <param name="arObjects">List of ARObjects to spawn in AR scene.</param>
         public TextBoxQuestionData(List<TextBox> textBoxes, List<ARObjectType> arObjects)
         {
             this.texts = textBoxes;
@@ -22,13 +32,21 @@ public class TextBoxQuestion : QuestionBehaviour
         }
     }
 
-    [Serializable]
-    public class TextBox
+    /// <summary>
+    /// Contains data for how a TextBox behaves.
+    /// </summary>
+    [Serializable] public class TextBox
     {
         public string avatar;
         public bool left;
         public string text;
 
+        /// <summary>
+        /// Constructor that sets variables.
+        /// </summary>
+        /// <param name="avatar">The name of the image to display with this textbox. Null if no image.</param>
+        /// <param name="leftPlacement">Is the image placed left.</param>
+        /// <param name="text">The text of the textbox.</param>
         public TextBox(string avatar, bool leftPlacement, string text)
         {
             this.avatar = avatar;
@@ -42,6 +60,8 @@ public class TextBoxQuestion : QuestionBehaviour
     public Text boxText;
     public RawImage avatarLeft;
     public RawImage avatarRight;
+
+    public Texture noImageTexture;
 
     public Texture[] pics;
     public string[] infoText;
@@ -58,28 +78,39 @@ public class TextBoxQuestion : QuestionBehaviour
      *  FalseTrue -> Right
      */
 
-    //Set the avatar layout to left
+    /// <summary>
+    /// Set the avatar layout to left.
+    /// </summary>
     void AvatarStateTrueFalse()
     {
         avatarRight.enabled = false;
         avatarLeft.enabled = true;
     }
 
-    //Set the avatar layout to right
+    /// <summary>
+    /// Set the avatar layout to right.
+    /// </summary>
     void AvatarStateFalseTrue()
     {
         avatarLeft.enabled = false;
         avatarRight.enabled = true;
     }
 
-    //Update the textures, typically done when we change page 
+    /// <summary>
+    /// Update the textures, typically done when we change page.
+    /// </summary>
     void AvatarTextureUpdate()
     {
         avatarLeft.texture = pics[currentQuest];
         avatarRight.texture = pics[currentQuest];
     }
 
-    //This is the function to input values for editor mode, you must have anything at all in it and you must have the same amount of avatars as questions / dialogs
+    /// <summary>
+    /// This is the function to input values for editor mode, you must have anything at all in it and you must have the same amount of avatars as questions / dialogs.
+    /// </summary>
+    /// <param name="inText">Texts for the text boxes.</param>
+    /// <param name="inPics">images for the text boxes.</param>
+    /// <param name="sideOfScreen">placement of images in text boxes.</param>
     public void InsertValues(List<string> inText, List<Texture> inPics, List<bool> sideOfScreen)
     {
         if (inText.Count == 0 || inPics.Count == 0)
@@ -92,7 +123,7 @@ public class TextBoxQuestion : QuestionBehaviour
             Debug.LogWarning("You must have the same amount of avatars as questions / dialogs!");
         }
 
-        //Takes the provided text and pictures, then assign them into seperate arrays
+        // Takes the provided text and pictures, then assign them into seperate arrays
         infoText = new string[inText.Count];
         questAm = inText.Count;
         pics = new Texture[inPics.Count];
@@ -106,50 +137,57 @@ public class TextBoxQuestion : QuestionBehaviour
         }
     }
 
-    //Check if the layout of the avatar is left or right, this is modifiable for each page
+    /// <summary>
+    /// Check if the layout of the avatar is left or right, this is modifiable for each page.
+    /// </summary>
     private void Update()
     {
-        //Left side of the screen for the text box
+        // Left side of the screen for the text box
         if (leftSideLayout == true)
         {
             AvatarStateTrueFalse();
         }
 
-        //Right side of the screen for the text box
+        // Right side of the screen for the text box
         if (leftSideLayout == false)
         {
             AvatarStateFalseTrue();
         }
     }
 
+    /// <summary>
+    /// Check movement permission in fixed update.
+    /// </summary>
     void FixedUpdate()
     {
-        //If we are at the first page, we can't go back anymore
+        // If we are at the first page, we can't go back anymore
         if (currentQuest == 0)
         {
             prevQuestionButton.SetActive(false);
         }
 
-        //If we are at the last page, we can't go forward anymore
+        // If we are at the last page, we can't go forward anymore
         if (currentQuest == questAm - 1)
         {
             nextQuestionButton.SetActive(false);
         }
 
-        //If we are at page two or higher, we can go back
+        // If we are at page two or higher, we can go back
         if (currentQuest != 0)
         {
             prevQuestionButton.SetActive(true);
         }
 
-        //If we are lower than the total amount of pages, we can go forth
+        // If we are lower than the total amount of pages, we can go forth
         if (currentQuest != questAm - 1)
         {
             nextQuestionButton.SetActive(true);
         }
     }
 
-    //Change avatar and text for the comming page
+    /// <summary>
+    /// Change avatar and text for the comming page.
+    /// </summary>
     public void NextQuestion()
     {
         currentQuest = currentQuest + 1;
@@ -169,7 +207,9 @@ public class TextBoxQuestion : QuestionBehaviour
         boxText.text = infoText[currentQuest].ToString();
     }
 
-    //Change avatar and text for the previouse page
+    /// <summary>
+    /// Change avatar and text for the previouse page.
+    /// </summary>
     public void PreviouseQuestion()
     {
         currentQuest = currentQuest - 1;
@@ -189,62 +229,46 @@ public class TextBoxQuestion : QuestionBehaviour
         boxText.text = infoText[currentQuest].ToString();
     }
 
-    //When you wanna open the text box
+    /// <summary>
+    /// When you wanna open the text box.
+    /// </summary>
     public override void Show()
     {
         this.gameObject.SetActive(true);
     }
 
-    //When you wanna close the text box
+    /// <summary>
+    /// When you wanna close the text box.
+    /// </summary>
     public override void Hide()
     {
         this.gameObject.SetActive(false);
     }
 
-    /*
-     * This is the question setup
-     * 
-     * 1. We retreive data about witch question it currently is
-     * 
-     * 2. We search for the pictures linked to each page of text
-     * 
-     * 3. When the picture is retrived we will add it to that page and apply the text
-     * 
-     * 4. When all pics and texts are in place, we set the amount of questions so the orientation of witch question we are on works properly
-     */
+    /// <summary>
+    /// This is the question setup
+    /// 
+    /// 1. We retreive data about witch question it currently is
+    /// 
+    /// 2. We search for the pictures linked to each page of text
+    /// 
+    /// 3. When the picture is retrived we will add it to that page and apply the text
+    /// 
+    /// 4. When all pics and texts are in place, we set the amount of questions so the orientation of witch question we are on works properly
+    /// 
+    /// </summary>
+    /// <param name="question">The QuestionData of the problem.</param>
     public override void SetupQuestion(QuestionData question)
     {
         List<Texture> textures = new List<Texture>();
         List<bool> leftOrientation = new List<bool>();
         List<string> texts = new List<string>();
 
-        Texture texture = new Texture();
-
-        //bool fail = false;
-        //float time = 0;
-        //float timeout = 1;
-
         foreach (TextBox t in ((TextBoxQuestionData)question).texts)
         {
-            //WWW www = new WWW(StoryManager.Instance.GetImagePath(t.avatar));
-
-            //while (!www.isDone || !fail)
-            //{
-            //    if (time >= timeout)
-            //        fail = true;
-            //    time += Time.deltaTime;
-            //}
-
-            //texture = www.texture;
-
-            //textures.Add(texture);
-            //leftOrientation.Add(t.left);
-            //texts.Add(t.text);
-
             textures.Add(StoryManager.Instance.GetImageTexture(t.avatar));
             leftOrientation.Add(t.left);
             texts.Add(t.text);
-
         }
 
         InsertValues(texts, textures, leftOrientation);
@@ -262,15 +286,5 @@ public class TextBoxQuestion : QuestionBehaviour
             InterfaceFactory.GetInstance().SpawnARObject(a, InterfaceFactory.GetInstance().transform, new Vector3(UnityEngine.Random.Range(-5.0f, 5.0f), y, UnityEngine.Random.Range(-5.0f, 5.0f)));
             y += 1.5f;
         }
-    }
-
-    //Retrieve textures from the internet
-    private IEnumerator GetWebText(string url, Texture texture)
-    {
-        WWW www = new WWW(url);
-        print(url);
-        yield return new WaitForSeconds(1.0f);
-        print("Texture Loaded");
-        texture = www.texture;
     }
 }

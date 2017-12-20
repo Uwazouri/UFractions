@@ -3,6 +3,7 @@
 /// <summary>
 /// Attach this script to a UI object in a canvas and call its show and hide functions.
 /// The object will move from either the left or right side of the parent canvas.
+/// Note: Unoptimized and unstable I think, could be iterated into better more adjustable component.
 /// </summary>
 [RequireComponent(typeof(RectTransform), typeof(CanvasRenderer))]
 public class SlideUIElement : MonoBehaviour
@@ -60,8 +61,6 @@ public class SlideUIElement : MonoBehaviour
         {
             this.on = true;
             Rect parentCanvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
-            if (parentCanvasRect == null)
-                print("SlideUIPanel could not find canvas rect");
             if (!this.centerObjectX)
             {
                 if (!this.leftOrientation)
@@ -92,9 +91,7 @@ public class SlideUIElement : MonoBehaviour
         {
             this.on = false;
             Rect parentCanvasRect = GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect;
-            if (parentCanvasRect == null)
-                print("SlideUIPanel could not find canvas rect");
-            else if (!this.leftOrientation)
+            if (!this.leftOrientation)
             {
                 if (this.transform.localPosition.x >= parentCanvasRect.xMax)
                     this.hide = false;

@@ -1,33 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Put on a GameObject with material that uses outlines to allow highlight selection by TouchRaycast.
+/// </summary>
 public class HighlightReaction : RaycastReaction
 {
     public bool isActive = false; 
     public bool hitHighlight;
     int hitCounter = 0;
 
-    // Use this for initialization
-    void Start ()
-    {
-       
-    }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-
-	}
-
     /// <summary>
     /// if the raycast hits it will first set the online border on the object it hit, and put the hit bool to true
     /// when you klick the same object again it turns of the outline
-    /// 
     /// </summary>
     public override void OnHit()
     {
-
         if (isActive == false)
             return; 
         Renderer rend = GetComponent<Renderer>();
@@ -41,7 +28,5 @@ public class HighlightReaction : RaycastReaction
             hitCounter = 0;
             this.hitHighlight = false;
         }
-       
-      
     }
 }

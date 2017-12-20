@@ -1,59 +1,68 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles user interaction and navigation in the main menu scene.
+/// </summary>
 public class MainMenuScript : MonoBehaviour
 {
     public GameObject mainMenuPanel;
-    public GameObject aboutPanel;
+    public GameObject optionsPanel;
     public GameObject loadingPanel;
     public GameObject componentsPanel;
 
-    static bool log = false;
+    public TMPro.TMP_InputField pathText;
 
+    /// <summary>
+    /// Set the local story folder path on start.
+    /// </summary>
     public void Start()
     {
-        //if (!log)
-        //{
-        //    print("Started Log");
-        //    UnityEngine.Profiling.Profiler.logFile = System.IO.Path.Combine(Application.persistentDataPath, "ProfileLog.txt");
-        //    UnityEngine.Profiling.Profiler.enabled = true;
-        //    log = true;
-        //}
+        this.pathText.text = StoryManager.Instance.GetLocalStoriesPath();
     }
 
+    /// <summary>
+    /// Go to the story selection scene.
+    /// </summary>
     public void PlayGame()
     {
         this.componentsPanel.SetActive(false);
         this.loadingPanel.SetActive(true);
         SceneManager.LoadScene("StorySelectionScene");
     }
+
+    /// <summary>
+    /// Use to quit application.
+    /// </summary>
     public void QuitApplication()
     {
         Application.Quit();
     }
-    public void ShowAbout()
-    {
-        this.HideMainMenu();
-        this.aboutPanel.SetActive(true);
-    }
-    public void HideAbout()
-    {
-        this.aboutPanel.SetActive(false);
-        this.ShowMainMenu();
 
-    }
+    /// <summary>
+    /// Shows the main menu panel.
+    /// </summary>
     public void ShowMainMenu()
     {
+        this.optionsPanel.SetActive(false);
         this.mainMenuPanel.SetActive(true);
     }
-    public void HideMainMenu()
+
+    /// <summary>
+    /// Shows the options panel.
+    /// </summary>
+    public void ShowOptionsMenu()
     {
         this.mainMenuPanel.SetActive(false);
-    }
-    public void ShowHidePanel(string panelToShow)
-    {
+        this.optionsPanel.SetActive(true);
 
+    }
+
+    /// <summary>
+    /// Clears custom stories from the local story folder.
+    /// </summary>
+    public void RemoveCustomStories()
+    {
+        StoryManager.Instance.ClearLocalStories();
     }
 }

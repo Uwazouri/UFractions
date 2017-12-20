@@ -7,26 +7,33 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// An AnswerBehaviour that will display multiple customizable choices that are selectable and one of them is the answer.
 /// 
-/// Attach the object to a panel in a canvas that is of suitable size.
-/// Select a prefab of a choice that contains a Toggle component and is of suitable size according to the attached panel.
+/// Attach the object to a panel in a canvas that is of suitable size and in the middle of the canvas.
+/// Select a prefab for choicePrefab that contains a Toggle component and is of suitable size according to the attached panel.
 /// </summary>
 public class ChoiceAnswer : AnswerBehaviour
 {
-    [Serializable]
-    public class ChoiceAnswerData : AnswerData
+    /// <summary>
+    /// The interface data for ChoiceAnswer. Contains required data that ChoiceAnswer needs to setup its answer component.
+    /// </summary>
+    [Serializable] public class ChoiceAnswerData : AnswerData
     {
-        public List<string> textChoices;
-        public List<string> imageChoices;
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<string> choices;
         public int answer;
         public int mode;
 
+        /// <summary>
+        /// Constructor that sets internal data.
+        /// </summary>
+        /// <param name="strings">A list of texts that will be displayed as choices or the names of the images to display.</param>
+        /// <param name="answer">The index number of the correct choice in the string list.</param>
+        /// <param name="mode">Which mode to handle the string list. 0 = names for images in story, 1 = plain text.</param>
         public ChoiceAnswerData(List<string> strings, int answer, int mode)
         {
             this.mode = mode;
-            if (mode == 0)
-                this.imageChoices = strings;
-            else if (mode == 1)
-                this.textChoices = strings;
+            this.choices = strings;
             this.answer = answer;
         }
     }
@@ -39,7 +46,7 @@ public class ChoiceAnswer : AnswerBehaviour
     private GameObject lastChoice;
 
     /// <summary>
-    /// Set the location of the panel and create a list for the choices.
+    /// Create a list for the choices.
     /// </summary>
     void Start ()
     {
@@ -52,7 +59,6 @@ public class ChoiceAnswer : AnswerBehaviour
     /// </summary>
     public override void Show()
     {
-        //GetComponent<SlideUIElement>().Show();
         this.gameObject.SetActive(true);
     }
 
@@ -61,51 +67,30 @@ public class ChoiceAnswer : AnswerBehaviour
     /// </summary>
     public override void Hide()
     {
-        //GetComponent<SlideUIElement>().Hide();
         this.gameObject.SetActive(false);
     }
 
     /// <summary>
-    /// Sets the choices and correct answer from a given problems answer.
+    /// Sets the choices and correct answer from given ChoiceAnswerData.
     /// </summary>
+    /// <param name="answer">The AnswerData of the problem to setup. Must be a ChoiceAnswerData.</param>
     public override void SetupAnswer(AnswerData answer)
     {
+        /// Convert to interface
         ChoiceAnswerData choicesAnswer = (ChoiceAnswerData)answer;
 
+        /// Check mode and register choices based on mode
         if (choicesAnswer.mode == 0)
-        {
-            //bool fail = false;
-            //float time = 0;
-            //float timeout = 1;
-
-            foreach (string s in choicesAnswer.imageChoices)
-            {
-                //WWW www = new WWW(StoryManager.Instance.GetImagePath(s));
-
-                //while (!www.isDone || !fail)
-                //{
-                //    if (time >= timeout)
-                //        fail = true;
-                //    time += Time.deltaTime;
-                //}
-
-                //Sprite sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0.1f, 0.1f));
-
-                //this.AddChoice(sprite);
-
+            foreach (string s in choicesAnswer.choices)
                 this.AddChoice(StoryManager.Instance.GetImageSprite(s));
-            }
-        }
-
-        if (choicesAnswer.mode == 1)
-        {
-            foreach (string s in choicesAnswer.textChoices)
-            {
+        else if (choicesAnswer.mode == 1)
+            foreach (string s in choicesAnswer.choices)
                 this.AddChoice(s);
-            }
-        }
+        else
+            print("ChoiceAnswerData has mode that is not accepted.");
 
         this.SetAnswer(this.choices[(int)choicesAnswer.answer]);
+
         this.SetupChoices();
     }
 
@@ -136,24 +121,24 @@ public class ChoiceAnswer : AnswerBehaviour
     /// <param name="text">The text to display with this choice.</param>
     private void AddChoice(string text)
     {
-        // Get object and set text
+        /// Get object and set text
         GameObject newChoice = this.GetChoiceObject();
         newChoice.GetComponentInChildren<Text>().text = text;
 
-        // Create the event trigger for the choice to only allow one choice.
+        /// Create the event trigger for the choice to only allow one choice.
         EventTrigger.Entry del = new EventTrigger.Entry();
         del.eventID = EventTriggerType.PointerDown;
         del.callback = new EventTrigger.TriggerEvent();
         UnityEngine.Events.UnityAction<BaseEventData> call = new UnityEngine.Events.UnityAction<BaseEventData>(this.CheckChoices);
         del.callback.AddListener(call);
 
-        // Add the event trigger
+        /// Add the event trigger
         EventTrigger eventTrigger = newChoice.GetComponent<EventTrigger>();
         if (eventTrigger == null)
             newChoice.AddComponent<EventTrigger>();
         newChoice.GetComponent<EventTrigger>().triggers.Add(del);
 
-        // Add the choice
+        /// Add the choice
         if (this.choices == null)
             this.choices = new List<GameObject>();
         this.choices.Add(newChoice);
@@ -165,7 +150,7 @@ public class ChoiceAnswer : AnswerBehaviour
     /// <param name="image">The image sprite to display with this choice.</param>
     private void AddChoice(Sprite image)
     {
-        // Get object and set image
+        /// Get object and set image
         GameObject newChoice = this.GetChoiceObject();
         GameObject label = newChoice.GetComponentInChildren<Text>().transform.gameObject;
         DestroyImmediate(label.GetComponent<Text>());
@@ -173,20 +158,20 @@ public class ChoiceAnswer : AnswerBehaviour
         label.GetComponent<Image>().sprite = image;
         label.GetComponent<Image>().preserveAspect = true;
 
-        // Create the event trigger for the choice to only allow one choice.
+        /// Create the event trigger for the choice to only allow one choice.
         EventTrigger.Entry del = new EventTrigger.Entry();
         del.eventID = EventTriggerType.PointerDown;
         del.callback = new EventTrigger.TriggerEvent();
         UnityEngine.Events.UnityAction<BaseEventData> call = new UnityEngine.Events.UnityAction<BaseEventData>(this.CheckChoices);
         del.callback.AddListener(call);
 
-        // Add the event trigger
+        /// Add the event trigger
         EventTrigger eventTrigger = newChoice.GetComponent<EventTrigger>();
         if (eventTrigger == null)
             newChoice.AddComponent<EventTrigger>();
         newChoice.GetComponent<EventTrigger>().triggers.Add(del);
 
-        // Add the choice
+        /// Add the choice
         if (this.choices == null)
             this.choices = new List<GameObject>();
         this.choices.Add(newChoice);
@@ -197,11 +182,14 @@ public class ChoiceAnswer : AnswerBehaviour
     /// </summary>
     private void SetupChoices()
     {
+        /// Determine panel placements by size and number of choices
         int order = this.choices.Count;
         float halfH = GetComponent<RectTransform>().rect.height / 2;
         float halfW = GetComponent<RectTransform>().rect.width / 2;
         float space = halfH*2 / order;
         float over = space / 2;
+
+        /// Position the choices
         foreach (GameObject g in this.choices)
         {
             float yPosition = space * order;

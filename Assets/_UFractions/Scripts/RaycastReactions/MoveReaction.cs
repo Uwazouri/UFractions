@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Makes the game object this script is attached to react to TouchRayCast with movement along the x-plane.
+/// Makes the game object this script is attached to react to TouchRaycast with movement along the xz-plane.
 /// NOTE: To move objects, a floor plane is needed that lies in the "Floor" layer.
 /// </summary>
 public class MoveReaction : RaycastReaction

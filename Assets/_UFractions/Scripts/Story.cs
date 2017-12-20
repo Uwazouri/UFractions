@@ -182,8 +182,10 @@ using Newtonsoft.Json;
         }
     }
 
-
-
+    /// <summary>
+    /// Constructor for story.
+    /// </summary>
+    /// <param name="storyName">The name of the story.</param>
     public Story(string storyName)
     {
         this.name = storyName;
@@ -202,51 +204,106 @@ using Newtonsoft.Json;
     public Dictionary<string, string> imgUrlsDictionary;
     public Dictionary<string, string> vidUrlsDictionary;
 
+    /// <summary>
+    /// Sets the name of the story.
+    /// </summary>
+    /// <param name="name">The name to set.</param>
     public void SetName(string name)
     {
         this.name = name;
     }
 
+    /// <summary>
+    /// Sets the description of the story.
+    /// </summary>
+    /// <param name="description">The story description.</param>
     public void SetDescription(string description)
     {
         this.description = description;
     }
 
+    /// <summary>
+    /// Sets the story version.
+    /// </summary>
+    /// <param name="main">Main version.</param>
+    /// <param name="patch">Patch version.</param>
+    /// <param name="bug">Bug fix version.</param>
     public void SetStoryVersion(uint main, uint patch, uint bug)
     {
         this.storyVersion = new Version(main, patch, bug);
     }
 
+    /// <summary>
+    /// Sets the editor used version.
+    /// </summary>
+    /// <param name="main">Main version.</param>
+    /// <param name="patch">Patch version.</param>
+    /// <param name="bug">Bug fix version.</param>
     public void SetEditorVersion(uint main, uint patch, uint bug)
     {
         this.editorVersion = new Version(main, patch, bug);
     }
 
+    /// <summary>
+    /// Sets the introduction path of the story.
+    /// </summary>
+    /// <param name="name">The name of the introduction path.</param>
+    /// <param name="description">The description of the introduction path.</param>
+    /// <param name="startingProblemID">The problem of the first event in the path.</param>
     public void SetIntroduction(string name, string description, uint startingProblemID)
     {
         this.paths.Insert(0, new Path(name, description, startingProblemID));
     }
 
+    /// <summary>
+    /// Adds a path to the story.
+    /// </summary>
+    /// <param name="name">The name of the path.</param>
+    /// <param name="description">The description of the path.</param>
+    /// <param name="startingProblem">The id of the problem of the first event in the path.</param>
     public void AddPath(string name, string description, uint startingProblem)
     {
         this.paths.Add(new Path(name, description, startingProblem));
     }
 
+    /// <summary>
+    /// Adds a problem to the story.
+    /// </summary>
+    /// <param name="problemID">The idea of the problem, needs to be unique.</param>
+    /// <param name="questionType">The question type of the question interface.</param>
+    /// <param name="questionData">The question data for the problem.</param>
+    /// <param name="answerType">The answer type of the question interface.</param>
+    /// <param name="answerData">The answer data for the problem.</param>
     public void AddProblem(uint problemID, QuestionBehaviour.QuestionType questionType, QuestionBehaviour.QuestionData questionData, AnswerBehaviour.AnswerType answerType, AnswerBehaviour.AnswerData answerData)
     {
         this.problems.Add(new Problem(problemID, questionType, questionData, answerType, answerData));
     }
 
+    /// <summary>
+    /// Adds an image url to the story.
+    /// </summary>
+    /// <param name="name">The name of the image.</param>
+    /// <param name="path">The url path to the image.</param>
     public void AddImage(string name, string path)
     {
         this.imgUrlsDictionary[name] = path;
     }
 
+    /// <summary>
+    /// Adds a video url to the story.
+    /// </summary>
+    /// <param name="name">The name of the video.</param>
+    /// <param name="path">The url path to the video.</param>
     public void AddVideo(string name, string path)
     {
         this.vidUrlsDictionary[name] = path;
     }
 
+    /// <summary>
+    /// Loads a story from a json story file.
+    /// </summary>
+    /// <param name="filePath">The system folder path to the story file.</param>
+    /// <returns>The loaded story.</returns>
     public static Story LoadFromJSON(string filePath)
     {
         JsonSerializerSettings settings = new JsonSerializerSettings();
@@ -263,6 +320,12 @@ using Newtonsoft.Json;
         return returnStory;
     }
 
+    /// <summary>
+    /// Loads a story from a json story file with given serialization settings.
+    /// </summary>
+    /// <param name="filePath">The system folder path to the story file.</param>
+    /// <param name="settings">The json settings.</param>
+    /// <returns></returns>
     public static Story LoadFromJSON(string filePath, JsonSerializerSettings settings)
     {
         Story returnStory = JsonConvert.DeserializeObject<Story>(File.ReadAllText(filePath), settings);

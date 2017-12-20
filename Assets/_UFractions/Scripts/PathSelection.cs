@@ -1,10 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles path selection of the current story in the path selection scene.
+/// Note: Needs current story to be set.
+/// Note: Must set current path before it can continue to path progression scene.
+/// </summary>
 public class PathSelection : MonoBehaviour
 {
     public GameObject pathButtonPrefab;
@@ -21,28 +25,18 @@ public class PathSelection : MonoBehaviour
 
     private GameObject pressedPath;
 
-    // Use this for initialization
+    /// <summary>
+    /// Set no path selected on start and load all paths from current story.
+    /// </summary>
     void Start()
     {
         pathSelected = false;
         LoadPathConfig();
     }
 
-    private void Update()
-    {
-        //if (pathSelected == false)
-        //{
-        //    GameObject.Find("CONFIRM").GetComponent<Button>().interactable = false;
-        //}
-
-        //else
-        //{
-        //    GameObject.Find("CONFIRM").GetComponent<Button>().interactable = true;
-        //}
-    }
-
-    //This is the function to update all the stories in the menu
-    //Interface Factory will have to create a button with two texts, "pathNameText" & "pathDescriptionText"
+    /// <summary>
+    /// This is the function to update all the stories in the menu
+    /// </summary>
     public void LoadPathConfig()
     {
         loadedPaths = StoryManager.Instance.GetAllPaths();
@@ -60,8 +54,10 @@ public class PathSelection : MonoBehaviour
         pathChoiceContainer.GetComponent<RectTransform>().localPosition = new Vector2(-150.0f, -1000.0f);
     }
 
-    //Check witch button was pressed and retrive the belonging name and description
-    //Set the path linked to the button as confirmed path
+    /// <summary>
+    /// Check witch button was pressed and retrive the belonging name and description
+    /// Set the path linked to the button as confirmed path
+    /// </summary>
     public void selectedPath()
     {
         pressedPath = EventSystem.current.currentSelectedGameObject;
@@ -87,7 +83,9 @@ public class PathSelection : MonoBehaviour
         }
     }
 
-    //Sends the confirmed path to the PathSelection scene
+    /// <summary>
+    /// Sends the confirmed path to the PathSelection scene
+    /// </summary>
     public void OpenPath()
     {
         if (pathSelected == true)
@@ -100,7 +98,9 @@ public class PathSelection : MonoBehaviour
         }
     }
 
-    //When you wanna go back to the main menu
+    /// <summary>
+    /// When you wanna go back to the main menu
+    /// </summary>
     public void GoBack()
     {
         SceneManager.LoadScene("StorySelectionScene");

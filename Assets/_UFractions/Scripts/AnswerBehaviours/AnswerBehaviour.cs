@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,8 +7,10 @@ using UnityEngine;
 /// </summary>
 public class AnswerBehaviour : MonoBehaviour
 {
-    [Serializable]
-    public enum AnswerType
+    /// <summary>
+    /// Every AnswerBehaviour needs to add thier own Enum AnswerType and set thier type to it.
+    /// </summary>
+    [Serializable] public enum AnswerType
     {
         None,
         Choices,
@@ -18,12 +18,17 @@ public class AnswerBehaviour : MonoBehaviour
         Input
     }
 
-    [Serializable]
-    public class AnswerData
+    /// <summary>
+    /// Every AnswerBehaviour interface needs to implement thier own interface of AnswerData for data managment.
+    /// </summary>
+    [Serializable] public class AnswerData
     {
 
     }
 
+    /// <summary>
+    /// Interfaces of AnswerBehaviour needs to set this to thier enum type.
+    /// </summary>
     public AnswerType answerType;
 
     /// <summary>

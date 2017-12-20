@@ -6,7 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-
+/// <summary>
+/// Handles progression trough the current path of the story.
+/// Note: Needs current path to be selected.
+/// Flow: Checks if last problem was solved and either loads the problem scene to try same problem again
+/// or go to next event/ event selection if there are any before loading problem scene or go back to path selection
+/// if no more events in current path.
+/// </summary>
 public class ProgressionHandler : MonoBehaviour
 {
     float yPos = 0;
