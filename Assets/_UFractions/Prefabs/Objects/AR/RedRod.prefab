@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114727607340436018}
   - component: {fileID: 114811347937386250}
   - component: {fileID: 114831736539634180}
+  - component: {fileID: 114347019012095012}
   m_Layer: 0
   m_Name: RedRod
   m_TagString: Untagged
@@ -114,6 +115,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114347019012095012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1766697855533636}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114727607340436018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114347019012095012}
   isActive: 0
   hitHighlight: 0
 --- !u!114 &114831736539634180

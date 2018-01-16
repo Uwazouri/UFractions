@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114902411278630270}
   - component: {fileID: 114361207342164338}
   - component: {fileID: 114279140827599784}
+  - component: {fileID: 114883875312717586}
   m_Layer: 0
   m_Name: WhiteRod
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114883875312717586}
   isActive: 0
   hitHighlight: 0
 --- !u!114 &114361207342164338
@@ -139,6 +141,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 9
+--- !u!114 &114883875312717586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1302171930889714}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 1
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114902411278630270
 MonoBehaviour:
   m_ObjectHideFlags: 1

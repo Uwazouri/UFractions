@@ -156,7 +156,11 @@
           },
           "arObjects": {
             "$type": "System.Collections.Generic.List`1[[ARObjectType, Assembly-CSharp]], mscorlib",
-            "$values": []
+            "$values": [
+              5,
+              5,
+              0
+            ]
           }
         },
         "answerType": 3,

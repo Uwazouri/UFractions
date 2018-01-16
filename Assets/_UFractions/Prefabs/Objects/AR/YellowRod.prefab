@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114787756220573312}
   - component: {fileID: 114558545039207766}
   - component: {fileID: 114022631529044016}
+  - component: {fileID: 114027035084492002}
   m_Layer: 0
   m_Name: YellowRod
   m_TagString: Untagged
@@ -126,6 +127,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 5
+--- !u!114 &114027035084492002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1974360793977900}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114558545039207766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114027035084492002}
   isActive: 0
   hitHighlight: 0
 --- !u!114 &114787756220573312

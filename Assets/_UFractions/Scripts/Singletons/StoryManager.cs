@@ -494,7 +494,12 @@ public class StoryManager : Singleton<StoryManager>
                         "How many days Senatla has lived?"),
                         new TextBoxQuestion.TextBox("Phone", true, "Hint: Take two yellow rods and compare their length to the length of orange rod.")
 
-                    }), null),
+                    }), new List<ARObjectType>( new ARObjectType[] 
+                    {
+                        ARObjectType.YellowRod,
+                        ARObjectType.YellowRod,
+                        ARObjectType.OrangeRod
+                    } )),
             AnswerBehaviour.AnswerType.Input, /// The AnswerType of the problem
             new InputAnswer.InputAnswerData(new List<string>(new string[] /// The AnswerData of input is a list of strings as accepted answers
                     {

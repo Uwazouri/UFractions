@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114205327036067196}
   - component: {fileID: 114469006613855646}
   - component: {fileID: 114219624064301456}
+  - component: {fileID: 114675555226666370}
   m_Layer: 0
   m_Name: BrownRod
   m_TagString: Untagged
@@ -148,5 +149,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114675555226666370}
   isActive: 0
   hitHighlight: 0
+--- !u!114 &114675555226666370
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313031408551706}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []

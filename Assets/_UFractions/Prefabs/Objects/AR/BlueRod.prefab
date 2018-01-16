@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114084528073665450}
   - component: {fileID: 114164786249029232}
   - component: {fileID: 114901569022594088}
+  - component: {fileID: 114524025566274736}
   m_Layer: 0
   m_Name: BlueRod
   m_TagString: Untagged
@@ -136,8 +137,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114524025566274736}
   isActive: 0
   hitHighlight: 0
+--- !u!114 &114524025566274736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1324004591687246}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114901569022594088
 MonoBehaviour:
   m_ObjectHideFlags: 1

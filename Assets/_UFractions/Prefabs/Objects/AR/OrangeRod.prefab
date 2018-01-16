@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114303011977720780}
   - component: {fileID: 114206277307035088}
   - component: {fileID: 114105580425839692}
+  - component: {fileID: 114250500667280956}
   m_Layer: 0
   m_Name: OrangeRod
   m_TagString: Untagged
@@ -137,8 +138,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114250500667280956}
   isActive: 0
   hitHighlight: 0
+--- !u!114 &114250500667280956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1468523822253406}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114303011977720780
 MonoBehaviour:
   m_ObjectHideFlags: 1

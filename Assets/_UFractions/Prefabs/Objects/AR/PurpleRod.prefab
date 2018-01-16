@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114589139612203608}
   - component: {fileID: 114120947468085690}
   - component: {fileID: 114367247956361462}
+  - component: {fileID: 114575906134549848}
   m_Layer: 0
   m_Name: PurpleRod
   m_TagString: Untagged
@@ -125,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea64d126b2478ac4f97b9a5182b26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outline: {fileID: 114575906134549848}
   isActive: 0
   hitHighlight: 0
 --- !u!114 &114367247956361462
@@ -139,6 +141,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objType: 6
+--- !u!114 &114575906134549848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1626782916517658}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+  originalLayer: 0
+  originalMaterials: []
 --- !u!114 &114589139612203608
 MonoBehaviour:
   m_ObjectHideFlags: 1
